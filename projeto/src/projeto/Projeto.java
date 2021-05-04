@@ -5,17 +5,23 @@
  */
 package projeto;
 
+import java.util.Scanner;
+
 /**
  *
  * @author CucasPC
  */
 public class Projeto {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
+   
+    public static Scanner input;
     
+    public static void main(String[] args) {
+        
+        input = new Scanner(System.in); 
+        
+        Game game = new Game(2);
+        game.start();
+        
+    }
 }
