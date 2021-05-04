@@ -11,7 +11,7 @@ import java.util.Scanner;
  *
  * @author CucasPC
  */
-public class Projeto {
+public class AppStart {
 
    
     public static Scanner input;

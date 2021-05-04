@@ -6,125 +6,102 @@
 package projeto;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author CucasPC
  */
-public class Game {
+public class Game{
 
     String nickname;
     public int numberOfPlayers;
 
-    public Game(int numberOfPlayers) {
+    public Game(int numberOfPlayers){
         this.numberOfPlayers = numberOfPlayers;
     }
 
     public void start(){
-        int playerOption;
+        int option;
+
         ArrayList<Player> players;
-        List<Integer> champion;
-        
         players = new ArrayList<Player>();
-        champion = new ArrayList<Integer>();
-        printIntroduction();
-        
-        do 
-        {
-            printMenu();
-            Scanner console = new Scanner(System.in);
-            
-            while (true)
-            {
-                if (console.hasNextInt())
-                {
-                    playerOption = console.nextInt();
-                    break;  
-                }
-                else
-                    console.next();
-                    
-                System.out.println();
-                System.out.println("\tERROR : Invalid Input. Please enter a valid number between 0 and 6 ");
-                System.out.println();
-                printMenu();
-            }
-            
-            switch (playerOption)
-            {
-                case 1:
-                    createNewPlayer(players, champion);break;
-               
-                case 2:
-                    gamePlayed(players, champion);break;
-                    
-                case 3:
-                    displayPlayerPositions(players);break;
-                    
-                case 4:
-                   printHelp();break;
-                
-                case 5:
-                   exitGame();break;
-                   
-                default:
-                    System.out.println("\n\tERROR : Invalid Input. Please enter a valid number between 0 and 6 \n ");
-            }
-        }while(true);
+
+        printIntro();
+        printMenu();
+        option = AppStart.input.nextInt();
+
+        switch(option){
+            case 1:
+                createPlayer(players);
+                break;
+            case 4:
+                printHelp();
+                break;
+
+            case 0:
+                exitGame();
+                break;
+            default:
+                System.out.println("\nERRO: Opção inválida");
+        }
     }
 
-    public void createPlayer(ArrayList<Player> players) {
+    public void createPlayer(ArrayList<Player> players){
         System.out.print("\nIntroduza o nome do jogador");
-        String nickname = Projeto.input.nextLine().trim().toLowerCase();
+        String nickname = AppStart.input.nextLine().trim().toLowerCase();
 
-        if (nickname.length() <= 2) {
+        if (nickname.length() <= 2){
             System.out.println();
             System.out.println("ERRO: O nome tem que ter 3 ou mais caracteres");
             System.out.println();
-        } else {
+        }else{
             Player user = new Player();
             user.setNickname(nickname);
             players.add(user);
         }
     }
 
-    public void displayNoPlayer() {
+    public void displayNoPlayer(){
         System.out.println();
         System.out.println("ERRO: Não existem jogadores!\n");
-    }
-    
-    public void printHelp(){
-        System.out.println();
-        System.out.println("::::::::::::::::::::::::::::::::::::::::Ajuda::::::::::::::::::::::::::::::::::::::::");
-        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-        System.out.println();        
     }
 
     public void printIntro(){
         System.out.println();
         System.out.println("::::::::::::::::::::::::::::::::::::::::Intro::::::::::::::::::::::::::::::::::::::::");
         System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-        System.out.println();        
+        System.out.println();
     }
-    
+
     public void printMenu(){
-        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-        System.out.println("||          Bem-Vindo ao Boats & Docks         ||");
+        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+        System.out.println("||         Bem-Vindo ao Boats & Docks         ||");
         System.out.println("================================================");
         System.out.print("Escolha uma opção: ");
     }
     
+    public void printHelp(){
+        System.out.println();
+        System.out.println("::::::::::::::::::::::::::::::::::::::::Ajuda::::::::::::::::::::::::::::::::::::::::");
+        System.out.println("Opção x para jogar");
+        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+        System.out.println();
+    }
+
+    public void exitGame(){
+        System.out.println("::::::::::Até à próxima::::::::::");
+        System.exit(0);
+    }
+
     //SETS
     public void setNumberOfPlayers(int numberOfPlayers){
         this.numberOfPlayers = numberOfPlayers;
-    }     
-    
+    }
+
     //GETS
     public int getNumberOfPlayers(){
         return numberOfPlayers;
     }
-    
 
 }
 
