@@ -1,11 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package projeto;
-
-import java.util.Scanner;
 
 /**
  *
@@ -14,14 +7,9 @@ import java.util.Scanner;
 public class AppStart {
 
    
-    public static Scanner input;
-    
+   
     public static void main(String[] args) {
-        
-        input = new Scanner(System.in); 
-        
-        Game game = new Game(2);
-        game.start();
-        
+        Game game = new Game(5);    //cria e inicializa um objeto da classe game com o numero de utilizadores definido a 5
+        game.printIntro();          //apresenta o menu de inicio do jogo   
     }
 }

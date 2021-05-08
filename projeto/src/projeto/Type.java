@@ -9,6 +9,6 @@ package projeto;
  *
  * @author CucasPC
  */
-public class Board {
-    
+public enum Type {
+    DOCK, UNKNOWN, WATER, BOAT //doca, desconhecido, agua, barco
 }
