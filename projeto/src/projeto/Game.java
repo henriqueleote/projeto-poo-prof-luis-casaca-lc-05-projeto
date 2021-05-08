@@ -1,5 +1,6 @@
 package projeto;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -14,7 +15,9 @@ public class Game {
     public int userCount;           //variavel o numero de jogadores criados
     public int userID;              //variavel para o id do jogador
     public int DEFAULT_VALUE = 0;   //variavel definida para 0
-    public static Scanner input;    //varivel para receber input de dados
+    public static Scanner input;    //variavel para receber input de dados
+    public static Board gameBoard;  //variavel para gerar um tabuleiro
+    public static Score score;      //variavel da classe Score para a pontuaçã do jogo
 
     //construtor da classe Game que recebe o numero de jogadores
     public Game(int numberOfPlayers) {              
@@ -25,6 +28,7 @@ public class Game {
 
     //metodo para criar um jogador
     public void createPlayer() {
+        System.out.println(Arrays.deepToString(players));
         if (userCount < numberOfPlayers) {  //se ainda houver "espaço para jogadores"
             System.out.print("\nIntroduza o nome do jogador: ");    //pede o nome do jogador
             String nickname = input.nextLine().trim().toLowerCase();    //recebe o input em string, retirar espaços e pôr em minusculas 
@@ -91,7 +95,10 @@ public class Game {
     }
 
     //metodo que apresenta o menu principal do jogo
-    public void printMenu() {
+    public void printMenu() { 
+        
+        score = new Score(Integer.parseInt(players[userID][2]));        //inicializa o score com a pontuação do jogador
+        
         System.out.println("\n\t=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         System.out.println("\t||         Bem-Vindo ao Boats & Docks:        ||");
         System.out.println("\t||      Escolha uma das seguintes opções:     ||");
@@ -109,15 +116,13 @@ public class Game {
         //switch para opção
         switch (option) {
             case 1:
-                //gerar tabuleiro facil
-                Score score = new Score(Integer.parseInt(players[userID][2]));
-                score.boatFail();
+                gameBoard = Layout.generateBoard(5);    //gera um tabuleiro de 5x5
                 break;
             case 2:
-                //gerar tabuleiro medio
+                gameBoard = Layout.generateBoard(7);    //gera um tabuleiro de 7x7
                 break;
             case 3:
-                //gerar tabuleiro dificil
+                gameBoard = Layout.generateBoard(10);   //gera um tabuleiro de 10x10
                 break;
             case 4:
                 printPlayers(); //apresenta todos os jogadores
