@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author CucasPC
+ * @author Gonçalo Fernandes e Henrique Leote
  */
 public class Board {
 
@@ -141,5 +141,27 @@ public class Board {
     public int getDockCount(){
         return dockLocations.size();
     }
+
+    //SETS
+    public void setGameBoard(Type[][] gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
+    public void setColumnCount(int[] columnCount) {
+        this.columnCount = columnCount;
+    }
+
+    public void setRowCount(int[] rowCount) {
+        this.rowCount = rowCount;
+    }
+
+    public void setDockLocations(List<Position> dockLocations) {
+        this.dockLocations = dockLocations;
+    }
+
+    public void setBoatLocations(List<Position> boatLocations) {
+        this.boatLocations = boatLocations;
+    }
+    
     
 }

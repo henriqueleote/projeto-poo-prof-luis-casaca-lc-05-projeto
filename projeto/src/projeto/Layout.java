@@ -7,7 +7,7 @@ import java.util.Random;
 
 /**
  *
- * @author CucasPC
+ * @author Gonçalo Fernandes e Henrique Leote
  */
 public class Layout {
     

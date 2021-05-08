@@ -2,7 +2,7 @@ package projeto;
 
 /**
  *
- * @author CucasPC
+ * @author Gonçalo Fernandes e Henrique Leote
  */
 public class AppStart {
     public static void main(String[] args) {

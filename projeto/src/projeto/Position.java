@@ -2,7 +2,7 @@ package projeto;
 
 /**
  *
- * @author CucasPC
+ * @author Gonçalo Fernandes e Henrique Leote
  */
 public class Position {
     public int row;                        //variavel para as linhas

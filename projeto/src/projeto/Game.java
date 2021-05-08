@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author CucasPC
+ * @author Gonçalo Fernandes e Henrique Leote
  */
 public class Game {
 
@@ -117,12 +117,18 @@ public class Game {
         switch (option) {
             case 1:
                 gameBoard = Layout.generateBoard(5);    //gera um tabuleiro de 5x5
+                players.[userID][2] = 50;
+                score.setScore(50);
                 break;
             case 2:
                 gameBoard = Layout.generateBoard(7);    //gera um tabuleiro de 7x7
+                players.[userID][2] = 100;
+                score.setScore(100);
                 break;
             case 3:
                 gameBoard = Layout.generateBoard(10);   //gera um tabuleiro de 10x10
+                players.[userID][2] = 150;
+                score.setScore(150);
                 break;
             case 4:
                 printPlayers(); //apresenta todos os jogadores

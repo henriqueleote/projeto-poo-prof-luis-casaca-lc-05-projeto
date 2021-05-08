@@ -2,7 +2,7 @@ package projeto;
 
 /**
  *
- * @author CucasPC
+ * @author Gonçalo Fernandes e Henrique Leote
  */
 public enum Level {
     EASY,MEDIUM,HARD;   //facil, medio, dificil

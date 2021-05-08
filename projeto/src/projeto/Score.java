@@ -2,7 +2,7 @@ package projeto;
 
 /**
  *
- * @author CucasPC
+ * @author Gonçalo Fernandes e Henrique Leote
  */
 public class Score {
     public int highScore;           //variavel para o recorde de pontuação
@@ -68,6 +68,28 @@ public class Score {
     //metodo que devolve a pontuação final
     public int getFinalScore(){    
         return score+gain-fail;
+    }
+    
+    //SETS
+    
+    //metodo que altera o recorde de pontuação
+    public void setHighScore(int highScore) { 
+        this.highScore = highScore;
+    }
+
+    //metodo que altera a pontuação
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    //metodo que altera os pontos perdidos
+    public void setFail(int fail) {
+        this.fail = fail;
+    }
+
+    //metodo que altera os pontos ganhos
+    public void setGain(int gain) {
+        this.gain = gain;
     }
     
     //metodo que verifica e devolve um novo record
