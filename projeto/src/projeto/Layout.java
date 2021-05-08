@@ -21,12 +21,12 @@ public class Layout {
     public static  List<Position> neighbors;                //variavel para armazenar todas as posições à volta de uma posição especifica 
     
     //metodo para gerar um tabuleiro aleatorio com um tamanho pedido
-    public static Board generateBoard(int size) {
+    public static Board generateBoard(int size, int spaces) {
         Type[][] newBoard = new Type[size][size];   //inicializar o objeto tamanho pedido no menu
         random = new Random();   //inicializar o objeto
         int[] newRowCount = new int[size];     //inicializa array para as linhas com o tamanho pedido no menu
         int[] newColumnCount = new int[size];  //inicializa array para as colunas com o tamanho pedido no menu
-        fillingSpaces = (size * size) / 4;   //inicializa a variavel sendo um quarto do tamanho do tabuleiro
+        fillingSpaces = spaces;   //inicializa a variavel com o vlaor recebido da dificuldade do tabuleiro
 
         //enche todos com desconhecidos
         for (Type[] row: newBoard){ //percorre o array

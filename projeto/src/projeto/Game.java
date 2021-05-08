@@ -116,19 +116,20 @@ public class Game {
         //switch para opção
         switch (option) {
             case 1:
-                gameBoard = Layout.generateBoard(5);    //gera um tabuleiro de 5x5
-                players.[userID][2] = 50;
-                score.setScore(50);
+                gameBoard = Layout.generateBoard(5,5);                           //gera um tabuleiro de 5x5
+                score.setScore(50);                                             //define a pontuação base para 50 pontos
+                players[userID][2] = String.valueOf(score.getScore());          //atribui a pontuação base ao utilizador
+                
                 break;
             case 2:
-                gameBoard = Layout.generateBoard(7);    //gera um tabuleiro de 7x7
-                players.[userID][2] = 100;
-                score.setScore(100);
+                gameBoard = Layout.generateBoard(7,10);                            //gera um tabuleiro de 7x7
+                score.setScore(100);                                            //define a pontuação base para 100 pontos
+                players[userID][2] = String.valueOf(score.getScore());          //atribui a pontuação base ao utilizador
                 break;
             case 3:
-                gameBoard = Layout.generateBoard(10);   //gera um tabuleiro de 10x10
-                players.[userID][2] = 150;
-                score.setScore(150);
+                gameBoard = Layout.generateBoard(10,17);                           //gera um tabuleiro de 10x10
+                score.setScore(150);                                            //define a pontuação base para 150 pontos
+                players[userID][2] = String.valueOf(score.getScore());          //atribui a pontuação base ao utilizador
                 break;
             case 4:
                 printPlayers(); //apresenta todos os jogadores
