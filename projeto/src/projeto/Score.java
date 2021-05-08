@@ -66,7 +66,7 @@ public class Score {
     }
     
     //metodo que devolve a pontuação final
-    public int finalScore(){    
+    public int getFinalScore(){    
         return score+gain-fail;
     }
     
