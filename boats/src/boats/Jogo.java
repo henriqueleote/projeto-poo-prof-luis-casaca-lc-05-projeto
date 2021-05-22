@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author CucasPC
  */
-public class Jogo {
+public class Jogo{
 
     /**
      * @param args the command line arguments
