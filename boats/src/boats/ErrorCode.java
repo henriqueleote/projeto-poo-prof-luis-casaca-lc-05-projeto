@@ -10,7 +10,7 @@ package boats;
  * @author CucasPC
  */
 public enum ErrorCode {
-    ARRAY_CANT_BE_NEGATIVE,NICKNAME_ALREADY_EXISTS;
+    ARRAY_CANT_BE_NEGATIVE,NICKNAME_ALREADY_EXISTS,NICKNAME_DOESNT_EXIST;
 
     @Override
     public String toString() {
@@ -19,6 +19,8 @@ public enum ErrorCode {
                 return "O array não pode conter valores negativos";
             case NICKNAME_ALREADY_EXISTS:
                 return "O nickname inserido já se encontra em uso";
+            case NICKNAME_DOESNT_EXIST:
+                return "Não existe nenhum utilizador com o nickname inserido";
             default:
                 return "desconhecido";
         }

@@ -49,4 +49,9 @@ public class Jogador {
     public void setPlayer(Jogador player){
         this.player=player;
     }
+    
+    @Override
+    public String toString(){
+        return "\nID: " + getId() + "\nNickname: " + getNickname() + getScore().toString();
+    }
 }

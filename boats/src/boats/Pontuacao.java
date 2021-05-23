@@ -34,4 +34,8 @@ public class Pontuacao {
     public void setHigh(int high){
         this.high = high;
     }
+    
+    public String toString(){
+        return "\nPontos: " + getPoints() + "\nRecord: " + getHigh();
+    }
 }
