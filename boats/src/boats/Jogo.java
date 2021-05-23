@@ -29,6 +29,7 @@ public class Jogo {
     static Regras rules = new Regras();
     static Scanner input = new Scanner(System.in);
     static int playerID;
+    static Jogador player;
 
     public static void main(String[] args) {
         start();
@@ -87,7 +88,19 @@ public class Jogo {
     public static void createPlayer() {
         System.out.print("Nickname-> ");
         String nickname = input.next().toLowerCase().trim();
-        for (i = 0; i < players.size(); i++) {
+        player = findStudentByNickname(nickname);
+        if(player!=null){
+            //if(players.contains(player))
+                System.out.println("O nickname inserido já se encontra em uso\n");
+        }else{
+               players.add(new Jogador(playerCount, nickname, 0));
+                playerID = players.get(playerCount).getId();
+                playerCount++;
+                menu(); 
+        }
+        
+        
+        /*for (i = 0; i < players.size(); i++) {
             if (players.get(i).getNickname().toLowerCase().trim().equals(nickname)) {
                 System.out.println("O nickname inserido já se encontra em uso\n");
                 break;
@@ -97,22 +110,42 @@ public class Jogo {
                 playerCount++;
                 menu();
             }
-        }
+        }*/
     }
 
     public static void choosePlayer() {
         System.out.print("Nickname-> ");
         String nickname = input.next().toLowerCase().trim();
-        for (i = 0; i < players.size(); i++) {
+        player = findStudentByNickname(nickname);
+        
+        if(player!=null){
+            if(players.contains(player))
+                playerID = players.indexOf(player);
+                menu();
+        }else{
+            System.out.println("Não existe nenhum utilizador com o nickname inserido\n");
+            start();
+        }
+        /*for (i = 0; i < players.size(); i++) {
             if (players.get(i).getNickname().toLowerCase().trim().equals(nickname)) {
                 playerID = players.get(i).getId();
                 menu();
                 break;
-            }else{
+            } else {
                 System.out.println("Não existe nenhum utilizador com o nickname inserido\n");
                 start();
             }
+        }*/
+
+    }
+
+    public static Jogador findStudentByNickname(String nickname) {
+        for (Jogador playerObj : players) {
+            if (playerObj.getNickname().toLowerCase().trim().equals(nickname)) {
+                return playerObj;
+            }  
         }
+        return null;
     }
 
     public static void menu() {
