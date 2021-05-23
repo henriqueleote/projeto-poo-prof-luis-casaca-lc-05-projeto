@@ -10,12 +10,22 @@ package boats;
  * @author CucasPC
  */
 public class Porto extends Casa{
-    public Porto(int row, int column){
-        super(row,column);
+
+    char indentifier;
+    
+    public Porto(int x, int y){
+        super(x,y);
+        position = new Posicao(x,y);
+        indentifier = 'P';
     }
     
+    public char getIndentifier(){
+        return indentifier;
+    }
+
     @Override
     public String toString(){
-        return(super.toString() + "Tipo: Porto");
-    }  
+        return Character.toString(getIndentifier());
+    }
+    
 }

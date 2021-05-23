@@ -10,12 +10,22 @@ package boats;
  * @author CucasPC
  */
 public class Agua extends Casa{
-    public Agua(int row, int column){
-        super(row,column);
+
+    char indentifier;
+    
+    public Agua(int x, int y){
+        super(x,y);
+        position = new Posicao(x,y);
+        indentifier = 'A';
     }
     
+    public char getIndentifier(){
+        return indentifier;
+    }
+
     @Override
     public String toString(){
-        return(super.toString() + "Tipo: Agua");
+        return Character.toString(getIndentifier());
     }
+    
 }

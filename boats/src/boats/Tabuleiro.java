@@ -35,8 +35,8 @@ public class Tabuleiro {
     }
     
     public void placePlacehold(Casa casa){ //talvez noutro sitio
-        int x = casa.getRow();
-        int y = casa.getColumn();
+        //int x = casa.getRow();
+        //int y = casa.getColumn();
         
     }
     

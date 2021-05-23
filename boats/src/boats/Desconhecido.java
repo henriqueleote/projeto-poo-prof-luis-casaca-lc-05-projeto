@@ -11,12 +11,21 @@ package boats;
  */
 public class Desconhecido extends Casa{
 
-    public Desconhecido(int row, int column){
-        super(row,column);
+    char indentifier;
+    
+    public Desconhecido(int x, int y){
+        super(x,y);
+        position = new Posicao(x,y);
+        indentifier = '-';
     }
     
+    public char getIndentifier(){
+        return indentifier;
+    }
+
     @Override
     public String toString(){
-        return(super.toString() + "-");
+        return Character.toString(getIndentifier());
     }
+    
 }

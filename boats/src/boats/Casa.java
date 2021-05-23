@@ -10,32 +10,18 @@ package boats;
  */
 
 public class Casa{  
-    int row;
-    int column;
+    Posicao position;
     
-    public Casa(int row, int column){
-        this.row=row;
-        this.column=column;
+    public Casa(int x, int y){
+        position = new Posicao(x,y);
     }
     
-    public void setLocation(int row, int column){
-        this.row=row;
-        this.column=column;
+    public void setPosition(int x, int y){
+        position.setRow(x);
+        position.setColumn(y);
     }
     
-    public int getRow(){
-        return row;
-    }
-    
-    public int getColumn(){
-        return column;
-    }
-    
-    @Override
-    public String toString(){
-        StringBuilder string = new StringBuilder();
-        //string.append("Linha: " + row + "\n");
-        //string.append("Coluna: " + column + "\n");
-        return string.toString();
+    public Posicao getPosition(){
+        return position;
     }
 }
