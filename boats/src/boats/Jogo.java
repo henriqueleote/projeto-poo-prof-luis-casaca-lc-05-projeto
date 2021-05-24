@@ -40,7 +40,7 @@ public class Jogo {
 
     //MAIN
     public static void main(String[] args) {
-        start();
+        start(); //Inicializa o programa, exibindo o menu principal
     }
 
     //IMPRIME O MENU PRINCIPAL - FEITO MAS FALTA COMENTARIO
@@ -49,10 +49,12 @@ public class Jogo {
         System.out.println("Escolha uma opção");
         System.out.println();
 
+        //Verifica se a lista de jogadores está vazia
         if (players.isEmpty()) {
             System.out.println("1 - Criar Jogador");
             System.out.println("0 - Sair\n");
 
+            //Exibe a opção escolhida pelo utilizador
             System.out.print("Opção -> ");
             while (!input.hasNextInt()) {
                 System.out.print("-> ");
@@ -61,6 +63,7 @@ public class Jogo {
             int option = input.nextInt();
             System.out.println("-----------");
 
+            //Consoante a opção escolhida, é criado um novo jogador ou é terminado o programa
             switch (option) {
                 case 1:
                     createPlayer();
@@ -69,10 +72,10 @@ public class Jogo {
                     System.exit(0);
                     break;
                 default:
-                    start();
+                    start(); // no caso de não ser escolhida nenhuma das opções facultadas ao utilizador, volta ao menu principal
                     break;
             }
-        } else {
+        } else { // ! POSSÍVEL REIMPLEMENTAÇÃO, DEIXADO PARA DEPOIS !
             System.out.println("1 - Criar Jogador");
             System.out.println("2 - Escolher jogador");
             System.out.println("0 - Sair\n");
@@ -103,38 +106,38 @@ public class Jogo {
 
     }
 
-    //CRIA UM JOGADOR - FEITO MAS FALTA COMENTARIO - REVER JUST IN CASE (TRATAR DA CENA DOS PONTOS)
+    //CRIA UM JOGADOR - REVER JUST IN CASE (TRATAR DA CENA DOS PONTOS)
     public static void createPlayer() {
         System.out.print("Nickname -> ");
-        String nickname = input.next().trim();
-        player = getPlayerByNickname(nickname);
+        String nickname = input.next().trim(); // Leitura do nickname digitado pelo utilizador
+        player = getPlayerByNickname(nickname); // Associação do jogador ao nickname
         
-        if (player != null) {
+        if (player != null) { // Caso o nickname pretendido pelo utilizador já esteja registado na aplicação, é emitida uma mensagem de erro 
             if (players.contains(player)) {
                 System.out.println("O nickname inserido já se encontra em uso\n");
             }
-        } else {
+        } else { // Caso o nickname pretendido pelo utilizador ainda não exista em utilização, é criado um novo jogador com o respetivo nickname associado
             players.add(new Jogador(playerCount, nickname, 0));
             playerID = players.get(playerCount).getId();
             playerCount++;
-            menu();
+            menu(); // Retrocede-se ao menu
         }
     }
 
-    //ESCOLHE O JOGADOR - FEITO MAS FALTA COMENTARIO - REVER JUST IN CASE (TRATAR DA CENA DOS PONTOS)
+    //ESCOLHE O JOGADOR - REVER JUST IN CASE (TRATAR DA CENA DOS PONTOS)
     public static void choosePlayer() {
         System.out.print("Nickname -> ");
-        String nickname = input.next().trim();
-        player = getPlayerByNickname(nickname);
+        String nickname = input.next().trim(); // O utilizador insere o seu nickname
+        player = getPlayerByNickname(nickname); 
 
-        if (player != null) {
+        if (player != null) { // Caso o nickname (jogador) exista, é extraído o index referente ao mesmo, o que carateriza a seleção do jogador a ser utilizado
             if (players.contains(player)) {
                 playerID = players.indexOf(player);
             }
-            menu();
-        } else {
+            menu(); // Retrocede-se ao menu
+        } else { // Caso o nickname inserido não corresponda a nenhum jogador, é emitida uma mensagem de erro
             System.out.println("Não existe nenhum utilizador com o nickname inserido\n");
-            start();
+            start(); // Retrocede-se ao menu principal
         }
     }
 
@@ -154,38 +157,38 @@ public class Jogo {
         System.out.println("0 - Sair\n");
 
         System.out.print("Opção -> ");
-            while (!input.hasNextInt()) {
+            while (!input.hasNextInt()) { //É selecionada a opção desejada pelo utilizador
                 System.out.print("-> ");
                 input.next();
             }
             int option = input.nextInt();
             System.out.println("-----------");
 
-            switch (option) {
+            switch (option) { // Verifica qual a opção escolhida pelo utilizador
             case 1:
-                chooseDificulty();
+                chooseDificulty(); // Redireciona o utilizar para o menu de escolha da dificuldade do jogo a ser jogado
                 break;
             case 2:
-                //
+                // ! TODO !
                 break;
             case 3:
-                printPlayerScore(players.get(playerID));
+                printPlayerScore(players.get(playerID)); // Exibe as pontuações pessoais do utilizador
                 break;
             case 4:
-                printScore();
+                printScore(); // Exibe a pontuação geral dos jogadores 
                 break;
-            case 5:
+            case 5: // ! TODO !
                 System.out.println("Funcionalidade indisponivel. Obrigado");
                 menu();
                 break;
             case 6:
-                printHelp();
+                printHelp(); // O utilizador é redirecionado para um menu de ajuda à compreensão das diferentes siglas inerentes ao jogo
                 break;
             case 7:
-                start();
+                start(); // Retrocede-se ao menu principal
                 break;
             case 0:
-                System.exit(0);
+                System.exit(0); // O programa é finalizado
                 break;
             default:
                 //
@@ -206,8 +209,8 @@ public class Jogo {
         }
     }
 
-    //IMPRIME AJUDA PARA O JOGO - FEITO MAS FALTA COMENTARIO
-    public static void printHelp() {
+    //IMPRIME AJUDA PARA O JOGO
+    public static void printHelp() { // Exibe a legenda para as siglas do jogo
         System.out.println("Legenda:");
         System.out.println("A: Água");
         System.out.println("-: Desconhecido");
@@ -215,7 +218,7 @@ public class Jogo {
         System.out.println("B: Barco");
         System.out.println("-------------------");
 
-        //imprime as posições no tabuleiro
+        // Criação de um tabuleiro ilustrativo de tamanho 5x5
         System.out.println("Exemplo de Posições 5x5:\n");
         for (i = 0; i < 5; i++) {
             System.out.print("\t");
@@ -224,28 +227,28 @@ public class Jogo {
             }
             System.out.println();
         }
-        System.out.println("\nPara jogar introduza o tipo de casa (B) e em seguida a posição (2,3)");
+        System.out.println("\nPara jogar introduza o tipo de casa (B) e em seguida a posição (2,3)"); // Exibição de uma mensagem onde se explica o conceito de introdução de casas no tabuleiro ao jogador
         System.out.println("Prima enter para voltar ao menu principal");
         try {
-            System.in.read();
+            System.in.read(); // É lida a tecla premida pelo utilizador
         } catch (Exception e) {
         }
-        menu();
+        menu(); // Retrocede-se ao menu
     }
 
-    //IMPRIME AS PONTUAÇÕES - FEITO MAS FALTA COMENTARIO - REVER
+    //IMPRIME AS PONTUAÇÕES - REVER
     public static void printScore() {
         System.out.println("Pontuações Gerais");
-        players.forEach((n) -> System.out.println(n.getId() + "º - " + n.getNickname() + " - " + n.getScore().getPoints() + " pontos"));
+        players.forEach((n) -> System.out.println(n.getId() + "º - " + n.getNickname() + " - " + n.getScore().getPoints() + " pontos")); // É exibida no ecrã uma mensagem onde é referido o id, nickname e os pontos do utilizador
         System.out.println("Prima enter para voltar ao menu principal");
         try {
-            System.in.read();
-            menu();
+            System.in.read(); // É lida a tecla premida pelo utilizador
+            menu(); // Retrocede-se ao menu
         } catch (Exception e) {
         }
     }
 
-    //MENU PARA ESCOLHA DE DIFICULDADE - FEITO MAS FALTA COMENTARIO - REVER
+    //MENU PARA ESCOLHA DE DIFICULDADE - REVER
     public static void chooseDificulty() {
         System.out.println("Escolha a dificuldade:");
         System.out.println();
@@ -260,56 +263,56 @@ public class Jogo {
                 System.out.print("-> ");
                 input.next();
             }
-            int option = input.nextInt();
+            int option = input.nextInt(); // É escolhida uma opção pelo utilizador
             System.out.println("-----------");
 
-            switch (option) {
+            switch (option) { // Verificação da opção escolhida pelo utilizador
             case 1:
-                //
+                // ! TODO !
                 break;
-            case 2:
+            case 2: // Criação de um tabuleiro de jogo de dificuldade "Fácil"
                 SET_DIFFICULTY = DIFFICULTY_BOARD_EASY;
                 NUMBER_OF_ROWS=4;
                 NUMBER_OF_COLUMNS=4;
-                generateBoard();
+                generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 //setTimer(30)
-                players.get(playerID).getScore().setPoints(50);
+                players.get(playerID).getScore().setPoints(50); // Atribuição de 50 pontos iniciais ao jogador
                 break;
-            case 3:
+            case 3: // Criação de um tabuleiro de jogo de dificuldade "Médio"
                 SET_DIFFICULTY = DIFFICULTY_BOARD_MEDIUM;
                 NUMBER_OF_ROWS=6;
                 NUMBER_OF_COLUMNS=6;
-                generateBoard();
+                generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 //setTimer(90)
-                players.get(playerID).getScore().setPoints(100);
+                players.get(playerID).getScore().setPoints(100); // Atribuição de 100 pontos iniciais ao jogador
                 break;
-            case 4:
+            case 4: // Criação de um tabuleiro de jogo de dificuldade "Difícil"
                 SET_DIFFICULTY = DIFFICULTY_BOARD_HARD;
                 NUMBER_OF_ROWS=9;
                 NUMBER_OF_COLUMNS=9;
-                generateBoard();
+                generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 //setTimer(150)
-                players.get(playerID).getScore().setPoints(150);
+                players.get(playerID).getScore().setPoints(150); // Atribuição de 100 pontos iniciais ao jogador
                 break;
             case 0:
-                start();
+                start(); // Retrocede-se ao menu principal
                 break;
             default:
-                chooseDificulty();
+                chooseDificulty(); // Caso não seja selecionada nenhuma das opções disponíveis, é exibido novamente o menu de escolha de dificuldade
                 break;
         }
     }
 
-    //IMPRIME O TABULEIRO DE JOGO - FEITO MAS FALTA COMENTARIO
+    //IMPRIME O TABULEIRO DE JOGO
     public static void print() {
         System.out.println("\nTabuleiro de Jogo:");
-        for (i = 0; i < board.size(); i++) {
+        for (i = 0; i < board.size(); i++) { // Criação do tabuleiro de jogo
             System.out.print(board.get(i).toString() + " ");
-            if (board.get(i).getPosition().getColumn() == (SET_DIFFICULTY - 1)) {
+            if (board.get(i).getPosition().getColumn() == (SET_DIFFICULTY - 1)) { // É criado um tabuleiro correspondente à dificuldade selecionada
                 System.out.println();
             }
         }
-        play();
+        play(); 
     }
 
     //JOGADAS DO UTILIZADOR - \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\TODO
@@ -345,7 +348,7 @@ public class Jogo {
         //CASO PONHA NO SITIO ERRADO, PORQUITOS
     }
 
-    //DEFINE TODAS AS VARIAVEIS COM O SEU VALOR INICIAL - FEITO MAS FALTA COMENTARIO
+    //DEFINE TODAS AS VARIAVEIS COM O SEU VALOR INICIAL 
     public static void clearValues() {
         DIFFICULTY_BOARD_EASY = 5;
         DIFFICULTY_BOARD_MEDIUM = 7;
@@ -366,48 +369,48 @@ public class Jogo {
         player = null;
     }
 
-    //DEVOLVE A POSIÇÃO NO ARRAYLIST DADAS AS COORDENADAS E A CASA - FEITO MAS FALTA COMENTARIO - REVER
+    //DEVOLVE A POSIÇÃO NO ARRAYLIST DADAS AS COORDENADAS E A CASA - REVER
     public static int getIndexFromPlace(int x, int y, char indentifier) {
         int arrayNumber = -1;
-        for (i = 0; i < board.size(); i++) {
+        for (i = 0; i < board.size(); i++) { // Ciclo for que percorre as posições do tabuleiro
             if (board.get(i).getPosition().getRow() == x && board.get(i).getPosition().getColumn() == y && board.get(i).toString().equals("-")) {
                 arrayNumber = i; //verificar porque começa em 0
             }
         }
-        return arrayNumber;
+        return arrayNumber; // retorna o índice da coordenada e da casa inserida
     }
 
-    //VERIFICA SE EXISTE ALGUM JOGADOR COM O NICKNAME INTRODUZIDO - FEITO MAS FALTA COMENTARIO
+    //VERIFICA SE EXISTE ALGUM JOGADOR COM O NICKNAME INTRODUZIDO
     public static Jogador getPlayerByNickname(String nickname) {
-        for (Jogador playerObj : players) {
-            if (playerObj.getNickname().toLowerCase().trim().equals(nickname)) {
+        for (Jogador playerObj : players) { // Ciclo for que percorre a coleção de jogadores
+            if (playerObj.getNickname().toLowerCase().trim().equals(nickname)) { // Caso exista um jogador com o respetivo nickname, devolve-o
                 return playerObj;
             }
         }
-        return null;
+        return null; // Caso não exista, retorna o valor NULL
     }
 
-    //DEVOLVE A POSIÇÃO NO ARRAYLIST DADAS AS COORDENADAS - FEITO MAS FALTA COMENTARIO
+    //DEVOLVE A POSIÇÃO NO ARRAYLIST DADAS AS COORDENADAS
     public static int getIndex(int x, int y) {
         int arrayNumber = -1;
-        for (Casa boardObj : board) {
-            if (boardObj.getPosition().getRow() == x && boardObj.getPosition().getColumn() == y) {
-                arrayNumber = board.indexOf(boardObj);
+        for (Casa boardObj : board) { // Ciclo for que percorre as posições do tabuleiro
+            if (boardObj.getPosition().getRow() == x && boardObj.getPosition().getColumn() == y) { // Caso o objeto casa possua uma coordenada X e Y, guarda a posição dessa mesma casa
+                arrayNumber = board.indexOf(boardObj); // Variável onde é guardado o valor relativo à posição da casa
             }
         }
-        return arrayNumber;
+        return arrayNumber; // Retorna a posição no array da casa
     }
 
-    //DEVOLVE AS COORDENADAS (x) DADA A POSIÇÃO NO ARRAYLIST - FEITO MAS FALTA COMENTARIO
+    //DEVOLVE AS COORDENADAS (x) DADA A POSIÇÃO NO ARRAYLIST
     public static int getRowFromIndex(int arrayNumber) {
-        int position = board.get(arrayNumber).getPosition().getRow();
-        return position;
+        int position = board.get(arrayNumber).getPosition().getRow(); // Guarda a coordenada X referente à posição (casa) recebida por parâmetro pelo método (arrayNumber)
+        return position; // Retorna a coordenada guardada na variável position
     }
 
-    //DEVOLVE AS COORDENADAS (y) DADA A POSIÇÃO NO ARRAYLIST - FEITO MAS FALTA COMENTARIO
+    //DEVOLVE AS COORDENADAS (y) DADA A POSIÇÃO NO ARRAYLIST
     public static int getColumnFromIndex(int arrayNumber) {
-        int position = board.get(arrayNumber).getPosition().getColumn();
-        return position;
+        int position = board.get(arrayNumber).getPosition().getColumn(); // Guarda a coordenada Y referente à posição (casa) recebida por parâmetro pelo método (arrayNumber)
+        return position; // Retorna a coordenada guardada na variável position
     }
 
     //VALIDAR JOGADAS - \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\TODO
