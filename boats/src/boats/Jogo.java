@@ -489,48 +489,48 @@ public class Jogo {
         }
     }
 
-    //GERA O TABULEIRO DE JOGO - FEITO MAS FALTA COMENTARIO
+    //GERA O TABULEIRO DE JOGO
     public static void generateBoard() {
-        if (SET_DIFFICULTY == DIFFICULTY_BOARD_EASY) {
+        if (SET_DIFFICULTY == DIFFICULTY_BOARD_EASY) { // Caso a dificuldade definida seja "Fácil", cria um tabuleiro de jogo com base nas propriedades dessa mesma dificuldade
             for (i = 0; i < DIFFICULTY_BOARD_EASY; i++) {
                 for (j = 0; j < DIFFICULTY_BOARD_EASY; j++) {
-                    board.add(new Desconhecido(i, j));
-                    unknown.add(getIndex(i, j));
+                    board.add(new Desconhecido(i, j)); // Adiciona posições do tipo "Desconhecido" ao tabuleiro, com as suas respetivas coordenadas
+                    unknown.add(getIndex(i, j)); // Atribuição do estado "Desconhecido" à posição referente às cordenadas anteriores
                 }
             }
         }
 
-        if (SET_DIFFICULTY == DIFFICULTY_BOARD_MEDIUM) {
+        if (SET_DIFFICULTY == DIFFICULTY_BOARD_MEDIUM) { // Caso a dificuldade definida seja "Médio", cria um tabuleiro de jogo com base nas propriedades dessa mesma dificuldade
             for (i = 0; i < DIFFICULTY_BOARD_MEDIUM; i++) {
                 for (j = 0; j < DIFFICULTY_BOARD_MEDIUM; j++) {
-                    board.add(new Desconhecido(i, j));
-                    unknown.add(getIndex(i, j));
+                    board.add(new Desconhecido(i, j)); // Adiciona posições do tipo "Desconhecido" ao tabuleiro, com as suas respetivas coordenadas
+                    unknown.add(getIndex(i, j)); // Atribuição do estado "Desconhecido" à posição referente às cordenadas anteriores
                 }
             }
         }
 
-        if (SET_DIFFICULTY == DIFFICULTY_BOARD_HARD) {
+        if (SET_DIFFICULTY == DIFFICULTY_BOARD_HARD) { // Caso a dificuldade definida seja "Difícil", cria um tabuleiro de jogo com base nas propriedades dessa mesma dificuldade
             for (i = 0; i < DIFFICULTY_BOARD_HARD; i++) {
                 for (j = 0; j < DIFFICULTY_BOARD_HARD; j++) {
-                    board.add(new Desconhecido(i, j));
-                    unknown.add(getIndex(i, j));
+                    board.add(new Desconhecido(i, j)); // Adiciona posições do tipo "Desconhecido" ao tabuleiro, com as suas respetivas coordenadas
+                    unknown.add(getIndex(i, j)); // Atribuição do estado "Desconhecido" à posição referente às cordenadas anteriores
                 }
             }
         }
-        placeDock();
-        print();
+        placeDock(); // Colocação de portos no tabuleiro de jogo
+        print(); // Exibe o tabuleiro de jogo
     }
 
-    //COLOCA OS PORTOS NO TABULEIRO DE JOGO - FEITO MAS FALTA COMENTARIO - REVER
+    //COLOCA OS PORTOS NO TABULEIRO DE JOGO - REVER
     public static void placeDock() { // REVER
-        while (docks.size() < SET_DIFFICULTY) {
-            int random = new Random().nextInt(board.size());
-            if (!docks.contains(random)) {
+        while (docks.size() < SET_DIFFICULTY) { // Enquanto a quantidade de docas no tabuleiro for menor do que a pré-estabelecida pela dificuldade, adiciona uma doca numa posição aleatória
+            int random = new Random().nextInt(board.size()); // Adição de uma doca aleatória
+            if (!docks.contains(random)) { 
                 docks.add(random);
             }
         }
 
-        for (i = 0; i < SET_DIFFICULTY; i++) {
+        for (i = 0; i < SET_DIFFICULTY; i++) { 
             board.set(docks.get(i), new Porto(getRowFromIndex(docks.get(i)), getColumnFromIndex(docks.get(i))));
         }
 
@@ -540,7 +540,7 @@ public class Jogo {
     //transforma em agua no fim do jogo
     public static void placeRemainWater() {
         for (i = 0; i < board.size(); i++) {
-            if (board.get(i).toString().equals("-")) {
+            if (board.get(i).toString().equals("-")) { 
                 board.set(i, new Agua(board.get(i).getPosition().getRow(), board.get(i).getPosition().getColumn()));
             }
         }
