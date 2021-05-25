@@ -525,7 +525,7 @@ public class Jogo {
     public static void placeDock() { // REVER
         while (docks.size() < SET_DIFFICULTY) { // Enquanto a quantidade de docas no tabuleiro for menor do que a pré-estabelecida pela dificuldade, adiciona uma doca numa posição aleatória
             int random = new Random().nextInt(board.size()); // Adição de uma doca aleatória
-            if (!docks.contains(random)) { 
+            if (!docks.contains(random)) { // Adiciona uma doca aleatória caso ainda não exista nenhuma
                 docks.add(random);
             }
         }
@@ -539,31 +539,31 @@ public class Jogo {
 
     //transforma em agua no fim do jogo
     public static void placeRemainWater() {
-        for (i = 0; i < board.size(); i++) {
+        for (i = 0; i < board.size(); i++) { // Ciclo for que cria objetos do tipo "Água" no tabuleiro
             if (board.get(i).toString().equals("-")) { 
                 board.set(i, new Agua(board.get(i).getPosition().getRow(), board.get(i).getPosition().getColumn()));
             }
         }
     }
     
-    //COLOCA A AGUA NO TABULEIRO DE JOGO - FEITO MAS FALTA COMENTARIO - REVER
+    //COLOCA A AGUA NO TABULEIRO DE JOGO - REVER
     public static void placeWater(int arrayNumber){
-        if (board.get(arrayNumber).toString().equals("P") || board.get(arrayNumber).toString().equals("B") || board.get(arrayNumber).toString().equals("A")) {
+        if (board.get(arrayNumber).toString().equals("P") || board.get(arrayNumber).toString().equals("B") || board.get(arrayNumber).toString().equals("A")) { // Caso a posição verificada já possua um estado que não seja "Desconhecido, é emitida uma mensagem
             System.out.println("Não pode colocar agua num lugar que não se encontra desconhecido.");
         } else {
-            board.set(arrayNumber, new Agua(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn()));
-            water.add(arrayNumber);
+            board.set(arrayNumber, new Agua(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Água", com as coordenadas correspondentes à posição a ser alterada
+            water.add(arrayNumber); // Adição do objeto do tipo "Água" no array que guarda as posições do tipo "Água"
         }
     }
 
     //COLOCA OS BARCOS NO TABULEIRO DE JOGO - \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\TODO
     public static void placeBoat(int arrayNumber) {
-        if (board.get(arrayNumber).toString().equals("P")) {
+        if (board.get(arrayNumber).toString().equals("P")) { // Caso a posição verificada já possua o estado "Porto", emite uma mensagem de erro
             System.out.println("Não pode colocar um barco onde está um porto de atracagem");
         } else {
-            board.set(arrayNumber, new Barco(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn()));
-            boat.add(arrayNumber);
-        }
+            board.set(arrayNumber, new Barco(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Barco", com as coordenadas correspondentes à posição a ser alterada
+            boat.add(arrayNumber); // Adição do objeto do tipo "Barco" no array que guarda as posições do tipo "Barco"
+            
         /*if (board.get(arrayNumber).toString().equals("-") || board.get(arrayNumber).toString().equals("A")) {
             //validar se pode ser posto naquele sitio
             //caso haja um porto à esquerda
