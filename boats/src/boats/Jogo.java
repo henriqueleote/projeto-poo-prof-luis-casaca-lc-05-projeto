@@ -25,14 +25,14 @@ public class Jogo {
     static int NUMBER_OF_ROWS = 0;
     static int NUMBER_OF_COLUMNS = 0;
     static int i, j, playerCount;
-    static ArrayList<Casa> board = new ArrayList<Casa>();
-    static ArrayList<Integer> forbiden = new ArrayList<Integer>();
-    static ArrayList<Jogador> players = new ArrayList<Jogador>();
-    static ArrayList<Integer> points = new ArrayList<Integer>();
-    static ArrayList<Integer> docks = new ArrayList<Integer>();
-    static ArrayList<Integer> water = new ArrayList<Integer>();
-    static ArrayList<Integer> boat = new ArrayList<Integer>();
-    static ArrayList<Integer> unknown = new ArrayList<Integer>();
+    static List<Casa> board = new ArrayList<Casa>();
+    static List<Integer> forbiden = new ArrayList<Integer>();
+    static List<Jogador> players = new ArrayList<Jogador>();
+    static List<Integer> points = new ArrayList<Integer>();
+    static List<Integer> docks = new ArrayList<Integer>();
+    static List<Integer> water = new ArrayList<Integer>();
+    static List<Integer> boat = new ArrayList<Integer>();
+    static List<Integer> unknown = new ArrayList<Integer>();
     static Regras rules = new Regras();
     static Scanner input = new Scanner(System.in);
     static int playerID;
@@ -111,7 +111,7 @@ public class Jogo {
         System.out.print("Nickname -> ");
         String nickname = input.next().trim(); // Leitura do nickname digitado pelo utilizador
         player = getPlayerByNickname(nickname); // Associação do jogador ao nickname
-        
+
         if (player != null) { // Caso o nickname pretendido pelo utilizador já esteja registado na aplicação, é emitida uma mensagem de erro 
             if (players.contains(player)) {
                 System.out.println("O nickname inserido já se encontra em uso\n");
@@ -128,7 +128,7 @@ public class Jogo {
     public static void choosePlayer() {
         System.out.print("Nickname -> ");
         String nickname = input.next().trim(); // O utilizador insere o seu nickname
-        player = getPlayerByNickname(nickname); 
+        player = getPlayerByNickname(nickname);
 
         if (player != null) { // Caso o nickname (jogador) exista, é extraído o index referente ao mesmo, o que carateriza a seleção do jogador a ser utilizado
             if (players.contains(player)) {
@@ -157,14 +157,14 @@ public class Jogo {
         System.out.println("0 - Sair\n");
 
         System.out.print("Opção -> ");
-            while (!input.hasNextInt()) { //É selecionada a opção desejada pelo utilizador
-                System.out.print("-> ");
-                input.next();
-            }
-            int option = input.nextInt();
-            System.out.println("-----------");
+        while (!input.hasNextInt()) { //É selecionada a opção desejada pelo utilizador
+            System.out.print("-> ");
+            input.next();
+        }
+        int option = input.nextInt();
+        System.out.println("-----------");
 
-            switch (option) { // Verifica qual a opção escolhida pelo utilizador
+        switch (option) { // Verifica qual a opção escolhida pelo utilizador
             case 1:
                 chooseDificulty(); // Redireciona o utilizar para o menu de escolha da dificuldade do jogo a ser jogado
                 break;
@@ -259,37 +259,37 @@ public class Jogo {
         System.out.println("0 - Voltar\n");
 
         System.out.print("Opção -> ");
-            while (!input.hasNextInt()) {
-                System.out.print("-> ");
-                input.next();
-            }
-            int option = input.nextInt(); // É escolhida uma opção pelo utilizador
-            System.out.println("-----------");
+        while (!input.hasNextInt()) {
+            System.out.print("-> ");
+            input.next();
+        }
+        int option = input.nextInt(); // É escolhida uma opção pelo utilizador
+        System.out.println("-----------");
 
-            switch (option) { // Verificação da opção escolhida pelo utilizador
+        switch (option) { // Verificação da opção escolhida pelo utilizador
             case 1:
                 // ! TODO !
                 break;
             case 2: // Criação de um tabuleiro de jogo de dificuldade "Fácil"
                 SET_DIFFICULTY = DIFFICULTY_BOARD_EASY;
-                NUMBER_OF_ROWS=4;
-                NUMBER_OF_COLUMNS=4;
+                NUMBER_OF_ROWS = 4;
+                NUMBER_OF_COLUMNS = 4;
                 generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 //setTimer(30)
                 players.get(playerID).getScore().setPoints(50); // Atribuição de 50 pontos iniciais ao jogador
                 break;
             case 3: // Criação de um tabuleiro de jogo de dificuldade "Médio"
                 SET_DIFFICULTY = DIFFICULTY_BOARD_MEDIUM;
-                NUMBER_OF_ROWS=6;
-                NUMBER_OF_COLUMNS=6;
+                NUMBER_OF_ROWS = 6;
+                NUMBER_OF_COLUMNS = 6;
                 generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 //setTimer(90)
                 players.get(playerID).getScore().setPoints(100); // Atribuição de 100 pontos iniciais ao jogador
                 break;
             case 4: // Criação de um tabuleiro de jogo de dificuldade "Difícil"
                 SET_DIFFICULTY = DIFFICULTY_BOARD_HARD;
-                NUMBER_OF_ROWS=9;
-                NUMBER_OF_COLUMNS=9;
+                NUMBER_OF_ROWS = 9;
+                NUMBER_OF_COLUMNS = 9;
                 generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 //setTimer(150)
                 players.get(playerID).getScore().setPoints(150); // Atribuição de 100 pontos iniciais ao jogador
@@ -308,11 +308,11 @@ public class Jogo {
         System.out.println("\nTabuleiro de Jogo:");
         for (i = 0; i < board.size(); i++) { // Criação do tabuleiro de jogo
             System.out.print(board.get(i).toString() + " ");
-            if (board.get(i).getPosition().getColumn() == (SET_DIFFICULTY - 1)) { // É criado um tabuleiro correspondente à dificuldade selecionada
+            if (board.get(i).getPosition().getColumn() == (NUMBER_OF_COLUMNS)) { // É criado um tabuleiro correspondente à dificuldade selecionada
                 System.out.println();
             }
         }
-        play(); 
+        play();
     }
 
     //JOGADAS DO UTILIZADOR - \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\TODO
@@ -320,29 +320,29 @@ public class Jogo {
         System.out.println("-----------");
         //por condição de caso ele escreva -1, acaba o jogo, x termina e por assim adiante
         System.out.print("Campo (A ou B) -> ");
-        while (!input.equals("A") || !input.equals("B") || input.toString().length()!=1) {
-                System.out.print("-> ");
-                input.next().trim().charAt(1);
-            }
+        while (!input.equals("A") || !input.equals("B") || input.toString().length() != 1) {
+            System.out.print("-> ");
+            input.next().trim().charAt(1);
+        }
         String move = input.next().trim();
         System.out.print("Linha (x) -> ");
-        while (!input.hasNextInt() || input.nextInt()>=0 || input.nextInt()<=NUMBER_OF_ROWS) {
-                System.out.print("-> ");
-                input.next().charAt(1);
-            }
+        while (!input.hasNextInt() || input.nextInt() >= 0 || input.nextInt() <= NUMBER_OF_ROWS) {
+            System.out.print("-> ");
+            input.next().charAt(1);
+        }
         int x = input.nextInt();
         System.out.print("Coluna (y) -> ");
-        while (!input.hasNextInt() || input.nextInt()>=0 || input.nextInt()<=NUMBER_OF_ROWS) {
-                System.out.print("-> ");
-                input.next().charAt(1);
-            }
+        while (!input.hasNextInt() || input.nextInt() >= 0 || input.nextInt() <= NUMBER_OF_ROWS) {
+            System.out.print("-> ");
+            input.next().charAt(1);
+        }
         int y = input.nextInt();
-        int position = getIndex(x,y);
+        int position = getIndex(x, y);
         //FALTAM VALIDAÇÕES
-        if(move.equals("B")){
+        if (move.equals("B")) {
             placeBoat(position);
         }
-        if(move.equals("A")){
+        if (move.equals("A")) {
             placeWater(position);
         }
         //CASO PONHA NO SITIO ERRADO, PORQUITOS
@@ -354,6 +354,8 @@ public class Jogo {
         DIFFICULTY_BOARD_MEDIUM = 7;
         DIFFICULTY_BOARD_HARD = 10;
         SET_DIFFICULTY = 0;
+        NUMBER_OF_ROWS = 0;
+        NUMBER_OF_COLUMNS = 0;
         i = 0;
         j = 0;
         playerCount = 0;
@@ -518,36 +520,63 @@ public class Jogo {
             }
         }
         placeDock(); // Colocação de portos no tabuleiro de jogo
-        print(); // Exibe o tabuleiro de jogo
     }
 
     //COLOCA OS PORTOS NO TABULEIRO DE JOGO - REVER
     public static void placeDock() { // REVER
         while (docks.size() < SET_DIFFICULTY) { // Enquanto a quantidade de docas no tabuleiro for menor do que a pré-estabelecida pela dificuldade, adiciona uma doca numa posição aleatória
             int random = new Random().nextInt(board.size()); // Adição de uma doca aleatória
-            if (!docks.contains(random)) { // Adiciona uma doca aleatória caso ainda não exista nenhuma
-                docks.add(random);
+            if (!docks.contains(random)) { // Adiciona uma doca aleatória caso ainda não exista nenhuma                
+                if(checkBounds(getRowFromIndex(random) - 1, getColumnFromIndex(random) - 1) && checkEmpty(getIndex(getRowFromIndex(random) - 1, getColumnFromIndex(random) - 1)))
+                    if(checkBounds(getRowFromIndex(random) - 1, getColumnFromIndex(random)) && checkEmpty(getIndex(getRowFromIndex(random) - 1, getColumnFromIndex(random))))
+                        if(checkBounds(getRowFromIndex(random) - 1, getColumnFromIndex(random) + 1) && checkEmpty(getIndex(getRowFromIndex(random) - 1, getColumnFromIndex(random) + 1)))
+                            if(checkBounds(getRowFromIndex(random), getColumnFromIndex(random) - 1) && checkEmpty(getIndex(getRowFromIndex(random), getColumnFromIndex(random) - 1)))
+                                if(checkBounds(getRowFromIndex(random), getColumnFromIndex(random) + 1) && checkEmpty(getIndex(getRowFromIndex(random), getColumnFromIndex(random) + 1)))
+                                    if(checkBounds(getRowFromIndex(random) + 1, getColumnFromIndex(random) - 1) && checkEmpty(getIndex(getRowFromIndex(random) + 1, getColumnFromIndex(random) - 1)))
+                                        if(checkBounds(getRowFromIndex(random) + 1, getColumnFromIndex(random)) && checkEmpty(getIndex(getRowFromIndex(random) + 1, getColumnFromIndex(random))))
+                                            if(checkBounds(getRowFromIndex(random) + 1, getColumnFromIndex(random) + 1) && checkEmpty(getIndex(getRowFromIndex(random) + 1, getColumnFromIndex(random) + 1)))
+                                                docks.add(random);
             }
         }
 
-        for (i = 0; i < SET_DIFFICULTY; i++) { 
+        for (i = 0; i < SET_DIFFICULTY; i++) {
             board.set(docks.get(i), new Porto(getRowFromIndex(docks.get(i)), getColumnFromIndex(docks.get(i))));
         }
 
+        print(); // Exibe o tabuleiro de jogo
+
         //docks.forEach((n) -> System.out.println(n));  //DEVOLVE PARA O ECRÃ AS POSIÇÕES DOS PORTOS NUM ARRAYLIST
+    }
+
+    public static boolean checkEmpty(int arrayNumber) {
+        boolean state = false;
+        if (board.get(arrayNumber).toString().equals("-")) {
+            state = true;
+        } else {
+            state = false;
+        }
+        return state;
+    }
+
+    public static boolean checkBounds(int x, int y) {
+        if (x >= 0 && x < NUMBER_OF_ROWS && y >= 0 && y < NUMBER_OF_COLUMNS) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //transforma em agua no fim do jogo
     public static void placeRemainWater() {
         for (i = 0; i < board.size(); i++) { // Ciclo for que cria objetos do tipo "Água" no tabuleiro
-            if (board.get(i).toString().equals("-")) { 
+            if (board.get(i).toString().equals("-")) {
                 board.set(i, new Agua(board.get(i).getPosition().getRow(), board.get(i).getPosition().getColumn()));
             }
         }
     }
-    
+
     //COLOCA A AGUA NO TABULEIRO DE JOGO - REVER
-    public static void placeWater(int arrayNumber){
+    public static void placeWater(int arrayNumber) {
         if (board.get(arrayNumber).toString().equals("P") || board.get(arrayNumber).toString().equals("B") || board.get(arrayNumber).toString().equals("A")) { // Caso a posição verificada já possua um estado que não seja "Desconhecido, é emitida uma mensagem
             System.out.println("Não pode colocar agua num lugar que não se encontra desconhecido.");
         } else {
@@ -563,8 +592,8 @@ public class Jogo {
         } else {
             board.set(arrayNumber, new Barco(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Barco", com as coordenadas correspondentes à posição a ser alterada
             boat.add(arrayNumber); // Adição do objeto do tipo "Barco" no array que guarda as posições do tipo "Barco"
-            
-        /*if (board.get(arrayNumber).toString().equals("-") || board.get(arrayNumber).toString().equals("A")) {
+
+            /*if (board.get(arrayNumber).toString().equals("-") || board.get(arrayNumber).toString().equals("A")) {
             //validar se pode ser posto naquele sitio
             //caso haja um porto à esquerda
             if (board.get(arrayNumber).getPosition().getRow() > 0 && board.get(arrayNumber).getPosition().getColumn() - 1 > 0 && board.get(arrayNumber).toString().equals("-")) {
@@ -584,8 +613,8 @@ public class Jogo {
                 print();
             }
         }*/     //falta rever as validações - tratar dos pontos caso erre na casa
+        }
     }
-}
 
 //    public void test(){
 //                    if (board.get(arrayNumber).getPosition().getRow()-1 >= board.size() && board.get(i).getPosition().getColumn() - 1 >= board.size()) {
@@ -617,3 +646,4 @@ public class Jogo {
 //                }
 //    }
 //}
+}
