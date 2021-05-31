@@ -10,12 +10,22 @@ package boats;
  * @author CucasPC
  */
 public class Barco extends Casa{
-    public Barco(int row, int column){
-        super(row,column);
+
+    char indentifier;
+    
+    public Barco(int x, int y){
+        super(x,y);
+        position = new Posicao(x,y);
+        indentifier = 'B';
     }
     
+    public char getIndentifier(){
+        return indentifier;
+    }
+
     @Override
     public String toString(){
-        return(super.toString() + "Tipo: Barco");
+        return Character.toString(getIndentifier());
     }
+    
 }

@@ -28,7 +28,6 @@ public class Jogo {
     static List<Casa> board = new ArrayList<Casa>();
     static List<Integer> forbiden = new ArrayList<Integer>();
     static List<Jogador> players = new ArrayList<Jogador>();
-    static List<Integer> points = new ArrayList<Integer>();
     static List<Integer> docks = new ArrayList<Integer>();
     static List<Integer> water = new ArrayList<Integer>();
     static List<Integer> boat = new ArrayList<Integer>();
@@ -103,7 +102,62 @@ public class Jogo {
                     break;
             }
         }
+    }
+    
+    
+        //IMPRIME O MENU PRINCIPAL - FEITO MAS FALTA COMENTARIO
+    public static void givePoints() {
+        System.out.println("Escolha uma opção");
+        System.out.println();
 
+            System.out.println("1 - Falhar agua");
+            System.out.println("2 - Falhar barco");
+            System.out.println("3 - Tempo de jogo inferior ao tempo base");
+            System.out.println("4 - Tempo de jogo para além do tempo base ");
+            System.out.println("5 - Mais que uma tentativa de valiação");
+            System.out.println("6 - Apenas uma validação ");
+            System.out.println("7 - Mostrar pontos");
+            System.out.println("8 - Escolher jogador");
+
+            //Exibe a opção escolhida pelo utilizador
+            System.out.print("Opção -> ");
+            while (!input.hasNextInt()) {
+                System.out.print("-> ");
+                input.next();
+            }
+            int option = input.nextInt();
+            System.out.println("-----------");
+
+            //Consoante a opção escolhida, é criado um novo jogador ou é terminado o programa
+            switch (option) {
+                case 1:
+                    players.get(playerID).getScore().missedWater();
+                    break;
+                case 2:
+                    players.get(playerID).getScore().missedBoat();
+                    break;
+                case 3:
+                    players.get(playerID).getScore().minusTime(5);
+                    break;
+                case 4:
+                    players.get(playerID).getScore().plusTime(6);
+                    break;
+                case 5:
+                    players.get(playerID).getScore().missedAttempts(8);
+                    break;
+                case 6:
+                    players.get(playerID).getScore().singleCheck();
+                    break;
+                case 7:
+                    System.out.println(players.get(playerID).getScore().getPoints()); // Atribuição de 50 pontos iniciais ao jogador
+                    break;
+                case 8:
+                    choosePlayer();
+                    break;
+                default:
+                    start(); // no caso de não ser escolhida nenhuma das opções facultadas ao utilizador, volta ao menu principal
+                    break;
+            }
     }
 
     //CRIA UM JOGADOR - REVER JUST IN CASE (TRATAR DA CENA DOS PONTOS)
@@ -231,8 +285,7 @@ public class Jogo {
         System.out.println("Prima enter para voltar ao menu principal");
         try {
             System.in.read(); // É lida a tecla premida pelo utilizador
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {}
         menu(); // Retrocede-se ao menu
     }
 
@@ -298,7 +351,7 @@ public class Jogo {
                 start(); // Retrocede-se ao menu principal
                 break;
             default:
-                chooseDificulty(); // Caso não seja selecionada nenhuma das opções disponíveis, é exibido novamente o menu de escolha de dificuldade
+                chooseDificulty(); // Caso não seja selecionada nenhuma das opções disponíveis, é exibido novamente o menu de  escolha de dificuldade
                 break;
         }
     }
@@ -362,7 +415,6 @@ public class Jogo {
         board.clear();
         forbiden.clear();
         players.clear();
-        points.clear();
         docks.clear();
         water.clear();
         boat.clear();

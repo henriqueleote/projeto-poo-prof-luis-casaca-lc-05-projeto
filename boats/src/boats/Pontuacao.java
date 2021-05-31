@@ -35,8 +35,32 @@ public class Pontuacao {
         this.high = high;
     }
     
+    public void missedWater(){
+        points-=2;
+    }
+    
+    public void missedBoat(){
+        points-=5;
+    }
+    
+    public void missedAttempts(int attempts){
+        points-=(attempts*10);
+    }
+    
+    public void plusTime(int seconds){
+        points-=(seconds*1);
+    }
+    
+    public void minusTime(int seconds){
+        points+=(seconds*1);
+    }
+    
+    public void singleCheck(){
+        points+=20;
+    }
+    
     public String toString(){
-        return "\nPontos: " + getPoints() + "\nRecord: " + getHigh();
+        return "\nPontos: " + getPoints() + "\nRecorde: " + getHigh();
     }
    
     public void gameEndVerification(int points){
