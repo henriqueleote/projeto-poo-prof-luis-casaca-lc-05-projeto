@@ -5,6 +5,9 @@
  */
 package boats;
 
+import static boats.Jogo.menu;
+import static boats.Jogo.players;
+
 /**
  *
  * @author CucasPC
@@ -57,6 +60,32 @@ public class Pontuacao {
     
     public void singleCheck(){
         points+=20;
+    }
+    
+        //IMPRIME AS PONTUAÇÕES - REVER
+    public static void printScore() {
+        System.out.println("Pontuações Gerais");
+        players.forEach((n) -> System.out.println(n.getId() + "º - " + n.getNickname() + " - " + n.getScore().getPoints() + " pontos")); // É exibida no ecrã uma mensagem onde é referido o id, nickname e os pontos do utilizador
+        System.out.println("Prima enter para voltar ao menu principal");
+        try {
+            System.in.read(); // É lida a tecla premida pelo utilizador
+            menu(); // Retrocede-se ao menu
+        } catch (Exception e) {
+        }
+    }
+
+    
+    //IMPRIME OS PONTOS DO JOGADOR - ///////////////////////////////////////////TODO
+    public static void printPlayerScore(Jogador player) {
+        System.out.println("Pontuações de " + player.getNickname());
+        //System.out.print("Pontuações Geral " + player.getNickname()); TODO
+        System.out.println("Nivel X - " + player.getScore().getPoints() + " pontos");
+        System.out.println("Prima enter para voltar ao menu principal");
+        try {
+            System.in.read();
+            menu();
+        } catch (Exception e) {
+        }
     }
     
     public String toString(){

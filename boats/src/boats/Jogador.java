@@ -5,6 +5,14 @@
  */
 package boats;
 
+import static boats.Jogo.input;
+import static boats.Jogo.menu;
+import static boats.Jogo.player;
+import static boats.Jogo.playerCount;
+import static boats.Jogo.playerID;
+import static boats.Jogo.players;
+import static boats.Jogo.start;
+
 /**
  *
  * @author CucasPC
@@ -48,6 +56,51 @@ public class Jogador {
     
     public void setPlayer(Jogador player){
         this.player=player;
+    }
+    
+        //VERIFICA SE EXISTE ALGUM JOGADOR COM O NICKNAME INTRODUZIDO
+    public static Jogador getPlayerByNickname(String nickname) {
+        for (Jogador playerObj : players) { // Ciclo for que percorre a coleção de jogadores
+            if (playerObj.getNickname().toLowerCase().trim().equals(nickname)) { // Caso exista um jogador com o respetivo nickname, devolve-o
+                return playerObj;
+            }
+        }
+        return null; // Caso não exista, retorna o valor NULL
+    }
+    
+        //CRIA UM JOGADOR - REVER JUST IN CASE (TRATAR DA CENA DOS PONTOS)
+    public static void createPlayer() {
+        System.out.print("Nickname -> ");
+        String nickname = input.next().trim(); // Leitura do nickname digitado pelo utilizador
+        player = getPlayerByNickname(nickname); // Associação do jogador ao nickname
+
+        if (player != null) { // Caso o nickname pretendido pelo utilizador já esteja registado na aplicação, é emitida uma mensagem de erro 
+            if (players.contains(player)) {
+                System.out.println("O nickname inserido já se encontra em uso\n");
+            }
+        } else { // Caso o nickname pretendido pelo utilizador ainda não exista em utilização, é criado um novo jogador com o respetivo nickname associado
+            players.add(new Jogador(playerCount, nickname, 0));
+            playerID = players.get(playerCount).getId();
+            playerCount++;
+            menu(); // Retrocede-se ao menu
+        }
+    }
+
+    //ESCOLHE O JOGADOR - REVER JUST IN CASE (TRATAR DA CENA DOS PONTOS)
+    public static void choosePlayer() {
+        System.out.print("Nickname -> ");
+        String nickname = input.next().trim(); // O utilizador insere o seu nickname
+        player = getPlayerByNickname(nickname);
+
+        if (player != null) { // Caso o nickname (jogador) exista, é extraído o index referente ao mesmo, o que carateriza a seleção do jogador a ser utilizado
+            if (players.contains(player)) {
+                playerID = players.indexOf(player);
+            }
+            menu(); // Retrocede-se ao menu
+        } else { // Caso o nickname inserido não corresponda a nenhum jogador, é emitida uma mensagem de erro
+            System.out.println("Não existe nenhum utilizador com o nickname inserido\n");
+            start(); // Retrocede-se ao menu principal
+        }
     }
     
     @Override
