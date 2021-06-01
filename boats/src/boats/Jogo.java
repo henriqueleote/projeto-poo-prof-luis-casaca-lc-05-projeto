@@ -36,6 +36,8 @@ public class Jogo {
     public static Scanner input = new Scanner(System.in);
     public static int playerID;
     public static Jogador player;
+    public static Tabuleiro tabuleiro;
+    public static Pontuacao pontuacao;
 
     //MAIN
     public static void main(String[] args) {
@@ -65,7 +67,7 @@ public class Jogo {
             //Consoante a opção escolhida, é criado um novo jogador ou é terminado o programa
             switch (option) {
                 case 1:
-                    createPlayer();
+                    player.createPlayer();
                     break;
                 case 0:
                     System.exit(0);
@@ -89,10 +91,10 @@ public class Jogo {
 
             switch (option) {
                 case 1:
-                    createPlayer();
+                    player.createPlayer();
                     break;
                 case 2:
-                    choosePlayer();
+                    player.choosePlayer();
                     break;
                 case 0:
                     System.exit(0);
@@ -129,16 +131,16 @@ public class Jogo {
 
         switch (option) { // Verifica qual a opção escolhida pelo utilizador
             case 1:
-                chooseDificulty(); // Redireciona o utilizar para o menu de escolha da dificuldade do jogo a ser jogado
+                tabuleiro.chooseDificulty(); // Redireciona o utilizar para o menu de escolha da dificuldade do jogo a ser jogado
                 break;
             case 2:
                 // ! TODO !
                 break;
             case 3:
-                printPlayerScore(players.get(playerID)); // Exibe as pontuações pessoais do utilizador
+                pontuacao.printPlayerScore(players.get(playerID)); // Exibe as pontuações pessoais do utilizador
                 break;
             case 4:
-                printScore(); // Exibe a pontuação geral dos jogadores 
+                pontuacao.printScore(); // Exibe a pontuação geral dos jogadores 
                 break;
             case 5: // ! TODO !
                 System.out.println("Funcionalidade indisponivel. Obrigado");
@@ -223,7 +225,7 @@ public class Jogo {
             input.next().charAt(1);
         }
         int y = input.nextInt();
-        int position = getIndex(x, y);
+        int position = tabuleiro.getIndex(x, y);
         //FALTAM VALIDAÇÕES
         if (move.equals("B")) {
             placeBoat(position);
@@ -261,20 +263,20 @@ public class Jogo {
         while (docks.size() < SET_DIFFICULTY) { // Enquanto a quantidade de docas no tabuleiro for menor do que a pré-estabelecida pela dificuldade, adiciona uma doca numa posição aleatória
             int random = new Random().nextInt(board.size()); // Adição de uma doca aleatória
             if (!docks.contains(random)) { // Adiciona uma doca aleatória caso ainda não exista nenhuma                
-                if(checkBounds(getRowFromIndex(random) - 1, getColumnFromIndex(random) - 1) && checkEmpty(getIndex(getRowFromIndex(random) - 1, getColumnFromIndex(random) - 1)))
-                    if(checkBounds(getRowFromIndex(random) - 1, getColumnFromIndex(random)) && checkEmpty(getIndex(getRowFromIndex(random) - 1, getColumnFromIndex(random))))
-                        if(checkBounds(getRowFromIndex(random) - 1, getColumnFromIndex(random) + 1) && checkEmpty(getIndex(getRowFromIndex(random) - 1, getColumnFromIndex(random) + 1)))
-                            if(checkBounds(getRowFromIndex(random), getColumnFromIndex(random) - 1) && checkEmpty(getIndex(getRowFromIndex(random), getColumnFromIndex(random) - 1)))
-                                if(checkBounds(getRowFromIndex(random), getColumnFromIndex(random) + 1) && checkEmpty(getIndex(getRowFromIndex(random), getColumnFromIndex(random) + 1)))
-                                    if(checkBounds(getRowFromIndex(random) + 1, getColumnFromIndex(random) - 1) && checkEmpty(getIndex(getRowFromIndex(random) + 1, getColumnFromIndex(random) - 1)))
-                                        if(checkBounds(getRowFromIndex(random) + 1, getColumnFromIndex(random)) && checkEmpty(getIndex(getRowFromIndex(random) + 1, getColumnFromIndex(random))))
-                                            if(checkBounds(getRowFromIndex(random) + 1, getColumnFromIndex(random) + 1) && checkEmpty(getIndex(getRowFromIndex(random) + 1, getColumnFromIndex(random) + 1)))
+                if(checkBounds(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random) - 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random) - 1)))
+                    if(checkBounds(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random)) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random))))
+                        if(checkBounds(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random) + 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random) + 1)))
+                            if(checkBounds(tabuleiro.getRowFromIndex(random), tabuleiro.getColumnFromIndex(random) - 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random), tabuleiro.getColumnFromIndex(random) - 1)))
+                                if(checkBounds(tabuleiro.getRowFromIndex(random), tabuleiro.getColumnFromIndex(random) + 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random), tabuleiro.getColumnFromIndex(random) + 1)))
+                                    if(checkBounds(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random) - 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random) - 1)))
+                                        if(checkBounds(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random)) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random))))
+                                            if(checkBounds(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random) + 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random) + 1)))
                                                 docks.add(random);
             }
         }
 
         for (i = 0; i < SET_DIFFICULTY; i++) {
-            board.set(docks.get(i), new Porto(getRowFromIndex(docks.get(i)), getColumnFromIndex(docks.get(i))));
+            board.set(docks.get(i), new Porto(tabuleiro.getRowFromIndex(docks.get(i)), tabuleiro.getColumnFromIndex(docks.get(i))));
         }
 
         print(); // Exibe o tabuleiro de jogo
@@ -403,7 +405,7 @@ public class Jogo {
                     System.out.println(players.get(playerID).getScore().getPoints()); // Atribuição de 50 pontos iniciais ao jogador
                     break;
                 case 8:
-                    choosePlayer();
+                    player.choosePlayer();
                     break;
                 default:
                     start(); // no caso de não ser escolhida nenhuma das opções facultadas ao utilizador, volta ao menu principal

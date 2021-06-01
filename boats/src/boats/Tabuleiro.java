@@ -19,6 +19,7 @@ import java.util.Arrays;
 public class Tabuleiro {
     
     public static Jogo jogo;
+    public static int i,j;
    
     //MENU PARA ESCOLHA DE DIFICULDADE - REVER
     public static void chooseDificulty() {
@@ -43,31 +44,31 @@ public class Tabuleiro {
                 // ! TODO !
                 break;
             case 2: // Criação de um tabuleiro de jogo de dificuldade "Fácil"
-                SET_DIFFICULTY = DIFFICULTY_BOARD_EASY;
-                NUMBER_OF_ROWS = 4;
-                NUMBER_OF_COLUMNS = 4;
+                SET_DIFFICULTY = jogo.DIFFICULTY_BOARD_EASY;
+                jogo.NUMBER_OF_ROWS = 4;
+                jogo.NUMBER_OF_COLUMNS = 4;
                 generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 //setTimer(30)
-                players.get(playerID).getScore().setPoints(50); // Atribuição de 50 pontos iniciais ao jogador
+                jogo.players.get(jogo.playerID).getScore().setPoints(50); // Atribuição de 50 pontos iniciais ao jogador
                 break;
             case 3: // Criação de um tabuleiro de jogo de dificuldade "Médio"
-                SET_DIFFICULTY = DIFFICULTY_BOARD_MEDIUM;
-                NUMBER_OF_ROWS = 6;
-                NUMBER_OF_COLUMNS = 6;
+                SET_DIFFICULTY = jogo.DIFFICULTY_BOARD_MEDIUM;
+                jogo.NUMBER_OF_ROWS = 6;
+                jogo.NUMBER_OF_COLUMNS = 6;
                 generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 //setTimer(90)
-                players.get(playerID).getScore().setPoints(100); // Atribuição de 100 pontos iniciais ao jogador
+                jogo.players.get(jogo.playerID).getScore().setPoints(100); // Atribuição de 100 pontos iniciais ao jogador
                 break;
             case 4: // Criação de um tabuleiro de jogo de dificuldade "Difícil"
-                SET_DIFFICULTY = DIFFICULTY_BOARD_HARD;
-                NUMBER_OF_ROWS = 9;
-                NUMBER_OF_COLUMNS = 9;
+                SET_DIFFICULTY = jogo.DIFFICULTY_BOARD_HARD;
+                jogo.NUMBER_OF_ROWS = 9;
+                jogo.NUMBER_OF_COLUMNS = 9;
                 generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 //setTimer(150)
-                players.get(playerID).getScore().setPoints(150); // Atribuição de 100 pontos iniciais ao jogador
+                jogo.players.get(jogo.playerID).getScore().setPoints(150); // Atribuição de 100 pontos iniciais ao jogador
                 break;
             case 0:
-                start(); // Retrocede-se ao menu principal
+                jogo.start(); // Retrocede-se ao menu principal
                 break;
             default:
                 chooseDificulty(); // Caso não seja selecionada nenhuma das opções disponíveis, é exibido novamente o menu de  escolha de dificuldade
@@ -77,33 +78,33 @@ public class Tabuleiro {
     
     //GERA O TABULEIRO DE JOGO
     public static void generateBoard() {
-        if (SET_DIFFICULTY == DIFFICULTY_BOARD_EASY) { // Caso a dificuldade definida seja "Fácil", cria um tabuleiro de jogo com base nas propriedades dessa mesma dificuldade
-            for (i = 0; i < DIFFICULTY_BOARD_EASY; i++) {
-                for (j = 0; j < DIFFICULTY_BOARD_EASY; j++) {
+        if (SET_DIFFICULTY == jogo.DIFFICULTY_BOARD_EASY) { // Caso a dificuldade definida seja "Fácil", cria um tabuleiro de jogo com base nas propriedades dessa mesma dificuldade
+            for (i = 0; i < jogo.DIFFICULTY_BOARD_EASY; i++) {
+                for (j = 0; j < jogo.DIFFICULTY_BOARD_EASY; j++) {
                     board.add(new Desconhecido(i, j)); // Adiciona posições do tipo "Desconhecido" ao tabuleiro, com as suas respetivas coordenadas
-                    unknown.add(getIndex(i, j)); // Atribuição do estado "Desconhecido" à posição referente às cordenadas anteriores
+                    jogo.unknown.add(getIndex(i, j)); // Atribuição do estado "Desconhecido" à posição referente às cordenadas anteriores
                 }
             }
         }
 
-        if (SET_DIFFICULTY == DIFFICULTY_BOARD_MEDIUM) { // Caso a dificuldade definida seja "Médio", cria um tabuleiro de jogo com base nas propriedades dessa mesma dificuldade
-            for (i = 0; i < DIFFICULTY_BOARD_MEDIUM; i++) {
-                for (j = 0; j < DIFFICULTY_BOARD_MEDIUM; j++) {
+        if (SET_DIFFICULTY == jogo.DIFFICULTY_BOARD_MEDIUM) { // Caso a dificuldade definida seja "Médio", cria um tabuleiro de jogo com base nas propriedades dessa mesma dificuldade
+            for (i = 0; i < jogo.DIFFICULTY_BOARD_MEDIUM; i++) {
+                for (j = 0; j < jogo.DIFFICULTY_BOARD_MEDIUM; j++) {
                     board.add(new Desconhecido(i, j)); // Adiciona posições do tipo "Desconhecido" ao tabuleiro, com as suas respetivas coordenadas
-                    unknown.add(getIndex(i, j)); // Atribuição do estado "Desconhecido" à posição referente às cordenadas anteriores
+                    jogo.unknown.add(getIndex(i, j)); // Atribuição do estado "Desconhecido" à posição referente às cordenadas anteriores
                 }
             }
         }
 
-        if (SET_DIFFICULTY == DIFFICULTY_BOARD_HARD) { // Caso a dificuldade definida seja "Difícil", cria um tabuleiro de jogo com base nas propriedades dessa mesma dificuldade
-            for (i = 0; i < DIFFICULTY_BOARD_HARD; i++) {
-                for (j = 0; j < DIFFICULTY_BOARD_HARD; j++) {
+        if (SET_DIFFICULTY == jogo.DIFFICULTY_BOARD_HARD) { // Caso a dificuldade definida seja "Difícil", cria um tabuleiro de jogo com base nas propriedades dessa mesma dificuldade
+            for (i = 0; i < jogo.DIFFICULTY_BOARD_HARD; i++) {
+                for (j = 0; j < jogo.DIFFICULTY_BOARD_HARD; j++) {
                     board.add(new Desconhecido(i, j)); // Adiciona posições do tipo "Desconhecido" ao tabuleiro, com as suas respetivas coordenadas
-                    unknown.add(getIndex(i, j)); // Atribuição do estado "Desconhecido" à posição referente às cordenadas anteriores
+                    jogo.unknown.add(getIndex(i, j)); // Atribuição do estado "Desconhecido" à posição referente às cordenadas anteriores
                 }
             }
         }
-        placeDock(); // Colocação de portos no tabuleiro de jogo
+        jogo.placeDock(); // Colocação de portos no tabuleiro de jogo
     }
     
     

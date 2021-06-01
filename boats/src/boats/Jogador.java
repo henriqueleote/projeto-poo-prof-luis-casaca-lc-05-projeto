@@ -72,7 +72,7 @@ public class Jogador {
     public static void createPlayer() {
         System.out.print("Nickname -> ");
         String nickname = input.next().trim(); // Leitura do nickname digitado pelo utilizador
-        player = getPlayerByNickname(nickname); // Associação do jogador ao nickname
+        Jogador player = getPlayerByNickname(nickname); // Associação do jogador ao nickname
 
         if (player != null) { // Caso o nickname pretendido pelo utilizador já esteja registado na aplicação, é emitida uma mensagem de erro 
             if (players.contains(player)) {
@@ -82,7 +82,7 @@ public class Jogador {
             players.add(new Jogador(playerCount, nickname, 0));
             playerID = players.get(playerCount).getId();
             playerCount++;
-            menu(); // Retrocede-se ao menu
+            //menu(); // Retrocede-se ao menu
         }
     }
 
@@ -90,13 +90,13 @@ public class Jogador {
     public static void choosePlayer() {
         System.out.print("Nickname -> ");
         String nickname = input.next().trim(); // O utilizador insere o seu nickname
-        player = getPlayerByNickname(nickname);
+        Jogador player = getPlayerByNickname(nickname);
 
         if (player != null) { // Caso o nickname (jogador) exista, é extraído o index referente ao mesmo, o que carateriza a seleção do jogador a ser utilizado
             if (players.contains(player)) {
                 playerID = players.indexOf(player);
+                menu(); // Retrocede-se ao menu
             }
-            menu(); // Retrocede-se ao menu
         } else { // Caso o nickname inserido não corresponda a nenhum jogador, é emitida uma mensagem de erro
             System.out.println("Não existe nenhum utilizador com o nickname inserido\n");
             start(); // Retrocede-se ao menu principal
