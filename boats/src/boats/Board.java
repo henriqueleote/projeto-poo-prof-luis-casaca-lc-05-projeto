@@ -5,10 +5,10 @@
  */
 package boats;
 
-import static boats.Jogo.SET_DIFFICULTY;
-import static boats.Jogo.board;
-import static boats.Jogo.i;
-import static boats.Jogo.input;
+import static boats.Game.SET_DIFFICULTY;
+import static boats.Game.board;
+import static boats.Game.i;
+import static boats.Game.input;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
@@ -16,19 +16,18 @@ import java.util.Arrays;
  *
  * @author CucasPC
  */
-public class Tabuleiro {
+public class Board {
     
-    public static Jogo jogo;
     public static int i,j;
    
     //MENU PARA ESCOLHA DE DIFICULDADE - REVER
     public static void chooseDificulty() {
         System.out.println("Escolha a dificuldade:");
         System.out.println();
-        System.out.println("1 - Iniciar jogo aleatório");
-        System.out.println("2 - Iniciar jogo – Fácil");
-        System.out.println("3 - Iniciar jogo – Médio");
-        System.out.println("4 - Iniciar jogo - Difícil");
+        System.out.println("1 - Iniciar Jogo aleatório");
+        System.out.println("2 - Iniciar Jogo – Fácil");
+        System.out.println("3 - Iniciar Jogo – Médio");
+        System.out.println("4 - Iniciar Jogo - Difícil");
         System.out.println("0 - Voltar\n");
 
         System.out.print("Opção -> ");
@@ -43,32 +42,32 @@ public class Tabuleiro {
             case 1:
                 // ! TODO !
                 break;
-            case 2: // Criação de um tabuleiro de jogo de dificuldade "Fácil"
-                SET_DIFFICULTY = jogo.DIFFICULTY_BOARD_EASY;
-                jogo.NUMBER_OF_ROWS = 4;
-                jogo.NUMBER_OF_COLUMNS = 4;
+            case 2: // Criação de um tabuleiro de Game de dificuldade "Fácil"
+                SET_DIFFICULTY = Game.DIFFICULTY_BOARD_EASY;
+                Game.NUMBER_OF_ROWS = 4;
+                Game.NUMBER_OF_COLUMNS = 4;
                 generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 //setTimer(30)
-                jogo.players.get(jogo.playerID).getScore().setPoints(50); // Atribuição de 50 pontos iniciais ao jogador
+                Game.players.get(Game.playerID).getScore().setPoints(50); // Atribuição de 50 pontos iniciais ao jogador
                 break;
-            case 3: // Criação de um tabuleiro de jogo de dificuldade "Médio"
-                SET_DIFFICULTY = jogo.DIFFICULTY_BOARD_MEDIUM;
-                jogo.NUMBER_OF_ROWS = 6;
-                jogo.NUMBER_OF_COLUMNS = 6;
+            case 3: // Criação de um tabuleiro de Game de dificuldade "Médio"
+                SET_DIFFICULTY = Game.DIFFICULTY_BOARD_MEDIUM;
+                Game.NUMBER_OF_ROWS = 6;
+                Game.NUMBER_OF_COLUMNS = 6;
                 generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 //setTimer(90)
-                jogo.players.get(jogo.playerID).getScore().setPoints(100); // Atribuição de 100 pontos iniciais ao jogador
+                Game.players.get(Game.playerID).getScore().setPoints(100); // Atribuição de 100 pontos iniciais ao jogador
                 break;
-            case 4: // Criação de um tabuleiro de jogo de dificuldade "Difícil"
-                SET_DIFFICULTY = jogo.DIFFICULTY_BOARD_HARD;
-                jogo.NUMBER_OF_ROWS = 9;
-                jogo.NUMBER_OF_COLUMNS = 9;
+            case 4: // Criação de um tabuleiro de Game de dificuldade "Difícil"
+                SET_DIFFICULTY = Game.DIFFICULTY_BOARD_HARD;
+                Game.NUMBER_OF_ROWS = 9;
+                Game.NUMBER_OF_COLUMNS = 9;
                 generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 //setTimer(150)
-                jogo.players.get(jogo.playerID).getScore().setPoints(150); // Atribuição de 100 pontos iniciais ao jogador
+                Game.players.get(Game.playerID).getScore().setPoints(150); // Atribuição de 100 pontos iniciais ao jogador
                 break;
             case 0:
-                jogo.start(); // Retrocede-se ao menu principal
+                Game.start(); // Retrocede-se ao menu principal
                 break;
             default:
                 chooseDificulty(); // Caso não seja selecionada nenhuma das opções disponíveis, é exibido novamente o menu de  escolha de dificuldade
@@ -78,33 +77,33 @@ public class Tabuleiro {
     
     //GERA O TABULEIRO DE JOGO
     public static void generateBoard() {
-        if (SET_DIFFICULTY == jogo.DIFFICULTY_BOARD_EASY) { // Caso a dificuldade definida seja "Fácil", cria um tabuleiro de jogo com base nas propriedades dessa mesma dificuldade
-            for (i = 0; i < jogo.DIFFICULTY_BOARD_EASY; i++) {
-                for (j = 0; j < jogo.DIFFICULTY_BOARD_EASY; j++) {
-                    board.add(new Desconhecido(i, j)); // Adiciona posições do tipo "Desconhecido" ao tabuleiro, com as suas respetivas coordenadas
-                    jogo.unknown.add(getIndex(i, j)); // Atribuição do estado "Desconhecido" à posição referente às cordenadas anteriores
+        if (SET_DIFFICULTY == Game.DIFFICULTY_BOARD_EASY) { // Caso a dificuldade definida seja "Fácil", cria um tabuleiro de Game com base nas propriedades dessa mesma dificuldade
+            for (i = 0; i < Game.DIFFICULTY_BOARD_EASY; i++) {
+                for (j = 0; j < Game.DIFFICULTY_BOARD_EASY; j++) {
+                    board.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
+                    Game.unknown.add(getIndex(i, j)); // Atribuição do estado "Unknown" à posição referente às cordenadas anteriores
                 }
             }
         }
 
-        if (SET_DIFFICULTY == jogo.DIFFICULTY_BOARD_MEDIUM) { // Caso a dificuldade definida seja "Médio", cria um tabuleiro de jogo com base nas propriedades dessa mesma dificuldade
-            for (i = 0; i < jogo.DIFFICULTY_BOARD_MEDIUM; i++) {
-                for (j = 0; j < jogo.DIFFICULTY_BOARD_MEDIUM; j++) {
-                    board.add(new Desconhecido(i, j)); // Adiciona posições do tipo "Desconhecido" ao tabuleiro, com as suas respetivas coordenadas
-                    jogo.unknown.add(getIndex(i, j)); // Atribuição do estado "Desconhecido" à posição referente às cordenadas anteriores
+        if (SET_DIFFICULTY == Game.DIFFICULTY_BOARD_MEDIUM) { // Caso a dificuldade definida seja "Médio", cria um tabuleiro de Game com base nas propriedades dessa mesma dificuldade
+            for (i = 0; i < Game.DIFFICULTY_BOARD_MEDIUM; i++) {
+                for (j = 0; j < Game.DIFFICULTY_BOARD_MEDIUM; j++) {
+                    board.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
+                    Game.unknown.add(getIndex(i, j)); // Atribuição do estado "Unknown" à posição referente às cordenadas anteriores
                 }
             }
         }
 
-        if (SET_DIFFICULTY == jogo.DIFFICULTY_BOARD_HARD) { // Caso a dificuldade definida seja "Difícil", cria um tabuleiro de jogo com base nas propriedades dessa mesma dificuldade
-            for (i = 0; i < jogo.DIFFICULTY_BOARD_HARD; i++) {
-                for (j = 0; j < jogo.DIFFICULTY_BOARD_HARD; j++) {
-                    board.add(new Desconhecido(i, j)); // Adiciona posições do tipo "Desconhecido" ao tabuleiro, com as suas respetivas coordenadas
-                    jogo.unknown.add(getIndex(i, j)); // Atribuição do estado "Desconhecido" à posição referente às cordenadas anteriores
+        if (SET_DIFFICULTY == Game.DIFFICULTY_BOARD_HARD) { // Caso a dificuldade definida seja "Difícil", cria um tabuleiro de Game com base nas propriedades dessa mesma dificuldade
+            for (i = 0; i < Game.DIFFICULTY_BOARD_HARD; i++) {
+                for (j = 0; j < Game.DIFFICULTY_BOARD_HARD; j++) {
+                    board.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
+                    Game.unknown.add(getIndex(i, j)); // Atribuição do estado "Unknown" à posição referente às cordenadas anteriores
                 }
             }
         }
-        jogo.placeDock(); // Colocação de portos no tabuleiro de jogo
+        Game.placeDock(); // Colocação de portos no tabuleiro de Game
     }
     
     
@@ -124,7 +123,7 @@ public class Tabuleiro {
     //DEVOLVE A POSIÇÃO NO ARRAYLIST DADAS AS COORDENADAS
     public static int getIndex(int x, int y) {
         int arrayNumber = -1;
-        for (Casa boardObj : board) { // Ciclo for que percorre as posições do tabuleiro
+        for (Spot boardObj : board) { // Ciclo for que percorre as posições do tabuleiro
             if (boardObj.getPosition().getRow() == x && boardObj.getPosition().getColumn() == y) { // Caso o objeto casa possua uma coordenada X e Y, guarda a posição dessa mesma casa
                 arrayNumber = board.indexOf(boardObj); // Variável onde é guardado o valor relativo à posição da casa
             }

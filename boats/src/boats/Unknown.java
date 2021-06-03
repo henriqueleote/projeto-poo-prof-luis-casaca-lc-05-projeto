@@ -9,13 +9,13 @@ package boats;
  *
  * @author CucasPC
  */
-public class Desconhecido extends Casa{
+public class Unknown extends Spot{
 
     char indentifier;
     
-    public Desconhecido(int x, int y){
+    public Unknown(int x, int y){
         super(x,y);
-        position = new Posicao(x,y);
+        position = new Position(x,y);
         indentifier = '-';
     }
     

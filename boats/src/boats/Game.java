@@ -16,7 +16,7 @@ import java.util.Scanner;
  *
  * @author CucasPC
  */
-public class Jogo {
+public class Game {
 
     public static int DIFFICULTY_BOARD_EASY = 5;
     public static int DIFFICULTY_BOARD_MEDIUM = 7;
@@ -25,25 +25,26 @@ public class Jogo {
     public static int NUMBER_OF_ROWS = 0;
     public static int NUMBER_OF_COLUMNS = 0;
     public static int i, j, playerCount;
-    public static List<Casa> board = new ArrayList<Casa>();
+    public static List<Spot> board = new ArrayList<Spot>();
     public static List<Integer> forbiden = new ArrayList<Integer>();
-    public static List<Jogador> players = new ArrayList<Jogador>();
+    public static List<Player> players = new ArrayList<Player>();
     public static List<Integer> docks = new ArrayList<Integer>();
     public static List<Integer> water = new ArrayList<Integer>();
     public static List<Integer> boat = new ArrayList<Integer>();
     public static List<Integer> unknown = new ArrayList<Integer>();
-    public static Regras rules = new Regras();
+    public static Rules rules = new Rules();
     public static Scanner input = new Scanner(System.in);
     public static int playerID;
-    public static Jogador player;
-    public static Tabuleiro tabuleiro;
-    public static Pontuacao pontuacao;
+    public static Player player;
+    public static Board tabuleiro;
+    public static Score pontuacao;
 
     //MAIN
     public static void main(String[] args) {
         start(); //Inicializa o programa, exibindo o menu principal
     }
 
+    
     //IMPRIME O MENU PRINCIPAL - FEITO MAS FALTA COMENTARIO
     public static void start() {
         System.out.println("Seja bem-vindo ao Docks & Boats\n");
@@ -106,7 +107,8 @@ public class Jogo {
         }
     }
     
-    //IMPRIME O MENU - /////////////////////////////////////////////////////////TODO
+    
+    //IMPRIME O MENU
     public static void menu() {
         System.out.println("----------------------------------\n");
         System.out.println("Olá " + players.get(playerID).getNickname());
@@ -133,8 +135,9 @@ public class Jogo {
             case 1:
                 tabuleiro.chooseDificulty(); // Redireciona o utilizar para o menu de escolha da dificuldade do jogo a ser jogado
                 break;
-            case 2:
-                // ! TODO !
+            case 2: // ! TODO !
+                System.out.println("Funcionalidade indisponivel. Obrigado");
+                menu();
                 break;
             case 3:
                 pontuacao.printPlayerScore(players.get(playerID)); // Exibe as pontuações pessoais do utilizador
@@ -188,9 +191,7 @@ public class Jogo {
         menu(); // Retrocede-se ao menu
     }
 
-
-
-
+    
     //IMPRIME O TABULEIRO DE JOGO
     public static void print() {
         System.out.println("\nTabuleiro de Jogo:");
@@ -203,26 +204,29 @@ public class Jogo {
         play();
     }
 
+    
     //JOGADAS DO UTILIZADOR - \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\TODO
     public static void play() {
         System.out.println("-----------");
-        //por condição de caso ele escreva -1, acaba o jogo, x termina e por assim adiante
-        System.out.print("Campo (A ou B) -> ");
-        while (!input.equals("A") || !input.equals("B") || input.toString().length() != 1) {
+            //por condição de caso ele escreva -1, acaba o jogo, x termina e por assim adiante
+        System.out.print("Campo (A ou B) (escreva \"sair\" para sair)-> ");
+        while (!input.toString().toUpperCase().trim().equals("A") && !input.toString().toUpperCase().trim().equals("B") || input.toString().length() != 1) {
+            if(input.next().equals("sair"))
+                System.exit(0);
+            else
             System.out.print("-> ");
-            input.next().trim().charAt(1);
         }
         String move = input.next().trim();
-        System.out.print("Linha (x) -> ");
+        System.out.print(move);
+        
+        /*System.out.print("Linha (x) -> ");
         while (!input.hasNextInt() || input.nextInt() >= 0 || input.nextInt() <= NUMBER_OF_ROWS) {
             System.out.print("-> ");
-            input.next().charAt(1);
         }
         int x = input.nextInt();
         System.out.print("Coluna (y) -> ");
         while (!input.hasNextInt() || input.nextInt() >= 0 || input.nextInt() <= NUMBER_OF_ROWS) {
             System.out.print("-> ");
-            input.next().charAt(1);
         }
         int y = input.nextInt();
         int position = tabuleiro.getIndex(x, y);
@@ -232,45 +236,25 @@ public class Jogo {
         }
         if (move.equals("A")) {
             placeWater(position);
-        }
+        }*/
+        
         //CASO PONHA NO SITIO ERRADO, PORQUITOS
     }
 
-    //DEFINE TODAS AS VARIAVEIS COM O SEU VALOR INICIAL 
-    public static void clearValues() {
-        DIFFICULTY_BOARD_EASY = 5;
-        DIFFICULTY_BOARD_MEDIUM = 7;
-        DIFFICULTY_BOARD_HARD = 10;
-        SET_DIFFICULTY = 0;
-        NUMBER_OF_ROWS = 0;
-        NUMBER_OF_COLUMNS = 0;
-        i = 0;
-        j = 0;
-        playerCount = 0;
-        board.clear();
-        forbiden.clear();
-        players.clear();
-        docks.clear();
-        water.clear();
-        boat.clear();
-        unknown.clear();
-        playerID = -1;
-        player = null;
-    }
-
+    
     //COLOCA OS PORTOS NO TABULEIRO DE JOGO - REVER
     public static void placeDock() { // REVER
         while (docks.size() < SET_DIFFICULTY) { // Enquanto a quantidade de docas no tabuleiro for menor do que a pré-estabelecida pela dificuldade, adiciona uma doca numa posição aleatória
             int random = new Random().nextInt(board.size()); // Adição de uma doca aleatória
             if (!docks.contains(random)) { // Adiciona uma doca aleatória caso ainda não exista nenhuma                
-                if(checkBounds(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random) - 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random) - 1)))
+                /*if(checkBounds(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random) - 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random) - 1)))
                     if(checkBounds(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random)) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random))))
                         if(checkBounds(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random) + 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) - 1, tabuleiro.getColumnFromIndex(random) + 1)))
                             if(checkBounds(tabuleiro.getRowFromIndex(random), tabuleiro.getColumnFromIndex(random) - 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random), tabuleiro.getColumnFromIndex(random) - 1)))
                                 if(checkBounds(tabuleiro.getRowFromIndex(random), tabuleiro.getColumnFromIndex(random) + 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random), tabuleiro.getColumnFromIndex(random) + 1)))
                                     if(checkBounds(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random) - 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random) - 1)))
                                         if(checkBounds(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random)) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random))))
-                                            if(checkBounds(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random) + 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random) + 1)))
+                                            if(checkBounds(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random) + 1) && checkEmpty(tabuleiro.getIndex(tabuleiro.getRowFromIndex(random) + 1, tabuleiro.getColumnFromIndex(random) + 1)))*/
                                                 docks.add(random);
             }
         }
@@ -280,43 +264,25 @@ public class Jogo {
         }
 
         print(); // Exibe o tabuleiro de jogo
-
-        //docks.forEach((n) -> System.out.println(n));  //DEVOLVE PARA O ECRÃ AS POSIÇÕES DOS PORTOS NUM ARRAYLIST
     }
 
-    public static boolean checkEmpty(int arrayNumber) {
-        boolean state = false;
-        if (board.get(arrayNumber).toString().equals("-")) {
-            state = true;
-        } else {
-            state = false;
-        }
-        return state;
-    }
-
-    public static boolean checkBounds(int x, int y) {
-        if (x >= 0 && x < NUMBER_OF_ROWS && y >= 0 && y < NUMBER_OF_COLUMNS) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     //transforma em agua no fim do jogo
     public static void placeRemainWater() {
         for (i = 0; i < board.size(); i++) { // Ciclo for que cria objetos do tipo "Água" no tabuleiro
             if (board.get(i).toString().equals("-")) {
-                board.set(i, new Agua(board.get(i).getPosition().getRow(), board.get(i).getPosition().getColumn()));
+                board.set(i, new Water(board.get(i).getPosition().getRow(), board.get(i).getPosition().getColumn()));
             }
         }
     }
 
+    
     //COLOCA A AGUA NO TABULEIRO DE JOGO - REVER
     public static void placeWater(int arrayNumber) {
         if (board.get(arrayNumber).toString().equals("P") || board.get(arrayNumber).toString().equals("B") || board.get(arrayNumber).toString().equals("A")) { // Caso a posição verificada já possua um estado que não seja "Desconhecido, é emitida uma mensagem
             System.out.println("Não pode colocar agua num lugar que não se encontra desconhecido.");
         } else {
-            board.set(arrayNumber, new Agua(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Água", com as coordenadas correspondentes à posição a ser alterada
+            board.set(arrayNumber, new Water(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Água", com as coordenadas correspondentes à posição a ser alterada
             water.add(arrayNumber); // Adição do objeto do tipo "Água" no array que guarda as posições do tipo "Água"
         }
     }
@@ -326,32 +292,34 @@ public class Jogo {
         if (board.get(arrayNumber).toString().equals("P")) { // Caso a posição verificada já possua o estado "Porto", emite uma mensagem de erro
             System.out.println("Não pode colocar um barco onde está um porto de atracagem");
         } else {
-            board.set(arrayNumber, new Barco(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Barco", com as coordenadas correspondentes à posição a ser alterada
-            boat.add(arrayNumber); // Adição do objeto do tipo "Barco" no array que guarda as posições do tipo "Barco"
+            board.set(arrayNumber, new Boat(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Boat", com as coordenadas correspondentes à posição a ser alterada
+            boat.add(arrayNumber); // Adição do objeto do tipo "Boat" no array que guarda as posições do tipo "Boat"
 
             /*if (board.get(arrayNumber).toString().equals("-") || board.get(arrayNumber).toString().equals("A")) {
             //validar se pode ser posto naquele sitio
             //caso haja um porto à esquerda
             if (board.get(arrayNumber).getPosition().getRow() > 0 && board.get(arrayNumber).getPosition().getColumn() - 1 > 0 && board.get(arrayNumber).toString().equals("-")) {
-                board.set(arrayNumber, new Barco(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn()));
+                board.set(arrayNumber, new Boat(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn()));
                 print();
             } //caso haja um porto em cima
             else if (board.get(arrayNumber).getPosition().getRow() - 1 > 0 && board.get(arrayNumber).getPosition().getColumn() > 0 && board.get(arrayNumber).toString().equals("-")) {
-                board.set(arrayNumber, new Barco(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn()));
+                board.set(arrayNumber, new Boat(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn()));
                 print();
             } //caso haja um porto à direita
             else if (board.get(arrayNumber).getPosition().getRow() > 0 && board.get(arrayNumber).getPosition().getColumn() < DIFFICULTY_BOARD_EASY - 1 && board.get(arrayNumber).toString().equals("-")) {
-                board.set(arrayNumber, new Barco(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn()));
+                board.set(arrayNumber, new Boat(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn()));
                 print();
             } //caso haja um porto em baixo
             else if (board.get(arrayNumber).getPosition().getRow() < DIFFICULTY_BOARD_EASY - 1 && board.get(arrayNumber).getPosition().getColumn() > 0 && board.get(arrayNumber).toString().equals("-")) {
-                board.set(arrayNumber, new Barco(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn()));
+                board.set(arrayNumber, new Boat(board.get(arrayNumber).getPosition().getRow(), board.get(arrayNumber).getPosition().getColumn()));
                 print();
             }
         }*/     //falta rever as validações - tratar dos pontos caso erre na casa
         }
     }
 
+    
+    
     
     
     

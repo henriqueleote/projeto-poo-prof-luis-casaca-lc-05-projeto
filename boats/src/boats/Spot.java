@@ -9,11 +9,11 @@ package boats;
  * @author CucasPC
  */
 
-public class Casa{  
-    Posicao position;
+public class Spot{  
+    Position position;
     
-    public Casa(int x, int y){
-        position = new Posicao(x,y);
+    public Spot(int x, int y){
+        position = new Position(x,y);
     }
     
     public void setPosition(int x, int y){
@@ -21,7 +21,7 @@ public class Casa{
         position.setColumn(y);
     }
     
-    public Posicao getPosition(){
+    public Position getPosition(){
         return position;
     }
 }

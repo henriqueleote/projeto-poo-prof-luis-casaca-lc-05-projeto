@@ -4,18 +4,18 @@ package boats;
  *
  * @author Gonçalo Fernandes e Henrique Leote
  */
-public class Posicao {
+public class Position {
 
     public int x;                       //variavel para as linhas
     public int y;                       //variavel para as colunas
 
     //construtor da classe Position que recebe as linhas e colunas
-    public Posicao(int x, int y) {
+    public Position(int x, int y) {
         this.x = x;                     //inicializar a variavel com o numero de linhas recebida
         this.y = y;                     //inicializar a variavel com o numero de colunas recebida
     }
 
-    public Posicao() {
+    public Position() {
     }
 
     //GETS

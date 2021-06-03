@@ -9,13 +9,13 @@ package boats;
  *
  * @author CucasPC
  */
-public class Porto extends Casa{
+public class Porto extends Spot{
 
     char indentifier;
     
     public Porto(int x, int y){
         super(x,y);
-        position = new Posicao(x,y);
+        position = new Position(x,y);
         indentifier = 'P';
     }
     

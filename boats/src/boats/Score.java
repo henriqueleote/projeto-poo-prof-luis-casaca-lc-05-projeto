@@ -5,19 +5,19 @@
  */
 package boats;
 
-import static boats.Jogo.menu;
-import static boats.Jogo.players;
+import static boats.Game.menu;
+import static boats.Game.players;
 
 /**
  *
  * @author CucasPC
  */
-public class Pontuacao {
+public class Score {
     int points;
     int high;
     int level;
     
-    public Pontuacao(int points){
+    public Score(int points){
         this.points = points;
         this.high = 0;
     }
@@ -76,7 +76,7 @@ public class Pontuacao {
 
     
     //IMPRIME OS PONTOS DO JOGADOR - ///////////////////////////////////////////TODO
-    public static void printPlayerScore(Jogador player) {
+    public static void printPlayerScore(Player player) {
         System.out.println("Pontuações de " + player.getNickname());
         //System.out.print("Pontuações Geral " + player.getNickname()); TODO
         System.out.println("Nivel X - " + player.getScore().getPoints() + " pontos");

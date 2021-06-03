@@ -5,28 +5,28 @@
  */
 package boats;
 
-import static boats.Jogo.input;
-import static boats.Jogo.menu;
-import static boats.Jogo.player;
-import static boats.Jogo.playerCount;
-import static boats.Jogo.playerID;
-import static boats.Jogo.players;
-import static boats.Jogo.start;
+import static boats.Game.input;
+import static boats.Game.menu;
+import static boats.Game.player;
+import static boats.Game.playerCount;
+import static boats.Game.playerID;
+import static boats.Game.players;
+import static boats.Game.start;
 
 /**
  *
  * @author CucasPC
  */
-public class Jogador {
+public class Player {
     int id;
     String nickname;
-    Pontuacao score;
-    Jogador player;
+    Score score;
+    Player player;
     
-    public Jogador(int id, String nickname, int score){
+    public Player(int id, String nickname, int score){
         this.id = id;
         this.nickname = nickname;
-        this.score = new Pontuacao(score);
+        this.score = new Score(score);
     }
     
     public int getId(){
@@ -38,11 +38,11 @@ public class Jogador {
     }
    
     
-    public Pontuacao getScore(){
+    public Score getScore(){
         return score;
     }
     
-    public Jogador getPlayer(){
+    public Player getPlayer(){
         return player;
     }
     
@@ -54,13 +54,13 @@ public class Jogador {
         this.nickname = nickname;
     }
     
-    public void setPlayer(Jogador player){
+    public void setPlayer(Player player){
         this.player=player;
     }
     
         //VERIFICA SE EXISTE ALGUM JOGADOR COM O NICKNAME INTRODUZIDO
-    public static Jogador getPlayerByNickname(String nickname) {
-        for (Jogador playerObj : players) { // Ciclo for que percorre a coleção de jogadores
+    public static Player getPlayerByNickname(String nickname) {
+        for (Player playerObj : players) { // Ciclo for que percorre a coleção de jogadores
             if (playerObj.getNickname().toLowerCase().trim().equals(nickname)) { // Caso exista um jogador com o respetivo nickname, devolve-o
                 return playerObj;
             }
@@ -72,17 +72,17 @@ public class Jogador {
     public static void createPlayer() {
         System.out.print("Nickname -> ");
         String nickname = input.next().trim(); // Leitura do nickname digitado pelo utilizador
-        Jogador player = getPlayerByNickname(nickname); // Associação do jogador ao nickname
+        Player player = getPlayerByNickname(nickname); // Associação do jogador ao nickname
 
         if (player != null) { // Caso o nickname pretendido pelo utilizador já esteja registado na aplicação, é emitida uma mensagem de erro 
             if (players.contains(player)) {
                 System.out.println("O nickname inserido já se encontra em uso\n");
             }
         } else { // Caso o nickname pretendido pelo utilizador ainda não exista em utilização, é criado um novo jogador com o respetivo nickname associado
-            players.add(new Jogador(playerCount, nickname, 0));
+            players.add(new Player(playerCount, nickname, 0));
             playerID = players.get(playerCount).getId();
             playerCount++;
-            //menu(); // Retrocede-se ao menu
+            menu(); // Retrocede-se ao menu
         }
     }
 
@@ -90,7 +90,7 @@ public class Jogador {
     public static void choosePlayer() {
         System.out.print("Nickname -> ");
         String nickname = input.next().trim(); // O utilizador insere o seu nickname
-        Jogador player = getPlayerByNickname(nickname);
+        Player player = getPlayerByNickname(nickname);
 
         if (player != null) { // Caso o nickname (jogador) exista, é extraído o index referente ao mesmo, o que carateriza a seleção do jogador a ser utilizado
             if (players.contains(player)) {

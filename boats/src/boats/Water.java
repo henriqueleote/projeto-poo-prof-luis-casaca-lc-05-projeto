@@ -9,14 +9,14 @@ package boats;
  *
  * @author CucasPC
  */
-public class Barco extends Casa{
+public class Water extends Spot{
 
     char indentifier;
     
-    public Barco(int x, int y){
+    public Water(int x, int y){
         super(x,y);
-        position = new Posicao(x,y);
-        indentifier = 'B';
+        position = new Position(x,y);
+        indentifier = 'A';
     }
     
     public char getIndentifier(){

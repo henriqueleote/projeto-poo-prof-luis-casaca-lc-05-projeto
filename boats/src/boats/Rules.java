@@ -5,17 +5,17 @@
  */
 package boats;
 
-import static boats.Jogo.i;
-import static boats.Jogo.board;
+import static boats.Game.i;
+import static boats.Game.board;
 import java.util.ArrayList;
 
 /**
  *
  * @author CucasPC
  */
-public class Regras {
+public class Rules {
 
-    public boolean placeBoatLeft(ArrayList<Casa> board) {
+    public boolean placeBoatLeft(ArrayList<Spot> board) {
         boolean result = false;
         for (i = 0; i < board.size(); i++) {
             if (board.get(i).toString().equals("-") || board.get(i).toString().equals("A")) {
