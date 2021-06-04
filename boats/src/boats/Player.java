@@ -7,7 +7,6 @@ package boats;
 
 import static boats.Game.input;
 import static boats.Game.menu;
-import static boats.Game.player;
 import static boats.Game.playerCount;
 import static boats.Game.playerID;
 import static boats.Game.players;

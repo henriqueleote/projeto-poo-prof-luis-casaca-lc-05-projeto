@@ -9,11 +9,11 @@ package boats;
  *
  * @author CucasPC
  */
-public class Porto extends Spot{
+public class Dock extends Spot{
 
     char indentifier;
     
-    public Porto(int x, int y){
+    public Dock(int x, int y){
         super(x,y);
         position = new Position(x,y);
         indentifier = 'P';

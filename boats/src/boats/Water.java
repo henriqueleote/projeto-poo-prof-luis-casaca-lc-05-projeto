@@ -16,7 +16,7 @@ public class Water extends Spot{
     public Water(int x, int y){
         super(x,y);
         position = new Position(x,y);
-        indentifier = 'A';
+        indentifier = '.';
     }
     
     public char getIndentifier(){

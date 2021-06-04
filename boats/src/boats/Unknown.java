@@ -16,7 +16,7 @@ public class Unknown extends Spot{
     public Unknown(int x, int y){
         super(x,y);
         position = new Position(x,y);
-        indentifier = '-';
+        indentifier = ' ';
     }
     
     public char getIndentifier(){

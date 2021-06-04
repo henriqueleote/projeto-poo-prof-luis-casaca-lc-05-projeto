@@ -6,11 +6,8 @@
 package boats;
 
 import static boats.Game.SET_DIFFICULTY;
-import static boats.Game.board;
-import static boats.Game.i;
 import static boats.Game.input;
-import java.lang.reflect.Array;
-import java.util.Arrays;
+import java.util.Random;
 
 /**
  *
@@ -40,7 +37,32 @@ public class Board {
 
         switch (option) { // Verificação da opção escolhida pelo utilizador
             case 1:
-                // ! TODO !
+                int[] intArray = {5, 7, 10};    //array com os 3 tabuleiros possiveis
+                int idx = new Random().nextInt(intArray.length);    //escolhe aleatoriamente um tabuleiro                
+                if(intArray[idx] == 5){ //caso seja o 5 o escolhido, gera um tabuleiro facil
+                    SET_DIFFICULTY = Game.DIFFICULTY_BOARD_EASY;
+                    Game.NUMBER_OF_ROWS = 4;
+                    Game.NUMBER_OF_COLUMNS = 4;
+                    generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
+                    //setTimer(30)
+                    Game.players.get(Game.playerID).getScore().setPoints(50); // Atribuição de 50 pontos iniciais ao jogador
+                }
+                if(intArray[idx] == 7){ //caso seja o 7 o escolhido, gera um tabuleiro medio
+                    SET_DIFFICULTY = Game.DIFFICULTY_BOARD_MEDIUM;
+                    Game.NUMBER_OF_ROWS = 6;
+                    Game.NUMBER_OF_COLUMNS = 6;
+                    generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
+                    //setTimer(90)
+                    Game.players.get(Game.playerID).getScore().setPoints(100); // Atribuição de 100 pontos iniciais ao jogador
+                }
+                if(intArray[idx] == 10){    //caso seja o 10 o escolhido, gera um tabuleiro dificil
+                    SET_DIFFICULTY = Game.DIFFICULTY_BOARD_HARD;
+                    Game.NUMBER_OF_ROWS = 9;
+                    Game.NUMBER_OF_COLUMNS = 9;
+                    generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
+                    //setTimer(150)
+                    Game.players.get(Game.playerID).getScore().setPoints(150); // Atribuição de 100 pontos iniciais ao jogador
+                }
                 break;
             case 2: // Criação de um tabuleiro de Game de dificuldade "Fácil"
                 SET_DIFFICULTY = Game.DIFFICULTY_BOARD_EASY;
@@ -80,7 +102,7 @@ public class Board {
         if (SET_DIFFICULTY == Game.DIFFICULTY_BOARD_EASY) { // Caso a dificuldade definida seja "Fácil", cria um tabuleiro de Game com base nas propriedades dessa mesma dificuldade
             for (i = 0; i < Game.DIFFICULTY_BOARD_EASY; i++) {
                 for (j = 0; j < Game.DIFFICULTY_BOARD_EASY; j++) {
-                    board.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
+                    Game.gameBoard.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
                     Game.unknown.add(getIndex(i, j)); // Atribuição do estado "Unknown" à posição referente às cordenadas anteriores
                 }
             }
@@ -89,7 +111,7 @@ public class Board {
         if (SET_DIFFICULTY == Game.DIFFICULTY_BOARD_MEDIUM) { // Caso a dificuldade definida seja "Médio", cria um tabuleiro de Game com base nas propriedades dessa mesma dificuldade
             for (i = 0; i < Game.DIFFICULTY_BOARD_MEDIUM; i++) {
                 for (j = 0; j < Game.DIFFICULTY_BOARD_MEDIUM; j++) {
-                    board.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
+                    Game.gameBoard.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
                     Game.unknown.add(getIndex(i, j)); // Atribuição do estado "Unknown" à posição referente às cordenadas anteriores
                 }
             }
@@ -98,7 +120,7 @@ public class Board {
         if (SET_DIFFICULTY == Game.DIFFICULTY_BOARD_HARD) { // Caso a dificuldade definida seja "Difícil", cria um tabuleiro de Game com base nas propriedades dessa mesma dificuldade
             for (i = 0; i < Game.DIFFICULTY_BOARD_HARD; i++) {
                 for (j = 0; j < Game.DIFFICULTY_BOARD_HARD; j++) {
-                    board.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
+                    Game.gameBoard.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
                     Game.unknown.add(getIndex(i, j)); // Atribuição do estado "Unknown" à posição referente às cordenadas anteriores
                 }
             }
@@ -110,8 +132,8 @@ public class Board {
     //DEVOLVE A POSIÇÃO NO ARRAYLIST DADAS AS COORDENADAS E A CASA - REVER
     public static int getIndexFromPlace(int x, int y, char indentifier) {
         int arrayNumber = -1;
-        for (i = 0; i < board.size(); i++) { // Ciclo for que percorre as posições do tabuleiro
-            if (board.get(i).getPosition().getRow() == x && board.get(i).getPosition().getColumn() == y && board.get(i).toString().equals("-")) {
+        for (i = 0; i < Game.gameBoard.size(); i++) { // Ciclo for que percorre as posições do tabuleiro
+            if (Game.gameBoard.get(i).getPosition().getRow() == x && Game.gameBoard.get(i).getPosition().getColumn() == y && Game.gameBoard.get(i)  instanceof Unknown) {
                 arrayNumber = i; //verificar porque começa em 0
             }
         }
@@ -123,9 +145,9 @@ public class Board {
     //DEVOLVE A POSIÇÃO NO ARRAYLIST DADAS AS COORDENADAS
     public static int getIndex(int x, int y) {
         int arrayNumber = -1;
-        for (Spot boardObj : board) { // Ciclo for que percorre as posições do tabuleiro
+        for (Spot boardObj : Game.gameBoard) { // Ciclo for que percorre as posições do tabuleiro
             if (boardObj.getPosition().getRow() == x && boardObj.getPosition().getColumn() == y) { // Caso o objeto casa possua uma coordenada X e Y, guarda a posição dessa mesma casa
-                arrayNumber = board.indexOf(boardObj); // Variável onde é guardado o valor relativo à posição da casa
+                arrayNumber = Game.gameBoard.indexOf(boardObj); // Variável onde é guardado o valor relativo à posição da casa
             }
         }
         return arrayNumber; // Retorna a posição no array da casa
@@ -133,13 +155,13 @@ public class Board {
 
     //DEVOLVE AS COORDENADAS (x) DADA A POSIÇÃO NO ARRAYLIST
     public static int getRowFromIndex(int arrayNumber) {
-        int position = board.get(arrayNumber).getPosition().getRow(); // Guarda a coordenada X referente à posição (casa) recebida por parâmetro pelo método (arrayNumber)
+        int position = Game.gameBoard.get(arrayNumber).getPosition().getRow(); // Guarda a coordenada X referente à posição (casa) recebida por parâmetro pelo método (arrayNumber)
         return position; // Retorna a coordenada guardada na variável position
     }
 
     //DEVOLVE AS COORDENADAS (y) DADA A POSIÇÃO NO ARRAYLIST
     public static int getColumnFromIndex(int arrayNumber) {
-        int position = board.get(arrayNumber).getPosition().getColumn(); // Guarda a coordenada Y referente à posição (casa) recebida por parâmetro pelo método (arrayNumber)
+        int position = Game.gameBoard.get(arrayNumber).getPosition().getColumn(); // Guarda a coordenada Y referente à posição (casa) recebida por parâmetro pelo método (arrayNumber)
         return position; // Retorna a coordenada guardada na variável position
     }
 
