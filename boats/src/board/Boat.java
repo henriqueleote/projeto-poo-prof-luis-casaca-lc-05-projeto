@@ -1,0 +1,30 @@
+package board;
+
+/**
+ *
+ * @author Leote (200221060)
+ */
+public class Boat extends Spot{
+
+    public char indentifier;                                                    //Variavel char para o identificador no tabuleiro de jogo
+    
+    //CONSTRUTOR - Define valores recebidos
+    public Boat(int x, int y){
+        super(x,y);
+        position = new Position(x,y);
+        indentifier = 'B';
+    }
+    
+    //DEVOLVE O IDENTIFICADOR - A FUNCIONAR
+    public char getIndentifier(){
+        return indentifier;
+    }
+
+    //IMPRIME PARA STRING - A FUNCIONAR
+    @Override
+    public String toString(){
+        return Character.toString(getIndentifier());                            //Converte de char para String no output
+    }
+    
+}
+
