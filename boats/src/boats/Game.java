@@ -28,6 +28,7 @@ public class Game {
     public static Scanner input = new Scanner(System.in);
     public static int playerID;
     public static Score score;
+    public static int attempts;
 
     //MAIN
     public static void main(String[] args) {
@@ -247,6 +248,7 @@ public class Game {
                     placeBoat(position);
                 } else {
                     score.missedBoat();
+                    attempts++;
                     try {
                         throw new BoatsIllegalArgumentException(ErrorCode.BOAT_CANT_POSITION.toString());
                     } catch (Exception e) {
@@ -258,6 +260,7 @@ public class Game {
                 placeWater(position);
             }
         } else {
+            attempts++;
             try {
                 throw new BoatsIllegalArgumentException(ErrorCode.POSITION_OCCUPIED.toString());
             } catch (Exception e) {
@@ -268,10 +271,22 @@ public class Game {
         //FALTAM VALIDAÇÕES        
         //CASO PONHA NO SITIO ERRADO, PORQUITOS
     }
+
     
-    //VALIDA O TABULEIRO NO FIM DO JOGO - TODO
-    public static void validateBoard(){
-        score.singleCheck();
+    //VALIDA O TABULEIRO NO FIM DO JOGO
+    public static void endValidateBoard(){
+        int count=0;
+        for (i = 0; i < gameBoard.size(); i++) { // Ciclo for que cria objetos do tipo "Água" no tabuleiro
+            if (gameBoard.get(i) instanceof Dock) {
+                if(!(gameBoard.get(Board.getIndex(Board.getRowFromIndex(i), Board.getColumnFromIndex(i)-1)) instanceof Boat) && !(gameBoard.get(Board.getIndex(Board.getRowFromIndex(i)-1, Board.getColumnFromIndex(i))) instanceof Boat) && !(gameBoard.get(Board.getIndex(Board.getRowFromIndex(i), Board.getColumnFromIndex(i)+1)) instanceof Boat) && !(gameBoard.get(Board.getIndex(Board.getRowFromIndex(i)+1, Board.getColumnFromIndex(i))) instanceof Boat))
+                  count++;
+            }
+        }
+        if(count==0)
+            score.singleCheck();
+        else
+            System.out.println("Esqueceu-se de preencher" + count + " lugares no tabuleiro");
+        score.missedAttempts(attempts);
         score.checkRecord();
         placeRemainWater();
         print();
