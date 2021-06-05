@@ -1,31 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package boats;
 
 /**
  *
- * @author CucasPC
+ * @author Leote (200221060)
  */
 public class Water extends Spot{
 
-    char indentifier;
+    char indentifier;           //Variavel char para o identificador no tabuleiro de jogo
     
+    //CONSTRUTOR - Define valores recebidos
     public Water(int x, int y){
         super(x,y);
         position = new Position(x,y);
         indentifier = '.';
     }
     
+    //DEVOLVE O IDENTIFICADOR - A FUNCIONAR
     public char getIndentifier(){
         return indentifier;
     }
 
+    //IMPRIME PARA STRING - A FUNCIONAR
     @Override
     public String toString(){
-        return Character.toString(getIndentifier());
+        return Character.toString(getIndentifier());    //Converte de char para String no output
     }
     
 }
+

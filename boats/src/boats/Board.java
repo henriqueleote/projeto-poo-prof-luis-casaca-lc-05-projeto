@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package boats;
 
 import static boats.Game.SET_DIFFICULTY;
@@ -11,7 +6,7 @@ import java.util.Random;
 
 /**
  *
- * @author CucasPC
+ * @author Leote (200221060)
  */
 public class Board {
     
@@ -37,9 +32,9 @@ public class Board {
 
         switch (option) { // Verificação da opção escolhida pelo utilizador
             case 1:
-                int[] intArray = {5, 7, 10};    //array com os 3 tabuleiros possiveis
-                int idx = new Random().nextInt(intArray.length);    //escolhe aleatoriamente um tabuleiro                
-                if(intArray[idx] == 5){ //caso seja o 5 o escolhido, gera um tabuleiro facil
+                int[] array = {5, 7, 10};    //array com os 3 tabuleiros possiveis
+                int index = new Random().nextInt(array.length);    //escolhe aleatoriamente um tabuleiro                
+                if(array[index] == 5){ //caso seja o 5 o escolhido, gera um tabuleiro facil
                     SET_DIFFICULTY = Game.DIFFICULTY_BOARD_EASY;
                     Game.NUMBER_OF_ROWS = 4;
                     Game.NUMBER_OF_COLUMNS = 4;
@@ -47,7 +42,7 @@ public class Board {
                     //setTimer(30)
                     Game.players.get(Game.playerID).getScore().setPoints(50); // Atribuição de 50 pontos iniciais ao jogador
                 }
-                if(intArray[idx] == 7){ //caso seja o 7 o escolhido, gera um tabuleiro medio
+                if(array[index] == 7){ //caso seja o 7 o escolhido, gera um tabuleiro medio
                     SET_DIFFICULTY = Game.DIFFICULTY_BOARD_MEDIUM;
                     Game.NUMBER_OF_ROWS = 6;
                     Game.NUMBER_OF_COLUMNS = 6;
@@ -55,7 +50,7 @@ public class Board {
                     //setTimer(90)
                     Game.players.get(Game.playerID).getScore().setPoints(100); // Atribuição de 100 pontos iniciais ao jogador
                 }
-                if(intArray[idx] == 10){    //caso seja o 10 o escolhido, gera um tabuleiro dificil
+                if(array[index] == 10){    //caso seja o 10 o escolhido, gera um tabuleiro dificil
                     SET_DIFFICULTY = Game.DIFFICULTY_BOARD_HARD;
                     Game.NUMBER_OF_ROWS = 9;
                     Game.NUMBER_OF_COLUMNS = 9;

@@ -2,7 +2,7 @@ package boats;
 
 /**
  *
- * @author Gonçalo Fernandes e Henrique Leote
+ * @author Leote (200221060)
  */
 public class Position {
 

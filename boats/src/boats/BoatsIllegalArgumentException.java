@@ -1,20 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package boats;
 
 /**
  *
- * @author CucasPC
+ * @author Leote (200221060)
  */
-public class BoatsIllegalArgumentException extends IllegalArgumentException {
-    
+public class BoatsIllegalArgumentException extends Exception{
+
+    private String message;
     ErrorCode code;
-    
-    public BoatsIllegalArgumentException(ErrorCode code){
-        super();
+ 
+    public BoatsIllegalArgumentException(String msg)
+    {
+        this.message = msg;
+    }
+    //Message can be retrieved using this accessor method
+    public String getMessage() {
+        return message;
     }
     
     public ErrorCode getCode(){

@@ -1,26 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package boats;
 
 /**
- * @author CucasPC
+ *
+ * @author Leote (200221060)
  */
-
 public class Spot{  
-    Position position;
     
+    Position position;              //Objeto da classe Position para a posição da casa
+    
+    //CONSTRUTOR - Define valores recebidos
     public Spot(int x, int y){
         position = new Position(x,y);
     }
     
+    //DEFINE A POSIÇÃO DA CASA - A FUNCIONAR
     public void setPosition(int x, int y){
         position.setRow(x);
         position.setColumn(y);
     }
     
+    //DEVOLVE A POSIÇÃO DA CASA - A FUNCIONAR
     public Position getPosition(){
         return position;
     }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package boats;
 
 import static boats.Game.menu;
@@ -10,61 +5,77 @@ import static boats.Game.players;
 
 /**
  *
- * @author CucasPC
+ * @author Leote (200221060)
  */
 public class Score {
-    int points;
-    int high;
-    int level;
-    
+    int points;                 //Variavel inteira para os pontos
+    int high;                   //Variavel inteira para o recorde
+
+    //CONSTRUTOR - Define valores recebidos
     public Score(int points){
         this.points = points;
         this.high = 0;
     }
     
+    //DEVOLVE OS PONTOS - A FUNCIONAR
     public int getPoints(){
         return points;
     }
     
+    //DEVOLVE O RECORDE - A FUNCIONAR
     public int getHigh(){
         return high;
     }
     
+    //DEFINE OS PONTOS - A FUNCIONAR
     public void setPoints(int points){
         this.points = points;
     }
     
+    //DEFINE O RECORDE - A FUNCIONAR
     public void setHigh(int high){
         this.high = high;
     }
     
+    //RETIRA 2 PONTOS À PONTUACAO POR FALHAR A CASA - A FUNCIONAR
     public void missedWater(){
         points-=2;
     }
     
+    //RETIRA 5 PONTOS À PONTUACAO POR FALHAR A CASA - A FUNCIONAR
     public void missedBoat(){
         points-=5;
     }
     
+    //RETIRA 10 PONTOS POR CADA TENTATIVA ERRADA - A FUNCIONAR
     public void missedAttempts(int attempts){
         points-=(attempts*10);
     }
     
+    //RETIRA 1 PONTO POR CADA SEGUNDO EXTRA - A FUNCIONAR
     public void plusTime(int seconds){
         points-=(seconds*1);
     }
     
+    //ADICIONA 1 PONTO POR CADA SEGUNDO EXTRA - A FUNCIONAR
     public void minusTime(int seconds){
         points+=(seconds*1);
     }
     
+    //ADICIONA 20 PONTOS SE COMPLETAR EM UMA SÓ VALIDAÇÃO - A FUNCIONAR
     public void singleCheck(){
         points+=20;
     }
     
-        //IMPRIME AS PONTUAÇÕES - REVER
+    public void checkRecord(){
+        if(points>=high){
+            high=points;
+        }
+    }
+    
+    //IMPRIME AS PONTUAÇÕES - A FUNCIONAR
     public static void printScore() {
-        System.out.println("Pontuações Gerais");
+        System.out.println("Pontuações Gerais:");
         players.forEach((n) -> System.out.println(n.getId() + "º - " + n.getNickname() + " - " + n.getScore().getPoints() + " pontos")); // É exibida no ecrã uma mensagem onde é referido o id, nickname e os pontos do utilizador
         System.out.println("Prima enter para voltar ao menu principal");
         try {
@@ -75,41 +86,20 @@ public class Score {
     }
 
     
-    //IMPRIME OS PONTOS DO JOGADOR - ///////////////////////////////////////////TODO
+    //IMPRIME OS PONTOS DO JOGADOR - A FUNCIONAR
     public static void printPlayerScore(Player player) {
-        System.out.println("Pontuações de " + player.getNickname());
-        //System.out.print("Pontuações Geral " + player.getNickname()); TODO
-        System.out.println("Nivel X - " + player.getScore().getPoints() + " pontos");
+        System.out.println("Pontuações de " + player.getNickname() + ":");
+        System.out.println(player.getScore().getPoints() + " pontos");
         System.out.println("Prima enter para voltar ao menu principal");
         try {
-            System.in.read();
-            menu();
-        } catch (Exception e) {
-        }
+            System.in.read(); // É lida a tecla premida pelo utilizador
+        } catch (Exception e) {}
+        menu(); // Retrocede-se ao menu
     }
     
+    //IMPRIME PARA STRING - A FUNCIONAR
+    @Override
     public String toString(){
         return "\nPontos: " + getPoints() + "\nRecorde: " + getHigh();
-    }
-   
-    public void gameEndVerification(int points){
-        // Verificação do preenchimento do tabuleiro
-        /* Caso os espaços não estejam todos corretamente preenchidos, o jogo continua.
-        -> Criação da variável "int numberOfFails" que deduzirá 10 pontos ao jogador por cada tentativa falhada.
-        -> Criação da variável "int pointsToDeduct", que deduzirá à pontuação final do jogador:
-        -> 2 pontos por falha na validação de casas do tipo "Água"; 
-        -> 5 pontos por cada segmento de um barco falhado;
-        */
-        
-        /* Caso os espaços do tabuleiro estejam todos preenchidos corretamente, o jogo termina e a pontuação final é calculada:
-        -> Criação da variável "int startingPontuation", que atribui uma pontuação base consoante o nível de dificuldade do jogo; */
-    
-        /* -> Criação da variável "int bonusPontuation", onde serão adicionados:
-        -> 20 pontos caso jogador tenha validado o tabuleiro corretamente à primeira tentativa (numberOfFails = 0);
-        -> Por cada segundo ultrapassado em relação ao tempo base, deduzir 1 ponto à pontuação final; por cada segundo que o jogador não tenha utilizado, incrementar 1 ponto à pontuação final */
-        
-        /* -> Criação da variável "int finalPontuation", que calculará a pontuação final do jogador através da seguinte equação: finalPontuation = startingPontuation - pointsToDeduct + bonusPontuation
-        -> Se o valor da variável finalPontuation for um número negativo, colocar a variável finalPontuation com o valor 0 (int finalPontuation = 0) */
-        
     }
 }

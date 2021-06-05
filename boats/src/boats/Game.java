@@ -1,21 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package boats;
 
-import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 /**
  *
- * @author CucasPC
+ * @author Leote (200221060)
  */
 public class Game {
 
@@ -35,6 +27,7 @@ public class Game {
     public static List<Integer> unknown = new ArrayList<Integer>();
     public static Scanner input = new Scanner(System.in);
     public static int playerID;
+    public static Score score;
 
     //MAIN
     public static void main(String[] args) {
@@ -132,8 +125,12 @@ public class Game {
             case 1:
                 Board.chooseDificulty(); // Redireciona o utilizar para o menu de escolha da dificuldade do jogo a ser jogado
                 break;
-            case 2: // ! TODO !
-                System.out.println("Funcionalidade indisponivel. Obrigado");
+            case 2:
+                try {
+                    throw new BoatsIllegalArgumentException(ErrorCode.NO_FUNCTION.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 menu();
                 break;
             case 3:
@@ -142,8 +139,12 @@ public class Game {
             case 4:
                 Score.printScore(); // Exibe a pontuação geral dos jogadores 
                 break;
-            case 5: // ! TODO !
-                System.out.println("Funcionalidade indisponivel. Obrigado");
+            case 5:
+                try {
+                    throw new BoatsIllegalArgumentException(ErrorCode.NO_FUNCTION.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 menu();
                 break;
             case 6:
@@ -189,6 +190,15 @@ public class Game {
         } catch (Exception e) {}
         menu(); // Retrocede-se ao menu
     }
+    
+    public static void printEnd(){
+        System.out.println("O jogo terminou, e você terminou com " + players.get(playerID).getScore().getPoints() + " pontos");
+        System.out.println("Prima enter para sair do jogo.");
+        try {
+            System.in.read(); // É lida a tecla premida pelo utilizador
+        } catch (Exception e) {}
+        System.exit(0);// Retrocede-se ao menu
+    }
 
     
     //IMPRIME O TABULEIRO DE JOGO - A FUNCIONAR
@@ -233,20 +243,39 @@ public class Game {
         int position = Board.getIndex(x, y);
         if (!(gameBoard.get(position) instanceof Dock) && !(gameBoard.get(position) instanceof Boat)) {
             if (move.equals("B")) {
-                if(Rules.checkSpotForBoat(x,y))
+                if (Rules.checkSpotForBoat(x, y)) {
                     placeBoat(position);
-                else
-                    System.out.print("Não pode colocar um barco nessa posição");  
+                } else {
+                    score.missedBoat();
+                    try {
+                        throw new BoatsIllegalArgumentException(ErrorCode.BOAT_CANT_POSITION.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
             if (move.equals("A")) {
                 placeWater(position);
             }
         } else {
-            System.out.print("Essa posição já se encontra ocupada");
+            try {
+                throw new BoatsIllegalArgumentException(ErrorCode.POSITION_OCCUPIED.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         print();
         //FALTAM VALIDAÇÕES        
         //CASO PONHA NO SITIO ERRADO, PORQUITOS
+    }
+    
+    //VALIDA O TABULEIRO NO FIM DO JOGO - TODO
+    public static void validateBoard(){
+        score.singleCheck();
+        score.checkRecord();
+        placeRemainWater();
+        print();
+        printEnd();
     }
 
     
@@ -278,7 +307,12 @@ public class Game {
     //COLOCA A AGUA NO TABULEIRO DE JOGO - A FUNCIONAR
     public static void placeWater(int arrayNumber) {
         if (gameBoard.get(arrayNumber) instanceof Dock || gameBoard.get(arrayNumber) instanceof Boat || gameBoard.get(arrayNumber) instanceof Water) { // Caso a posição verificada já possua um estado que não seja "Desconhecido, é emitida uma mensagem
-            System.out.println("Não pode colocar agua num lugar que não se encontra desconhecido.");
+            score.missedWater();
+            try {
+                throw new BoatsIllegalArgumentException(ErrorCode.NO_WATER_UNKNOWN.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             gameBoard.set(arrayNumber, new Water(gameBoard.get(arrayNumber).getPosition().getRow(), gameBoard.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Água", com as coordenadas correspondentes à posição a ser alterada
             water.add(arrayNumber); // Adição do objeto do tipo "Água" no array que guarda as posições do tipo "Água"

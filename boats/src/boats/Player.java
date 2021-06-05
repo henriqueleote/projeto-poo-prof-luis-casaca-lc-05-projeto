@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package boats;
 
 import static boats.Game.input;
@@ -14,50 +9,58 @@ import static boats.Game.start;
 
 /**
  *
- * @author CucasPC
+ * @author Leote (200221060)
  */
 public class Player {
-    int id;
-    String nickname;
-    Score score;
-    Player player;
-    
-    public Player(int id, String nickname, int score){
+
+    int id;                 //Variavel inteira para o ID
+    String nickname;        //Variavel string para o nickname
+    Score score;            //Objeto da classe score para a pontuação
+    Player player;          //Objeto da classe jogador para o jogador definido
+
+    //CONSTRUTOR - Define valores recebidos
+    public Player(int id, String nickname, int score) {
         this.id = id;
         this.nickname = nickname;
         this.score = new Score(score);
     }
-    
-    public int getId(){
+
+    //DEVOLVE O ID DO UTILIZADOR - A FUNCIONAR
+    public int getId() {
         return id;
     }
-    
-    public String getNickname(){
+
+    //DEVOLVE O NICKNAME DO JOGADOR - A FUNCIONAR
+    public String getNickname() {
         return nickname;
     }
-   
-    
-    public Score getScore(){
+
+    //DEVOLVE A PONTUACAO DO JOGADOR - A FUNCIONAR
+    public Score getScore() {
         return score;
     }
-    
-    public Player getPlayer(){
+
+    //DEVOLVE O OBJETO DO JOGADOR - A FUNCIONAR
+    public Player getPlayer() {
         return player;
     }
-    
-    public void setId(){
+
+    //DEFINE O ID - A FUNCIONAR
+    public void setId() {
         this.id = id;
     }
-    
-    public void setNickname(String nickname){
+
+    //DEFINE O NICKNAME - A FUNCIONAR
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-    
-    public void setPlayer(Player player){
-        this.player=player;
+
+    //DEFINE O OBJETO DO JOGADOR - A FUNCIONAR
+    public void setPlayer(Player player) {
+        this.player = player;
     }
-    
-        //VERIFICA SE EXISTE ALGUM JOGADOR COM O NICKNAME INTRODUZIDO
+
+    //VERIFICA SE EXISTE ALGUM JOGADOR COM O NICKNAME INTRODUZIDO - A FUNCIONAR
     public static Player getPlayerByNickname(String nickname) {
         for (Player playerObj : players) { // Ciclo for que percorre a coleção de jogadores
             if (playerObj.getNickname().toLowerCase().trim().equals(nickname)) { // Caso exista um jogador com o respetivo nickname, devolve-o
@@ -66,8 +69,8 @@ public class Player {
         }
         return null; // Caso não exista, retorna o valor NULL
     }
-    
-        //CRIA UM JOGADOR - REVER JUST IN CASE (TRATAR DA CENA DOS PONTOS)
+
+    //CRIA UM JOGADOR - A FUNCIONAR
     public static void createPlayer() {
         System.out.print("Nickname -> ");
         String nickname = input.next().trim(); // Leitura do nickname digitado pelo utilizador
@@ -75,7 +78,11 @@ public class Player {
 
         if (player != null) { // Caso o nickname pretendido pelo utilizador já esteja registado na aplicação, é emitida uma mensagem de erro 
             if (players.contains(player)) {
-                System.out.println("O nickname inserido já se encontra em uso\n");
+                try {
+                    throw new BoatsIllegalArgumentException(ErrorCode.NICKNAME_ALREADY_EXISTS.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         } else { // Caso o nickname pretendido pelo utilizador ainda não exista em utilização, é criado um novo jogador com o respetivo nickname associado
             players.add(new Player(playerCount, nickname, 0));
@@ -85,7 +92,7 @@ public class Player {
         }
     }
 
-    //ESCOLHE O JOGADOR - REVER JUST IN CASE (TRATAR DA CENA DOS PONTOS)
+    //ESCOLHE O JOGADOR - A FUNCIONAR
     public static void choosePlayer() {
         System.out.print("Nickname -> ");
         String nickname = input.next().trim(); // O utilizador insere o seu nickname
@@ -97,13 +104,18 @@ public class Player {
                 menu(); // Retrocede-se ao menu
             }
         } else { // Caso o nickname inserido não corresponda a nenhum jogador, é emitida uma mensagem de erro
-            System.out.println("Não existe nenhum utilizador com o nickname inserido\n");
+            try {
+                    throw new BoatsIllegalArgumentException(ErrorCode.NICKNAME_DOESNT_EXIST.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             start(); // Retrocede-se ao menu principal
         }
     }
-    
+
+    //IMPRIME PARA STRING - A FUNCIONAR
     @Override
-    public String toString(){
+    public String toString() {
         return "\nID: " + getId() + "\nNickname: " + getNickname() + getScore().toString();
     }
 }
