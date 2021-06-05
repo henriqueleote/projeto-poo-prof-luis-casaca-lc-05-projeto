@@ -10,12 +10,13 @@ import board.Board;
  */
 public class Rules {
     
-    public static Game game = new Game();   
-    public static Board board = new Board();
+    public static Game game = new Game();                                       //Objeto da classe Game
+    public static Board board = new Board();                                    //Objeto da classe Board
     
     //CONSTRUTOR VAZIO
     public Rules(){}
 
+    //VERIFICA SE A POSIÇÃO PEDIDA EXISTE NA COLEÇÃO E DEVOLVE UM BOOLEAN
     public boolean checkEmpty(int arrayNumber) {
         boolean result = false;
         if(game.gameBoard.contains(arrayNumber)){
@@ -30,6 +31,7 @@ public class Rules {
         return result;
     }
 
+    //VERIFICA SE A POSIÇÃO (x,y) PEDIDA EXISTE NA COLEÇÃO E DEVOLVE UM BOOLEAN
     public boolean checkBounds(int x, int y) {
         boolean result = false;
         if (x >= 0 && x < game.NUMBER_OF_ROWS && y >= 0 && y < game.NUMBER_OF_COLUMNS) {
@@ -40,6 +42,7 @@ public class Rules {
         return result;
     }
     
+    //VERIFICA SE A POSIÇÃO PEDIDA EXISTE NA COLEÇÃO E DEVOLVE UM BOOLEAN
     public boolean checkBounds(int arrayNumber) {
         boolean result = false;
         if (game.gameBoard.contains(arrayNumber)) {
@@ -50,36 +53,14 @@ public class Rules {
         return result;
     }
 
-//    public boolean checkSpotForDock(int random) {
-//        
-//        boolean result = false;
-//        if (checkBounds(board.getRowFromIndex(random) - 1, board.getColumnFromIndex(random) - 1) && checkEmpty(board.getIndex(board.getRowFromIndex(random) - 1, board.getColumnFromIndex(random) - 1))) {
-//            if (checkBounds(board.getRowFromIndex(random) - 1, board.getColumnFromIndex(random)) && checkEmpty(board.getIndex(board.getRowFromIndex(random) - 1, board.getColumnFromIndex(random)))) {
-//                if (checkBounds(board.getRowFromIndex(random) - 1, board.getColumnFromIndex(random) + 1) && checkEmpty(board.getIndex(board.getRowFromIndex(random) - 1, board.getColumnFromIndex(random) + 1))) {
-//                    if (checkBounds(board.getRowFromIndex(random), board.getColumnFromIndex(random) - 1) && checkEmpty(board.getIndex(board.getRowFromIndex(random), board.getColumnFromIndex(random) - 1))) {
-//                        if (checkBounds(board.getRowFromIndex(random), board.getColumnFromIndex(random) + 1) && checkEmpty(board.getIndex(board.getRowFromIndex(random), board.getColumnFromIndex(random) + 1))) {
-//                            if (checkBounds(board.getRowFromIndex(random) + 1, board.getColumnFromIndex(random) - 1) && checkEmpty(board.getIndex(board.getRowFromIndex(random) + 1, board.getColumnFromIndex(random) - 1))) {
-//                                if (checkBounds(board.getRowFromIndex(random) + 1, board.getColumnFromIndex(random)) && checkEmpty(board.getIndex(board.getRowFromIndex(random) + 1, board.getColumnFromIndex(random)))) {
-//                                    if (checkBounds(board.getRowFromIndex(random) + 1, board.getColumnFromIndex(random) + 1) && checkEmpty(board.getIndex(board.getRowFromIndex(random) + 1, board.getColumnFromIndex(random) + 1))) {
-//                                        result = true;
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return result;
-//    }
-    
-    public boolean checkSpotForDock(int row, int column){
+    //VERIFICA SE PODE SER POSTO UM PORTO NA POSIÇÃO (x,y) PEDIDA
+    public boolean checkSpotForDock(int x, int y){
         boolean result = false;
-        for(int x = row - 1; x < row - 1 + 3; x++)
+        for(int row = x - 1; row < x - 1 + 3; row++)
         {
-            for (int y = column - 1; y < column - 1 + 3; y++)
+            for (int column = y - 1; column < y - 1 + 3; column++)
             {
-                if (!(x == row && y == column))
+                if (!(row == x && column == y))
                 {
                     result = true;
                 }
@@ -89,7 +70,7 @@ public class Rules {
     }
     
     
-    //Verifica se pode ser colocado um barco naquela posição
+    //VERIFICA SE PODE SER POSTO UM PORTO NA POSIÇÃO (x,y) PEDIDA
     public boolean checkSpotForBoat(int x, int y){
         boolean result = false;
         if((checkBounds(x-1,y) && game.gameBoard.get(board.getIndex(x-1, y)) instanceof Dock) || (checkBounds(x+1,y) && game.gameBoard.get(board.getIndex(x+1, y)) instanceof Dock) || (checkBounds(x,y-1) && game.gameBoard.get(board.getIndex(x, y-1)) instanceof Dock) || (checkBounds(x,y+1) && game.gameBoard.get(board.getIndex(x, y+1)) instanceof Dock))

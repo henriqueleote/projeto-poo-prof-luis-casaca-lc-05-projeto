@@ -13,14 +13,14 @@ public class Spot{
         position = new Position(x,y);
     }
     
+    //DEVOLVE A POSIÇÃO DA CASA - A FUNCIONAR
+    public Position getPosition(){
+        return position;
+    }
+    
     //DEFINE A POSIÇÃO DA CASA - A FUNCIONAR
     public void setPosition(int x, int y){
         position.setRow(x);
         position.setColumn(y);
-    }
-    
-    //DEVOLVE A POSIÇÃO DA CASA - A FUNCIONAR
-    public Position getPosition(){
-        return position;
     }
 }

@@ -142,7 +142,7 @@ public class Game {
         switch (option) { // Verifica qual a opção escolhida pelo utilizador
             case 1:
                 if (gameBoard.isEmpty()) {
-                    board.chooseDificulty(); // Redireciona o utilizar para o menu de escolha da dificuldade do jogo a ser jogado
+                    board.chooseDifficulty(); // Redireciona o utilizar para o menu de escolha da dificuldade do jogo a ser jogado
                 } else {
                     print();
                 }
@@ -217,6 +217,7 @@ public class Game {
         menu(); // Retrocede-se ao menu
     }
 
+    //IMPRIME O TABULEIRO FINAL - A FUNCIONAR
     public void printEnd() {
         System.out.println("O jogo terminou, e você terminou com " + players.get(playerID).getScore().getPoints() + " pontos");
         System.out.println("Prima enter para sair do jogo.");

@@ -22,9 +22,7 @@ public class Board {
    
     
     //MENU PARA ESCOLHA DE DIFICULDADE - REVER
-    public void chooseDificulty() {
-        Game game = new Game();
-        
+    public void chooseDifficulty() {       
         System.out.println("Escolha a dificuldade:");
         System.out.println();
         System.out.println("1 - Iniciar Jogo aleatório");
@@ -98,7 +96,7 @@ public class Board {
                 game.start(); // Retrocede-se ao menu principal
                 break;
             default:
-                chooseDificulty(); // Caso não seja selecionada nenhuma das opções disponíveis, é exibido novamente o menu de  escolha de dificuldade
+                chooseDifficulty(); // Caso não seja selecionada nenhuma das opções disponíveis, é exibido novamente o menu de  escolha de dificuldade
                 break;
         }
     }
@@ -134,20 +132,6 @@ public class Board {
         game.placeDock(); // Colocação de portos no tabuleiro de game
     }
     
-    
-    //DEVOLVE A POSIÇÃO NO ARRAYLIST DADAS AS COORDENADAS E A CASA - REVER
-    public int getIndexFromPlace(int x, int y, char indentifier) {
-        int arrayNumber = -1;
-        for (i = 0; i < game.gameBoard.size(); i++) { // Ciclo for que percorre as posições do tabuleiro
-            if (game.gameBoard.get(i).getPosition().getRow() == x && game.gameBoard.get(i).getPosition().getColumn() == y && game.gameBoard.get(i)  instanceof Unknown) {
-                arrayNumber = i; //verificar porque começa em 0
-            }
-        }
-        return arrayNumber; // retorna o índice da coordenada e da casa inserida
-    }
-
-
-
     //DEVOLVE A POSIÇÃO NO ARRAYLIST DADAS AS COORDENADAS
     public int getIndex(int x, int y) {
         int arrayNumber = -1;
