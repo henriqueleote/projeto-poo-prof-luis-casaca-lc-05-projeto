@@ -1,21 +1,22 @@
 package boats;
 
-import static boats.Game.menu;
-import static boats.Game.players;
-
 /**
  *
  * @author Leote (200221060)
  */
 public class Score {
-    int points;                 //Variavel inteira para os pontos
-    int high;                   //Variavel inteira para o recorde
+    public int points;                 //Variavel inteira para os pontos
+    public int high;                   //Variavel inteira para o recorde
+    public static Game game = new Game();
 
     //CONSTRUTOR - Define valores recebidos
     public Score(int points){
         this.points = points;
         this.high = 0;
     }
+    
+    //CONSTRUTOR VAZIO
+    public Score(){}
     
     //DEVOLVE OS PONTOS - A FUNCIONAR
     public int getPoints(){
@@ -67,6 +68,7 @@ public class Score {
         points+=20;
     }
     
+    //VERIFICAR SE A PONTUAÇÃO É SUPERIOR AO RECORDE DO JOGADOR
     public void checkRecord(){
         if(points>=high){
             high=points;
@@ -74,27 +76,27 @@ public class Score {
     }
     
     //IMPRIME AS PONTUAÇÕES - A FUNCIONAR
-    public static void printScore() {
+    public void printScore() {
         System.out.println("Pontuações Gerais:");
-        players.forEach((n) -> System.out.println(n.getId() + "º - " + n.getNickname() + " - " + n.getScore().getPoints() + " pontos")); // É exibida no ecrã uma mensagem onde é referido o id, nickname e os pontos do utilizador
+        game.players.forEach((n) -> System.out.println(n.getId() + "º - " + n.getNickname() + " - " + n.getScore().getPoints() + " pontos")); // É exibida no ecrã uma mensagem onde é referido o id, nickname e os pontos do utilizador
         System.out.println("Prima enter para voltar ao menu principal");
         try {
             System.in.read(); // É lida a tecla premida pelo utilizador
-            menu(); // Retrocede-se ao menu
+            game.menu(); // Retrocede-se ao menu
         } catch (Exception e) {
         }
     }
 
     
     //IMPRIME OS PONTOS DO JOGADOR - A FUNCIONAR
-    public static void printPlayerScore(Player player) {
+    public void printPlayerScore(Player player) {
         System.out.println("Pontuações de " + player.getNickname() + ":");
         System.out.println(player.getScore().getPoints() + " pontos");
         System.out.println("Prima enter para voltar ao menu principal");
         try {
             System.in.read(); // É lida a tecla premida pelo utilizador
         } catch (Exception e) {}
-        menu(); // Retrocede-se ao menu
+        game.menu(); // Retrocede-se ao menu
     }
     
     //IMPRIME PARA STRING - A FUNCIONAR

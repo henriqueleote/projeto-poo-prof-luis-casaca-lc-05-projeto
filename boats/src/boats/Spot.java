@@ -6,7 +6,7 @@ package boats;
  */
 public class Spot{  
     
-    Position position;              //Objeto da classe Position para a posição da casa
+    public Position position;                                                   //Objeto da classe Position para a posição da casa
     
     //CONSTRUTOR - Define valores recebidos
     public Spot(int x, int y){

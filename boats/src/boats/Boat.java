@@ -6,7 +6,7 @@ package boats;
  */
 public class Boat extends Spot{
 
-    char indentifier;           //Variavel char para o identificador no tabuleiro de jogo
+    public char indentifier;                                                    //Variavel char para o identificador no tabuleiro de jogo
     
     //CONSTRUTOR - Define valores recebidos
     public Boat(int x, int y){
@@ -23,7 +23,7 @@ public class Boat extends Spot{
     //IMPRIME PARA STRING - A FUNCIONAR
     @Override
     public String toString(){
-        return Character.toString(getIndentifier());    //Converte de char para String no output
+        return Character.toString(getIndentifier());                            //Converte de char para String no output
     }
     
 }

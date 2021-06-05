@@ -6,18 +6,20 @@ package boats;
  */
 public class BoatsIllegalArgumentException extends Exception{
 
-    private String message;
-    ErrorCode code;
+    public String message;                                                      //Variavel String para a mensagem de erro
+    public ErrorCode code;                                                      //Objeto da classe ErrorCode para o codigo de erro
  
-    public BoatsIllegalArgumentException(String msg)
-    {
+    //CONSTRUTOR - Define valores recebidos
+    public BoatsIllegalArgumentException(String msg){
         this.message = msg;
     }
-    //Message can be retrieved using this accessor method
+    
+    //DEVOLVE A MENSAGEM DE ERRO - A FUNCIONAR
     public String getMessage() {
         return message;
     }
     
+    //DEVOLVE O CODIGO ERRO - A FUNCIONAR
     public ErrorCode getCode(){
         return code;
     }

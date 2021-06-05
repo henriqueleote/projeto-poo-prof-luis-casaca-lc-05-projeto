@@ -6,40 +6,42 @@ package boats;
  */
 public class Position {
 
-    public int x;                       //variavel para as linhas
-    public int y;                       //variavel para as colunas
+    public int x;                                                               //Variavel inteira para as linhas
+    public int y;                                                               //Variavel inteira para as colunas
 
-    //construtor da classe Position que recebe as linhas e colunas
+    
+    //CONSTRUTOR - Define valores recebidos
     public Position(int x, int y) {
-        this.x = x;                     //inicializar a variavel com o numero de linhas recebida
-        this.y = y;                     //inicializar a variavel com o numero de colunas recebida
+        this.x = x; 
+        this.y = y;
     }
 
-    public Position() {
-    }
+    
+    //CONSTRUTOR VAZIO
+    public Position() {}
 
-    //GETS
-    //metodo que devolve o numero de linhas
+    
+    //DEVOLVE A LINHA - A FUNCIONAR
     public int getRow() {
         return x;
     }
 
-    //metodo que devolve o numero de colunas
+    //DEVOLVE A COLUNA - A FUNCIONAR
     public int getColumn() {
         return y;
     }
 
-    //SETS
-    //metodo que define o numero de linhas
+    //DEFINE A LINHA - A FUNCIONAR
     public void setRow(int x) {
         this.x = x;
     }
 
-    //metodo que define o numero de colunas
+    //DEFINE A COLUNA - A FUNCIONAR
     public void setColumn(int y) {
         this.y = y;
     }
 
+    //IMPRIME PARA STRING - A FUNCIONAR
     @Override
     public String toString(){
         return getRow()+ ":" + getColumn();
