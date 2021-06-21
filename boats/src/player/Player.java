@@ -118,7 +118,7 @@ public class Player {
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
-            game.start(); // Retrocede-se ao menu principal
+            game.start1(); // Retrocede-se ao menu principal
         }
     }
 

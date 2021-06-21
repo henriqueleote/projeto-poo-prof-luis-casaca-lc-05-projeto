@@ -12,12 +12,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  *
  * @author Leote (200221060)
  */
-public class Game {
+public class Game extends Application{
 
     public static int DIFFICULTY_BOARD_EASY = 5;                                //Variavel inteira para a dificuldade facil
     public static int DIFFICULTY_BOARD_MEDIUM = 7;                              //Variavel inteira para a dificuldade media
@@ -44,18 +56,108 @@ public class Game {
     public static Board board = new Board();                                    //Objeto da classe Board
     public static Score score = new Score();                                    //Objeto da classe Score
     public static Rules rules = new Rules();                                    //Objeto da classe Rules
+    
+    //PHASE 3
+
 
     //MAIN
     public static void main(String[] args) {
-        game.start(); //Inicializa o programa, exibindo o menu principal
+        launch(args);
+        game.start1(); //Inicializa o programa, exibindo o menu principal
     }
+    
+    @Override
+    public void start(Stage stage) {
+        Button createPlayerButton = new Button();                               //Botão do JavaFX
+        Button choosePlayerButton = new Button();                               //Botão do JavaFX
+        Button exitButton = new Button();                                       //Botão do JavaFX
+        Text labelOne = new Text();                                             //Texto do JavaFX
+        StackPane root = new StackPane();
+        Scene scene = new Scene(root, 500, 300);
+        stage.setTitle("Docks & Boats");
+        stage.setScene(scene);
+        stage.show();
+        
+        exitButton.setTranslateX(80);
+        exitButton.setTranslateY(0);
+        exitButton.setPrefSize(80, 30);
+        exitButton.setFont(Font.font("Dialog", 12));
+        exitButton.setText("Sair");
+        exitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.exit(0);
+            }
+        });
+        root.getChildren().add(exitButton);
+
+        createPlayerButton.setTranslateX(-80);
+        createPlayerButton.setTranslateY(-20);
+        createPlayerButton.setPrefSize(100, 30);
+        createPlayerButton.setFont(Font.font("Dialog", 12));
+        createPlayerButton.setText("Criar Jogador");
+        createPlayerButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                createPlayer(stage);
+                stage.hide();
+            }
+        });
+        root.getChildren().add(createPlayerButton);
+
+        choosePlayerButton.setTranslateX(-80);
+        choosePlayerButton.setTranslateY(20);
+        choosePlayerButton.setPrefSize(100, 30);
+        choosePlayerButton.setFont(Font.font("Dialog", 12));
+        choosePlayerButton.setText("Escolher Jogador");
+        choosePlayerButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.exit(0);
+            }
+        });
+        root.getChildren().add(choosePlayerButton);
+
+        labelOne = new Text(30, 50, "Seja bem-vindo ao Docks & Boats");
+        labelOne.setTranslateX(0);
+        labelOne.setTranslateY(-100);
+        labelOne.setFill(Color.rgb(0, 0, 0, 1));
+        labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));
+        root.getChildren().add(labelOne);
+    }
+    
+    public void createPlayer(Stage oldStage) {
+        Button backButton = new Button();                                       //Botão do JavaFX
+        StackPane root = new StackPane();
+        Scene scene = new Scene(root, 500, 300);
+        Stage stage = new Stage();
+        stage.setTitle("Criar jogador");
+        stage.setScene(scene);
+        stage.show();
+        
+        backButton.setTranslateX(190);
+        backButton.setTranslateY(120);
+        backButton.setPrefSize(80, 30);
+        backButton.setFont(Font.font("Dialog", 12));
+        backButton.setText("Voltar");
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                stage.hide();
+                oldStage.show();
+            }
+        });
+        root.getChildren().add(backButton);
+    }
+
+   
 
     //CONSTRUTOR VAZIO
     public Game() {
     }
 
     //IMPRIME O MENU PRINCIPAL - A FUNCIONAR
-    public void start() {
+    public void start1() {
         System.out.println("Seja bem-vindo ao Docks & Boats\n");
         System.out.println("Escolha uma opção");
         System.out.println();
@@ -83,7 +185,7 @@ public class Game {
                     System.exit(0);
                     break;
                 default:
-                    start(); // no caso de não ser escolhida nenhuma das opções facultadas ao utilizador, volta ao menu principal
+                    start1(); // no caso de não ser escolhida nenhuma das opções facultadas ao utilizador, volta ao menu principal
                     break;
             }
         } else {
@@ -177,7 +279,7 @@ public class Game {
                 printHelp(); // O utilizador é redirecionado para um menu de ajuda à compreensão das diferentes siglas inerentes ao jogo
                 break;
             case 7:
-                game.start(); // Retrocede-se ao menu principal
+                game.start1(); // Retrocede-se ao menu principal
                 break;
             case 0:
                 System.exit(0); // O programa é finalizado
