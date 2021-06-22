@@ -84,7 +84,7 @@ public class Score {
         System.out.println("Prima enter para voltar ao menu principal");
         try {
             System.in.read(); // É lida a tecla premida pelo utilizador
-            game.menu(); // Retrocede-se ao menu
+            game.menuOLD(); // Retrocede-se ao menuOLD
         } catch (Exception e) {
         }
     }
@@ -98,7 +98,7 @@ public class Score {
         try {
             System.in.read(); // É lida a tecla premida pelo utilizador
         } catch (Exception e) {}
-        game.menu(); // Retrocede-se ao menu
+        game.menuOLD(); // Retrocede-se ao menuOLD
     }
     
     //IMPRIME PARA STRING - A FUNCIONAR

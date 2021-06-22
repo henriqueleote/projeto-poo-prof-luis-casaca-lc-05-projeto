@@ -17,13 +17,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import static player.Player.game;
 
 /**
  *
@@ -63,101 +67,299 @@ public class Game extends Application{
     //MAIN
     public static void main(String[] args) {
         launch(args);
-        game.start1(); //Inicializa o programa, exibindo o menu principal
+        game.startOLD(); //Inicializa o programa, exibindo o menuOLD principal
     }
     
     @Override
     public void start(Stage stage) {
+        StackPane root = new StackPane();
+        Scene scene = new Scene(root, 400, 200);
         Button createPlayerButton = new Button();                               //Botão do JavaFX
         Button choosePlayerButton = new Button();                               //Botão do JavaFX
         Button exitButton = new Button();                                       //Botão do JavaFX
         Text labelOne = new Text();                                             //Texto do JavaFX
-        StackPane root = new StackPane();
-        Scene scene = new Scene(root, 500, 300);
+        
         stage.setTitle("Docks & Boats");
         stage.setScene(scene);
         stage.show();
+                        
+        labelOne.setText("Seja bem-vindo ao Docks & Boats");
+        labelOne.setTranslateX(0);
+        labelOne.setTranslateY(-50);
+        labelOne.setFill(Color.BLACK);
+        labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));
+        root.getChildren().add(labelOne);
+
+        createPlayerButton.setTranslateX(-70);
+        createPlayerButton.setTranslateY(0);
+        createPlayerButton.setPrefSize(120, 30);
+        createPlayerButton.setFont(Font.font("Dialog", 12));
+        createPlayerButton.setText("Criar Jogador");
+        root.getChildren().add(createPlayerButton);
+        createPlayerButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                createPlayer(stage);
+                stage.close();
+            }
+        });
         
-        exitButton.setTranslateX(80);
-        exitButton.setTranslateY(0);
+        choosePlayerButton.setTranslateX(-70);
+        choosePlayerButton.setTranslateY(40);
+        choosePlayerButton.setPrefSize(120, 30);
+        choosePlayerButton.setFont(Font.font("Dialog", 12));
+        choosePlayerButton.setText("Escolher Jogador");
+        root.getChildren().add(choosePlayerButton);
+        choosePlayerButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                choosePlayer(stage);
+                stage.close();
+            }
+        });
+
+        if (players.isEmpty()) {
+            choosePlayerButton.setVisible(false);
+            createPlayerButton.setTranslateX(-70);
+            createPlayerButton.setTranslateY(20);
+        }
+           
+        exitButton.setTranslateX(90);
+        exitButton.setTranslateY(20);
         exitButton.setPrefSize(80, 30);
         exitButton.setFont(Font.font("Dialog", 12));
         exitButton.setText("Sair");
+        root.getChildren().add(exitButton);
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 System.exit(0);
             }
         });
-        root.getChildren().add(exitButton);
-
-        createPlayerButton.setTranslateX(-80);
-        createPlayerButton.setTranslateY(-20);
-        createPlayerButton.setPrefSize(100, 30);
-        createPlayerButton.setFont(Font.font("Dialog", 12));
-        createPlayerButton.setText("Criar Jogador");
-        createPlayerButton.setOnAction(new EventHandler<ActionEvent>() {
+    }
+    
+    public void createPlayer(Stage oldStage) {
+        StackPane root = new StackPane();
+        Scene scene = new Scene(root, 400, 200);
+        Stage stage = new Stage();
+        Button backButton = new Button();                                       //Botão do JavaFX
+        Button createButton = new Button();                                     //Botão do JavaFX
+        Text labelOne = new Text();
+        Text labelTwo = new Text();
+        TextField nicknameField = new TextField();
+        
+        stage.setTitle("Criar jogador");
+        stage.setScene(scene);
+        stage.show();
+        
+        labelOne.setText("Criar jogador");
+        labelOne.setTranslateX(0);
+        labelOne.setTranslateY(-75);
+        labelOne.setFill(Color.BLACK);
+        labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));
+        root.getChildren().add(labelOne);
+        
+        labelTwo.setText("Nome:");
+        labelTwo.setTranslateX(-80);
+        labelTwo.setTranslateY(0);
+        labelTwo.setFill(Color.BLACK);
+        labelTwo.setFont(Font.font("Dialog", 12));
+        root.getChildren().add(labelTwo);
+               
+        nicknameField.setTranslateX(0);
+        nicknameField.setTranslateY(0);
+        nicknameField.setPrefWidth(100);
+        nicknameField.setMaxWidth(100);
+        root.getChildren().add(nicknameField);
+                
+        createButton.setTranslateX(130);
+        createButton.setTranslateY(75);
+        createButton.setPrefSize(110, 30);
+        createButton.setFont(Font.font("Dialog", 12));
+        createButton.setText("Criar Jogador");
+        root.getChildren().add(createButton);
+        createButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                createPlayer(stage);
-                stage.hide();
+                if (nicknameField.getText() == null || nicknameField.getText().trim().isEmpty())
+                    createAlert("Alerta","Falta de dados","Tem que preencher o nome do jogador.",AlertType.WARNING);
+                else{
+                    player.createPlayer(nicknameField.getText().toString().trim(), stage);
+                    //stage.close();
+                }
             }
         });
-        root.getChildren().add(createPlayerButton);
-
-        choosePlayerButton.setTranslateX(-80);
-        choosePlayerButton.setTranslateY(20);
-        choosePlayerButton.setPrefSize(100, 30);
-        choosePlayerButton.setFont(Font.font("Dialog", 12));
-        choosePlayerButton.setText("Escolher Jogador");
-        choosePlayerButton.setOnAction(new EventHandler<ActionEvent>() {
+       
+        backButton.setTranslateX(-150);
+        backButton.setTranslateY(75);
+        backButton.setPrefSize(80, 30);
+        backButton.setFont(Font.font("Dialog", 12));
+        backButton.setText("Voltar");
+        root.getChildren().add(backButton);
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+                start(new Stage());
+            }
+        });
+    }
+    
+    public void choosePlayer(Stage oldStage) {
+        StackPane root = new StackPane();
+        Scene scene = new Scene(root, 400, 200);
+        Stage stage = new Stage();
+        Button backButton = new Button();                                       //Botão do JavaFX
+        Button chooseButton = new Button();                                     //Botão do JavaFX
+        Text labelOne = new Text();
+        Text labelTwo = new Text();
+        TextField nicknameField = new TextField();
+        
+        stage.setTitle("Escolher jogador");
+        stage.setScene(scene);
+        stage.show();
+        
+        labelOne.setText("Escolher jogador");
+        labelOne.setTranslateX(0);
+        labelOne.setTranslateY(-75);
+        labelOne.setFill(Color.BLACK);
+        labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));
+        root.getChildren().add(labelOne);
+        
+        labelTwo.setText("Nome:");
+        labelTwo.setTranslateX(-80);
+        labelTwo.setTranslateY(0);
+        labelTwo.setFill(Color.BLACK);
+        labelTwo.setFont(Font.font("Dialog", 12));
+        root.getChildren().add(labelTwo);
+               
+        nicknameField.setTranslateX(0);
+        nicknameField.setTranslateY(0);
+        nicknameField.setPrefWidth(100);
+        nicknameField.setMaxWidth(100);
+        root.getChildren().add(nicknameField);
+        
+        chooseButton.setTranslateX(130);
+        chooseButton.setTranslateY(75);
+        chooseButton.setPrefSize(120, 30);
+        chooseButton.setFont(Font.font("Dialog", 12));
+        chooseButton.setText("Escolher Jogador");
+        root.getChildren().add(chooseButton);
+        chooseButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (nicknameField.getText() == null || nicknameField.getText().trim().isEmpty())
+                    createAlert("Alerta","Falta de dados","Tem que preencher o nome do jogador.",AlertType.WARNING);
+                else{
+                    player.choosePlayer(nicknameField.getText().toString().trim(), stage);
+                }     
+            }
+        });
+        
+        backButton.setTranslateX(-150);
+        backButton.setTranslateY(75);
+        backButton.setPrefSize(80, 30);
+        backButton.setFont(Font.font("Dialog", 12));
+        backButton.setText("Voltar");
+        root.getChildren().add(backButton);
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+                start(new Stage());
+            }
+        });
+    }
+    
+    public void menu(Stage oldStage) {
+        StackPane root = new StackPane();
+        Scene scene = new Scene(root, 400, 200);
+        Stage stage = new Stage();
+        Button backButton = new Button();                                       //Botão do JavaFX
+        Button startGame = new Button();                                        //Botão do JavaFX
+        Button loadGame = new Button();                                        //Botão do JavaFX
+        Text labelOne = new Text();
+        Text labelTwo = new Text();
+        
+        System.out.println("1 - Iniciar Jogo");
+        System.out.println("2 - Carregar Jogo");
+        System.out.println("3 - Pontuações Pessoais");
+        System.out.println("4 - Pontuações Gerais");
+        System.out.println("5 - Criação de Níveis");
+        System.out.println("6 - Ajuda");
+        System.out.println("7 - Voltar");
+        System.out.println("0 - Sair\n");
+        
+        stage.setTitle("Menu");
+        stage.setScene(scene);
+        stage.show();
+        
+        labelOne.setText("Olá " + players.get(playerID).getNickname());
+        labelOne.setTranslateX(0);
+        labelOne.setTranslateY(-75);
+        labelOne.setFill(Color.BLACK);
+        labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));
+        root.getChildren().add(labelOne);
+        
+        labelTwo.setText("Escolha uma opção:");
+        labelTwo.setTranslateX(0);
+        labelTwo.setTranslateY(-60);
+        labelTwo.setFill(Color.BLACK);
+        labelTwo.setFont(Font.font("Dialog", 14));
+        root.getChildren().add(labelTwo);
+              
+        startGame.setTranslateX(-70);
+        startGame.setTranslateY(0);
+        startGame.setPrefSize(120, 30);
+        startGame.setFont(Font.font("Dialog", 12));
+        startGame.setText("Iniciar Jogo");
+        root.getChildren().add(startGame);
+        startGame.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 System.exit(0);
             }
         });
-        root.getChildren().add(choosePlayerButton);
-
-        labelOne = new Text(30, 50, "Seja bem-vindo ao Docks & Boats");
-        labelOne.setTranslateX(0);
-        labelOne.setTranslateY(-100);
-        labelOne.setFill(Color.rgb(0, 0, 0, 1));
-        labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));
-        root.getChildren().add(labelOne);
-    }
-    
-    public void createPlayer(Stage oldStage) {
-        Button backButton = new Button();                                       //Botão do JavaFX
-        StackPane root = new StackPane();
-        Scene scene = new Scene(root, 500, 300);
-        Stage stage = new Stage();
-        stage.setTitle("Criar jogador");
-        stage.setScene(scene);
-        stage.show();
         
-        backButton.setTranslateX(190);
-        backButton.setTranslateY(120);
+        //Botão para carregar o jogo
+        loadGame.setTranslateX(70);
+        loadGame.setTranslateY(0);
+        loadGame.setPrefSize(120, 30);
+        loadGame.setFont(Font.font("Dialog", 12));
+        loadGame.setText("Carregar Jogo");
+        loadGame.setDisable(true);
+        root.getChildren().add(loadGame);
+        
+        //Botão para voltar atrás
+        backButton.setTranslateX(-150);
+        backButton.setTranslateY(75);
         backButton.setPrefSize(80, 30);
         backButton.setFont(Font.font("Dialog", 12));
         backButton.setText("Voltar");
+        root.getChildren().add(backButton);
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                stage.hide();
-                oldStage.show();
+                stage.close();
+                start(new Stage());
             }
         });
-        root.getChildren().add(backButton);
     }
-
-   
+    
+    public void createAlert(String title, String header, String message, AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     //CONSTRUTOR VAZIO
     public Game() {
     }
 
     //IMPRIME O MENU PRINCIPAL - A FUNCIONAR
-    public void start1() {
+    public void startOLD() {
         System.out.println("Seja bem-vindo ao Docks & Boats\n");
         System.out.println("Escolha uma opção");
         System.out.println();
@@ -185,7 +387,7 @@ public class Game extends Application{
                     System.exit(0);
                     break;
                 default:
-                    start1(); // no caso de não ser escolhida nenhuma das opções facultadas ao utilizador, volta ao menu principal
+                    startOLD(); // no caso de não ser escolhida nenhuma das opções facultadas ao utilizador, volta ao menuOLD principal
                     break;
             }
         } else {
@@ -219,7 +421,7 @@ public class Game extends Application{
     }
 
     //IMPRIME O MENU - A FUNCIONAR
-    public void menu() {
+    public void menuOLD() {
         System.out.println("----------------------------------\n");
         System.out.println("Olá " + players.get(playerID).getNickname());
         System.out.println("Escolha uma opção");
@@ -244,7 +446,7 @@ public class Game extends Application{
         switch (option) { // Verifica qual a opção escolhida pelo utilizador
             case 1:
                 if (gameBoard.isEmpty()) {
-                    board.chooseDifficulty(); // Redireciona o utilizar para o menu de escolha da dificuldade do jogo a ser jogado
+                    board.chooseDifficulty(); // Redireciona o utilizar para o menuOLD de escolha da dificuldade do jogo a ser jogado
                 } else {
                     print();
                 }
@@ -257,7 +459,7 @@ public class Game extends Application{
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
-                menu();
+                menuOLD();
                 break;
             case 3:
                 score.printPlayerScore(players.get(playerID)); // Exibe as pontuações pessoais do utilizador
@@ -273,13 +475,13 @@ public class Game extends Application{
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
-                menu();
+                menuOLD();
                 break;
             case 6:
-                printHelp(); // O utilizador é redirecionado para um menu de ajuda à compreensão das diferentes siglas inerentes ao jogo
+                printHelp(); // O utilizador é redirecionado para um menuOLD de ajuda à compreensão das diferentes siglas inerentes ao jogo
                 break;
             case 7:
-                game.start1(); // Retrocede-se ao menu principal
+                game.startOLD(); // Retrocede-se ao menuOLD principal
                 break;
             case 0:
                 System.exit(0); // O programa é finalizado
@@ -316,7 +518,7 @@ public class Game extends Application{
             System.in.read(); // É lida a tecla premida pelo utilizador
         } catch (Exception e) {
         }
-        menu(); // Retrocede-se ao menu
+        menuOLD(); // Retrocede-se ao menuOLD
     }
 
     //IMPRIME O TABULEIRO FINAL - A FUNCIONAR
@@ -327,7 +529,7 @@ public class Game extends Application{
             System.in.read(); // É lida a tecla premida pelo utilizador
         } catch (Exception e) {
         }
-        System.exit(0);// Retrocede-se ao menu
+        System.exit(0);// Retrocede-se ao menuOLD
     }
 
     //IMPRIME O TABULEIRO DE JOGO - A FUNCIONAR
@@ -359,7 +561,7 @@ public class Game extends Application{
                 move = input.next();
                 if (move.equals("sair") || move.equals("validar")) {
                     if (move.equals("sair")) {
-                        menu();
+                        menuOLD();
                     }
                     if (move.equals("validar")) {
                         endValidateBoard();
@@ -382,7 +584,7 @@ public class Game extends Application{
                 String string = input.next();
                 if (string.equals("sair") || string.equals("validar")) {
                     if (string.equals("sair")) {
-                        menu();
+                        menuOLD();
                     }
                     if (string.equals("validar")) {
                         endValidateBoard();
@@ -406,7 +608,7 @@ public class Game extends Application{
                 String string = input.next();
                 if (string.equals("sair") || string.equals("validar")) {
                     if (string.equals("sair")) {
-                        menu();
+                        menuOLD();
                     }
                     if (string.equals("validar")) {
                         endValidateBoard();

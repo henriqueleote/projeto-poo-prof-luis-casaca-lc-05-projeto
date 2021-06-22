@@ -93,10 +93,10 @@ public class Board {
                 game.players.get(game.playerID).getScore().setPoints(150); // Atribuição de 100 pontos iniciais ao jogador
                 break;
             case 0:
-                game.start1(); // Retrocede-se ao menu principal
+                game.startOLD(); // Retrocede-se ao menuOLD principal
                 break;
             default:
-                chooseDifficulty(); // Caso não seja selecionada nenhuma das opções disponíveis, é exibido novamente o menu de  escolha de dificuldade
+                chooseDifficulty(); // Caso não seja selecionada nenhuma das opções disponíveis, é exibido novamente o menuOLD de  escolha de dificuldade
                 break;
         }
     }

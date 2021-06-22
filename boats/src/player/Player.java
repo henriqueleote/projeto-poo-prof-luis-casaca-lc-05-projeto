@@ -3,6 +3,9 @@ package player;
 import game.Game;
 import player.Score;
 import java.util.Scanner;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 
 /**
  *
@@ -95,10 +98,10 @@ public class Player {
             game.players.add(new Player(game.playerCount, nickname, 0));
             game.playerID = game.players.get(game.playerCount).getId();
             game.playerCount++;
-            game.menu(); // Retrocede-se ao menu
+            game.menuOLD(); // Retrocede-se ao menuOLD
         }
     }
-
+    
     //ESCOLHE O JOGADOR - A FUNCIONAR
     public void choosePlayer() {
         System.out.print("Nickname -> ");
@@ -108,7 +111,7 @@ public class Player {
         if (player != null) { // Caso o nickname (jogador) exista, é extraído o index referente ao mesmo, o que carateriza a seleção do jogador a ser utilizado
             if (game.players.contains(player)) {
                 game.playerID = game.players.indexOf(player);
-                game.menu(); // Retrocede-se ao menu
+                game.menuOLD(); // Retrocede-se ao menuOLD
             }
         } else { // Caso o nickname inserido não corresponda a nenhum jogador, é emitida uma mensagem de erro
             System.out.println("Não existe nenhum utilizador com o nickname inserido.");
@@ -118,7 +121,53 @@ public class Player {
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
-            game.start1(); // Retrocede-se ao menu principal
+            game.startOLD(); // Retrocede-se ao menuOLD principal
+        }
+    }
+    
+    //CRIA UM JOGADOR - A FUNCIONAR (PHASE 3 COMPLETE)
+    public void createPlayer(String nickname, Stage oldStage) {
+        Player player = getPlayerByNickname(nickname); // Associação do jogador ao nickname
+
+        if (player != null) { // Caso o nickname pretendido pelo utilizador já esteja registado na aplicação, é emitida uma mensagem de erro 
+            if (game.players.contains(player)) {
+                game.createAlert("Erro","Utilizador em uso","O nickname inserido já se encontra em uso.",AlertType.ERROR);
+                //Não foram utilizadas as exceções visto que interrompiam o programa aquando necessitadas, funcionam, mas estão em comentário
+//                try {
+//                    throw new BoatsIllegalArgumentException(ErrorCode.NICKNAME_ALREADY_EXISTS.toString());
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+            }
+        } else { // Caso o nickname pretendido pelo utilizador ainda não exista em utilização, é criado um novo jogador com o respetivo nickname associado
+            game.players.add(new Player(game.playerCount, nickname, 0));
+            game.playerID = game.players.get(game.playerCount).getId();
+            game.playerCount++;
+            oldStage.close();
+            //game.menuOLD(); // Retrocede-se ao menuOLD
+            game.menu(oldStage);
+        }
+    }
+    
+    //ESCOLHE O JOGADOR - A FUNCIONAR (PHASE 3 COMPLETE)
+    public void choosePlayer(String nickname, Stage oldStage) {
+        Player player = getPlayerByNickname(nickname);
+
+        if (player != null) { // Caso o nickname (jogador) exista, é extraído o index referente ao mesmo, o que carateriza a seleção do jogador a ser utilizado
+            if (game.players.contains(player)) {
+                game.playerID = game.players.indexOf(player);
+                oldStage.close();
+                //game.menuOLD(); // Retrocede-se ao menuOLD
+                game.menu(oldStage);
+            }
+        } else { // Caso o nickname inserido não corresponda a nenhum jogador, é emitida uma mensagem de erro
+            game.createAlert("Erro","Utilizador desconhecido","Não existe nenhum utilizador com o nickname inserido.",AlertType.ERROR);
+            //Não foram utilizadas as exceções visto que interrompiam o programa aquando necessitadas, funcionam, mas estão em comentário
+//            try {
+//                    throw new BoatsIllegalArgumentException(ErrorCode.NICKNAME_DOESNT_EXIST.toString());
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
         }
     }
 
