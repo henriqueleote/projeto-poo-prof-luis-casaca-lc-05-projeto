@@ -1,8 +1,21 @@
 package board;
 
 import game.Game;
+import static game.Game.playerID;
+import static game.Game.players;
 import java.util.Random;
 import java.util.Scanner;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  *
@@ -20,6 +33,93 @@ public class Board {
     //CONSTRUTOR VAZIO
     public Board(){}
    
+    
+    //PAINEL DE DIFICULDADE - POR FAZER (PHASE 3 POR FAZER)
+    public void chooseDifficulty(Stage oldStage) {
+        StackPane root = new StackPane();
+        Scene scene = new Scene(root, 400, 200);
+        Stage stage = new Stage();
+        Button backButton = new Button();                                       //Botão do JavaFX
+        Button easyButton = new Button();
+        Button mediumButton = new Button();
+        Button hardButton = new Button();
+        Text labelOne = new Text();
+        Text labelTwo = new Text();
+        
+        stage.setTitle("Escolher dificuldade");
+        stage.setScene(scene);
+        stage.show();
+        
+        labelOne.setText("Escolher dificuldade");
+        labelOne.setTranslateX(0);
+        labelOne.setTranslateY(-80);
+        labelOne.setFill(Color.BLACK);
+        labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));
+        root.getChildren().add(labelOne);
+        
+        labelTwo.setText("Escolha uma dificuldade:");
+        labelTwo.setTranslateX(0);
+        labelTwo.setTranslateY(-50);
+        labelTwo.setFill(Color.BLACK);
+        labelTwo.setFont(Font.font("Dialog", 14));
+        root.getChildren().add(labelTwo);
+        
+        easyButton.setTranslateX(0);
+        easyButton.setTranslateY(-10);
+        easyButton.setPrefSize(120, 30);
+        easyButton.setFont(Font.font("Dialog", 12));
+        easyButton.setText("Fácil");
+        root.getChildren().add(easyButton);
+        easyButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.exit(0);
+            }
+        });
+        
+        mediumButton.setTranslateX(0);
+        mediumButton.setTranslateY(30);
+        mediumButton.setPrefSize(120, 30);
+        mediumButton.setFont(Font.font("Dialog", 12));
+        mediumButton.setText("Médio");
+        root.getChildren().add(mediumButton);
+        mediumButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.exit(0);
+            }
+        });
+        
+        //FIQUEI NA PARTE DE ALTERAR OS BOTOES DAS DIFICULDADES PARA FAZEREM AS AÇÕES E ESSAS CENAS
+        //ERA FIXE ADICIONAR UMA COR DE VERMELHO AOS BOTOES DE VOLTAR
+        
+        hardButton.setTranslateX(0);
+        hardButton.setTranslateY(70);
+        hardButton.setPrefSize(120, 30);
+        hardButton.setFont(Font.font("Dialog", 12));
+        hardButton.setText("Difícil");
+        root.getChildren().add(hardButton);
+        hardButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.exit(0);
+            }
+        });
+        
+        backButton.setTranslateX(-150);
+        backButton.setTranslateY(75);
+        backButton.setPrefSize(80, 30);
+        backButton.setFont(Font.font("Dialog", 12));
+        backButton.setText("Voltar");
+        root.getChildren().add(backButton);
+        
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+            }
+        });
+    }
     
     //MENU PARA ESCOLHA DE DIFICULDADE - REVER
     public void chooseDifficulty() {       

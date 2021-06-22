@@ -64,12 +64,13 @@ public class Game extends Application{
     //PHASE 3
 
 
-    //MAIN
+    //MAIN - A FUNCIONAR (PHASE 3 COMPLETE)
     public static void main(String[] args) {
         launch(args);
         game.startOLD(); //Inicializa o programa, exibindo o menuOLD principal
     }
     
+    //PAINEL PRINCIPAL - A FUNCIONAR (PHASE 3 COMPLETE)
     @Override
     public void start(Stage stage) {
         StackPane root = new StackPane();
@@ -138,6 +139,7 @@ public class Game extends Application{
         });
     }
     
+    //PAINEL PARA CRIAR JOGADOR - A FUNCIONAR (PHASE 3 COMPLETE)
     public void createPlayer(Stage oldStage) {
         StackPane root = new StackPane();
         Scene scene = new Scene(root, 400, 200);
@@ -200,11 +202,12 @@ public class Game extends Application{
             @Override
             public void handle(ActionEvent event) {
                 stage.close();
-                start(new Stage());
+                start(stage);
             }
         });
     }
     
+    //PAINEL PARA ESCOLHER JOGADOR - A FUNCIONAR (PHASE 3 COMPLETE)
     public void choosePlayer(Stage oldStage) {
         StackPane root = new StackPane();
         Scene scene = new Scene(root, 400, 200);
@@ -266,71 +269,178 @@ public class Game extends Application{
             @Override
             public void handle(ActionEvent event) {
                 stage.close();
-                start(new Stage());
+                start(stage);
             }
         });
     }
     
+    //PAINEL DE MENU - A FUNCIONAR (PHASE 3 COMPLETE)
     public void menu(Stage oldStage) {
         StackPane root = new StackPane();
-        Scene scene = new Scene(root, 400, 200);
+        Scene scene = new Scene(root, 400, 280);
         Stage stage = new Stage();
+        Button startGameButton = new Button();                                        //Botão do JavaFX
+        Button loadGameButton = new Button();                                         //Botão do JavaFX
+        Button personalScoreButton = new Button();                                         //Botão do JavaFX
+        Button generalScoreButton = new Button();                                         //Botão do JavaFX
+        Button levelCreationButton = new Button();                                         //Botão do JavaFX
+        Button helpButton = new Button();                                         //Botão do JavaFX
         Button backButton = new Button();                                       //Botão do JavaFX
-        Button startGame = new Button();                                        //Botão do JavaFX
-        Button loadGame = new Button();                                        //Botão do JavaFX
+        Button exitButton = new Button();                                         //Botão do JavaFX
         Text labelOne = new Text();
         Text labelTwo = new Text();
-        
-        System.out.println("1 - Iniciar Jogo");
-        System.out.println("2 - Carregar Jogo");
-        System.out.println("3 - Pontuações Pessoais");
-        System.out.println("4 - Pontuações Gerais");
-        System.out.println("5 - Criação de Níveis");
-        System.out.println("6 - Ajuda");
-        System.out.println("7 - Voltar");
-        System.out.println("0 - Sair\n");
+        Text labelThree = new Text();
         
         stage.setTitle("Menu");
         stage.setScene(scene);
         stage.show();
         
         labelOne.setText("Olá " + players.get(playerID).getNickname());
-        labelOne.setTranslateX(0);
-        labelOne.setTranslateY(-75);
+        labelOne.setTranslateX(-110);
+        labelOne.setTranslateY(-120);
         labelOne.setFill(Color.BLACK);
         labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));
         root.getChildren().add(labelOne);
         
         labelTwo.setText("Escolha uma opção:");
         labelTwo.setTranslateX(0);
-        labelTwo.setTranslateY(-60);
+        labelTwo.setTranslateY(-82);
         labelTwo.setFill(Color.BLACK);
         labelTwo.setFont(Font.font("Dialog", 14));
         root.getChildren().add(labelTwo);
+        
+        labelThree.setText("Pontos: " + players.get(playerID).getScore().getPoints());
+        labelThree.setTranslateX(110);
+        labelThree.setTranslateY(-120);
+        labelThree.setFill(Color.GREEN);
+        labelThree.setFont(Font.font("Dialog", FontWeight.BOLD, 16));
+        root.getChildren().add(labelThree);
               
-        startGame.setTranslateX(-70);
-        startGame.setTranslateY(0);
-        startGame.setPrefSize(120, 30);
-        startGame.setFont(Font.font("Dialog", 12));
-        startGame.setText("Iniciar Jogo");
-        root.getChildren().add(startGame);
-        startGame.setOnAction(new EventHandler<ActionEvent>() {
+        startGameButton.setTranslateX(-70);
+        startGameButton.setTranslateY(-40);
+        startGameButton.setPrefSize(120, 30);
+        startGameButton.setFont(Font.font("Dialog", 12));
+        startGameButton.setText("Iniciar Jogo");
+        root.getChildren().add(startGameButton);
+        startGameButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                board.chooseDifficulty(stage);
+            }
+        });
+        
+        //Botão para carregar o jogo
+        loadGameButton.setTranslateX(70);
+        loadGameButton.setTranslateY(-40);
+        loadGameButton.setPrefSize(120, 30);
+        loadGameButton.setFont(Font.font("Dialog", 12));
+        loadGameButton.setText("Carregar Jogo");
+        loadGameButton.setDisable(true);
+        root.getChildren().add(loadGameButton);
+        
+        personalScoreButton.setTranslateX(-70);
+        personalScoreButton.setTranslateY(0);
+        personalScoreButton.setPrefSize(120, 30);
+        personalScoreButton.setFont(Font.font("Dialog", 12));
+        personalScoreButton.setText("Consultar Pontos");
+        root.getChildren().add(personalScoreButton);
+        personalScoreButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 System.exit(0);
             }
         });
         
-        //Botão para carregar o jogo
-        loadGame.setTranslateX(70);
-        loadGame.setTranslateY(0);
-        loadGame.setPrefSize(120, 30);
-        loadGame.setFont(Font.font("Dialog", 12));
-        loadGame.setText("Carregar Jogo");
-        loadGame.setDisable(true);
-        root.getChildren().add(loadGame);
+        generalScoreButton.setTranslateX(70);
+        generalScoreButton.setTranslateY(0);
+        generalScoreButton.setPrefSize(120, 30);
+        generalScoreButton.setFont(Font.font("Dialog", 12));
+        generalScoreButton.setText("Pontuação Geral");
+        root.getChildren().add(generalScoreButton);
+        generalScoreButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.exit(0);
+            }
+        });
+        
+        levelCreationButton.setTranslateX(-70);
+        levelCreationButton.setTranslateY(40);
+        levelCreationButton.setPrefSize(120, 30);
+        levelCreationButton.setFont(Font.font("Dialog", 12));
+        levelCreationButton.setText("Criar Nivel");
+        levelCreationButton.setDisable(true);
+        root.getChildren().add(levelCreationButton);
+        
+        helpButton.setTranslateX(70);
+        helpButton.setTranslateY(40);
+        helpButton.setPrefSize(120, 30);
+        helpButton.setFont(Font.font("Dialog", 12));
+        helpButton.setText("Ajuda");
+        root.getChildren().add(helpButton);
+        helpButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                helpMenu(stage);
+            }
+        });
         
         //Botão para voltar atrás
+        backButton.setTranslateX(-70);
+        backButton.setTranslateY(80);
+        backButton.setPrefSize(120, 30);
+        backButton.setFont(Font.font("Dialog", 12));
+        backButton.setText("Voltar");
+        root.getChildren().add(backButton);
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+                start(stage);
+            }
+        });
+        
+        //Botão para voltar atrás
+        exitButton.setTranslateX(70);
+        exitButton.setTranslateY(80);
+        exitButton.setPrefSize(120, 30);
+        exitButton.setFont(Font.font("Dialog", 12));
+        exitButton.setText("Sair");
+        root.getChildren().add(exitButton);
+        exitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.exit(0);
+            }
+        });
+    }
+    
+    //PAINEL DE AJUDA - POR FAZER (PHASE 3 POR FAZER)
+    public void helpMenu(Stage oldStage) {
+        StackPane root = new StackPane();
+        Scene scene = new Scene(root, 400, 200);
+        Stage stage = new Stage();
+        Button backButton = new Button();                                       //Botão do JavaFX
+        Text labelOne = new Text();
+        Text labelTwo = new Text();        
+        stage.setTitle("Ajuda");
+        stage.setScene(scene);
+        stage.show();
+        
+        labelOne.setText("Ajuda");
+        labelOne.setTranslateX(0);
+        labelOne.setTranslateY(-75);
+        labelOne.setFill(Color.BLACK);
+        labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));
+        root.getChildren().add(labelOne);
+        
+        labelTwo.setText("Nome:");
+        labelTwo.setTranslateX(-80);
+        labelTwo.setTranslateY(0);
+        labelTwo.setFill(Color.BLACK);
+        labelTwo.setFont(Font.font("Dialog", 12));
+        root.getChildren().add(labelTwo);
+        
         backButton.setTranslateX(-150);
         backButton.setTranslateY(75);
         backButton.setPrefSize(80, 30);
@@ -341,11 +451,11 @@ public class Game extends Application{
             @Override
             public void handle(ActionEvent event) {
                 stage.close();
-                start(new Stage());
             }
         });
     }
     
+    //PAINEL DE ALERT (DIALOG BOX) - A FUNCIONAR (PHASE 3 COMPLETE)
     public void createAlert(String title, String header, String message, AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -353,7 +463,7 @@ public class Game extends Application{
         alert.setContentText(message);
         alert.showAndWait();
     }
-
+    
     //CONSTRUTOR VAZIO
     public Game() {
     }
