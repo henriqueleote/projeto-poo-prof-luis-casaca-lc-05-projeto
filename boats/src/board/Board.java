@@ -3,8 +3,12 @@ package board;
 import game.Game;
 import static game.Game.playerID;
 import static game.Game.players;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -16,6 +20,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import player.Player;
 
 /**
  *
@@ -32,6 +37,16 @@ public class Board {
     
     //CONSTRUTOR VAZIO
     public Board(){}
+    
+    public void resetValue(){
+        game.gameBoard.clear();
+        game.docks.clear();
+        game.water.clear();
+        game.boat.clear();
+        game.unknown.clear();
+        game.buttons.clear();
+        game.players.get(game.playerID).getScore().setPoints(0); // Atribuição de 50 pontos iniciais ao jogador
+    }
    
     
     //PAINEL DE DIFICULDADE - POR FAZER (PHASE 3 POR FAZER)
@@ -59,13 +74,13 @@ public class Board {
         
         labelTwo.setText("Escolha uma dificuldade:");
         labelTwo.setTranslateX(0);
-        labelTwo.setTranslateY(-50);
+        labelTwo.setTranslateY(-45);
         labelTwo.setFill(Color.BLACK);
         labelTwo.setFont(Font.font("Dialog", 14));
         root.getChildren().add(labelTwo);
         
         easyButton.setTranslateX(0);
-        easyButton.setTranslateY(-10);
+        easyButton.setTranslateY(-5);
         easyButton.setPrefSize(120, 30);
         easyButton.setFont(Font.font("Dialog", 12));
         easyButton.setText("Fácil");
@@ -73,12 +88,19 @@ public class Board {
         easyButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.exit(0);
+                resetValue();
+                game.SET_DIFFICULTY = game.DIFFICULTY_BOARD_EASY;
+                game.NUMBER_OF_ROWS = 4;
+                game.NUMBER_OF_COLUMNS = 4;
+                stage.close();
+                generateBoard(stage); // Criação do tabuleiro com as caraterísticas acima descritas
+                //setTimer(30)
+                game.players.get(game.playerID).getScore().setPoints(50); // Atribuição de 50 pontos iniciais ao jogador
             }
         });
         
         mediumButton.setTranslateX(0);
-        mediumButton.setTranslateY(30);
+        mediumButton.setTranslateY(35);
         mediumButton.setPrefSize(120, 30);
         mediumButton.setFont(Font.font("Dialog", 12));
         mediumButton.setText("Médio");
@@ -86,15 +108,24 @@ public class Board {
         mediumButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.exit(0);
+                resetValue();
+                game.SET_DIFFICULTY = game.DIFFICULTY_BOARD_MEDIUM;
+                game.NUMBER_OF_ROWS = 6;
+                
+                
+                //TRATAR DO IF JÁ HAJA UM TABULEIRO CRIADO
+                
+                
+                game.NUMBER_OF_COLUMNS = 6;
+                stage.close();
+                generateBoard(stage); // Criação do tabuleiro com as caraterísticas acima descritas
+                //setTimer(30)
+                game.players.get(game.playerID).getScore().setPoints(100); // Atribuição de 50 pontos iniciais ao jogador
             }
-        });
-        
-        //FIQUEI NA PARTE DE ALTERAR OS BOTOES DAS DIFICULDADES PARA FAZEREM AS AÇÕES E ESSAS CENAS
-        //ERA FIXE ADICIONAR UMA COR DE VERMELHO AOS BOTOES DE VOLTAR
+        });       
         
         hardButton.setTranslateX(0);
-        hardButton.setTranslateY(70);
+        hardButton.setTranslateY(75);
         hardButton.setPrefSize(120, 30);
         hardButton.setFont(Font.font("Dialog", 12));
         hardButton.setText("Difícil");
@@ -102,7 +133,14 @@ public class Board {
         hardButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.exit(0);
+                resetValue();
+                game.SET_DIFFICULTY = game.DIFFICULTY_BOARD_HARD;
+                game.NUMBER_OF_ROWS = 9;
+                game.NUMBER_OF_COLUMNS = 9;
+                stage.close();
+                generateBoard(stage); // Criação do tabuleiro com as caraterísticas acima descritas
+                //setTimer(30)
+                game.players.get(game.playerID).getScore().setPoints(150); // Atribuição de 50 pontos iniciais ao jogador
             }
         });
         
@@ -112,11 +150,11 @@ public class Board {
         backButton.setFont(Font.font("Dialog", 12));
         backButton.setText("Voltar");
         root.getChildren().add(backButton);
-        
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 stage.close();
+                game.menu(oldStage);
             }
         });
     }
@@ -202,6 +240,37 @@ public class Board {
     }
     
     //GERA O TABULEIRO DE JOGO
+    public void generateBoard(Stage oldStage) {
+        if (game.SET_DIFFICULTY == game.DIFFICULTY_BOARD_EASY) { // Caso a dificuldade definida seja "Fácil", cria um tabuleiro de game com base nas propriedades dessa mesma dificuldade
+            for (i = 0; i < game.DIFFICULTY_BOARD_EASY; i++) {
+                for (j = 0; j < game.DIFFICULTY_BOARD_EASY; j++) {
+                    game.gameBoard.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
+                    game.unknown.add(getIndex(i, j)); // Atribuição do estado "Unknown" à posição referente às cordenadas anteriores
+                }
+            }
+        }
+
+        if (game.SET_DIFFICULTY == game.DIFFICULTY_BOARD_MEDIUM) { // Caso a dificuldade definida seja "Médio", cria um tabuleiro de game com base nas propriedades dessa mesma dificuldade
+            for (i = 0; i < game.DIFFICULTY_BOARD_MEDIUM; i++) {
+                for (j = 0; j < game.DIFFICULTY_BOARD_MEDIUM; j++) {
+                    game.gameBoard.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
+                    game.unknown.add(getIndex(i, j)); // Atribuição do estado "Unknown" à posição referente às cordenadas anteriores
+                }
+            }
+        }
+
+        if (game.SET_DIFFICULTY == game.DIFFICULTY_BOARD_HARD) { // Caso a dificuldade definida seja "Difícil", cria um tabuleiro de game com base nas propriedades dessa mesma dificuldade
+            for (i = 0; i < game.DIFFICULTY_BOARD_HARD; i++) {
+                for (j = 0; j < game.DIFFICULTY_BOARD_HARD; j++) {
+                    game.gameBoard.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
+                    game.unknown.add(getIndex(i, j)); // Atribuição do estado "Unknown" à posição referente às cordenadas anteriores
+                }
+            }
+        }
+        game.placeDock(oldStage); // Colocação de portos no tabuleiro de game
+    }
+    
+        //GERA O TABULEIRO DE JOGO
     public void generateBoard() {
         if (game.SET_DIFFICULTY == game.DIFFICULTY_BOARD_EASY) { // Caso a dificuldade definida seja "Fácil", cria um tabuleiro de game com base nas propriedades dessa mesma dificuldade
             for (i = 0; i < game.DIFFICULTY_BOARD_EASY; i++) {
@@ -229,8 +298,39 @@ public class Board {
                 }
             }
         }
-        game.placeDock(); // Colocação de portos no tabuleiro de game
+        //game.placeDock(); // Colocação de portos no tabuleiro de game
     }
+    
+    //GERA O TABULEIRO DE JOGO
+//    public void generateBoard() {
+//        if (game.SET_DIFFICULTY == game.DIFFICULTY_BOARD_EASY) { // Caso a dificuldade definida seja "Fácil", cria um tabuleiro de game com base nas propriedades dessa mesma dificuldade
+//            for (i = 0; i < game.DIFFICULTY_BOARD_EASY; i++) {
+//                for (j = 0; j < game.DIFFICULTY_BOARD_EASY; j++) {
+//                    game.gameBoard.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
+//                    game.unknown.add(getIndex(i, j)); // Atribuição do estado "Unknown" à posição referente às cordenadas anteriores
+//                }
+//            }
+//        }
+//
+//        if (game.SET_DIFFICULTY == game.DIFFICULTY_BOARD_MEDIUM) { // Caso a dificuldade definida seja "Médio", cria um tabuleiro de game com base nas propriedades dessa mesma dificuldade
+//            for (i = 0; i < game.DIFFICULTY_BOARD_MEDIUM; i++) {
+//                for (j = 0; j < game.DIFFICULTY_BOARD_MEDIUM; j++) {
+//                    game.gameBoard.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
+//                    game.unknown.add(getIndex(i, j)); // Atribuição do estado "Unknown" à posição referente às cordenadas anteriores
+//                }
+//            }
+//        }
+//
+//        if (game.SET_DIFFICULTY == game.DIFFICULTY_BOARD_HARD) { // Caso a dificuldade definida seja "Difícil", cria um tabuleiro de game com base nas propriedades dessa mesma dificuldade
+//            for (i = 0; i < game.DIFFICULTY_BOARD_HARD; i++) {
+//                for (j = 0; j < game.DIFFICULTY_BOARD_HARD; j++) {
+//                    game.gameBoard.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
+//                    game.unknown.add(getIndex(i, j)); // Atribuição do estado "Unknown" à posição referente às cordenadas anteriores
+//                }
+//            }
+//        }
+//        game.placeDock(); // Colocação de portos no tabuleiro de game
+//    }
     
     //DEVOLVE A POSIÇÃO NO ARRAYLIST DADAS AS COORDENADAS
     public int getIndex(int x, int y) {

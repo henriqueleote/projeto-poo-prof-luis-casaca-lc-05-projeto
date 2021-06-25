@@ -10,24 +10,32 @@ import board.Boat;
 import board.Board;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Scanner;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import static player.Player.game;
 
 /**
  *
@@ -46,14 +54,21 @@ public class Game extends Application{
     public static int playerCount;                                              //Variavel inteira para contar os jogadores
     public static int playerID;                                                 //Variavel inteira para a dificuldade facil
     public static int attempts;                                                 //Variavel inteira para a dificuldade facil
+    public static boolean boardReady = false;
+    public static int k = 0;
+    public static int position = 0;
 
-    public static List<Spot> gameBoard = new ArrayList<Spot>();                 //Coleção da classe Spot para o tabuleiro
-    public static List<Player> players = new ArrayList<Player>();               //Coleção da classe Player para os jogadores
-    public static List<Integer> docks = new ArrayList<Integer>();               //Coleção do tipo inteiro para os portos
-    public static List<Integer> water = new ArrayList<Integer>();               //Coleção do tipo inteiro para a agua
-    public static List<Integer> boat = new ArrayList<Integer>();                //Coleção do tipo inteiro para os barcos
-    public static List<Integer> unknown = new ArrayList<Integer>();             //Coleção do tipo inteiro para os desconhecidos
 
+
+    public static List<Spot> gameBoard = new ArrayList<Spot>();                                 //Coleção da classe Spot para o tabuleiro
+    public static ObservableList<Player> players=  FXCollections.observableArrayList();         //Coleção da classe Player para os jogadores
+    public static List<Integer> docks = new ArrayList<Integer>();                               //Coleção do tipo inteiro para os portos
+    public static List<Integer> water = new ArrayList<Integer>();                               //Coleção do tipo inteiro para a agua
+    public static List<Integer> boat = new ArrayList<Integer>();                                //Coleção do tipo inteiro para os barcos
+    public static List<Integer> unknown = new ArrayList<Integer>();                             //Coleção do tipo inteiro para os desconhecidos
+    public static ObservableList<Button> buttons = FXCollections.observableArrayList();         //Coleção da classe Button para os butoes de jogo
+
+    
     public static Scanner input = new Scanner(System.in);                       //Objeto da classe Scanner para receber dados
     public static Game game = new Game();                                       //Objeto da classe Game
     public static Player player = new Player();                                 //Objeto da classe Player
@@ -62,7 +77,6 @@ public class Game extends Application{
     public static Rules rules = new Rules();                                    //Objeto da classe Rules
     
     //PHASE 3
-
 
     //MAIN - A FUNCIONAR (PHASE 3 COMPLETE)
     public static void main(String[] args) {
@@ -325,6 +339,7 @@ public class Game extends Application{
         startGameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                stage.close();
                 board.chooseDifficulty(stage);
             }
         });
@@ -445,6 +460,7 @@ public class Game extends Application{
         backButton.setTranslateY(75);
         backButton.setPrefSize(80, 30);
         backButton.setFont(Font.font("Dialog", 12));
+        backButton.setStyle("-fx-text-fill: white; ");
         backButton.setText("Voltar");
         root.getChildren().add(backButton);
         backButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -453,6 +469,96 @@ public class Game extends Application{
                 stage.close();
             }
         });
+    }
+        
+    //PAINEL PARA APRESENTAR O TABULEIRO
+    public void displayBoard(Stage oldStage) {
+        ObservableList<Button> buttons = FXCollections.observableArrayList();
+        Stage stage = new Stage();
+        GridPane gridPane = new GridPane();
+        Scene scene = new Scene(gridPane, 600, 600);
+        Button backButton = new Button();                                       //Botão do JavaFX
+        stage.setScene(scene);
+        stage.show();
+        
+        for (i = 0; i < gameBoard.size(); i++) {
+            buttons.add(new Button());
+        }
+
+        for (i = 0; i < NUMBER_OF_ROWS+1; i++) {
+            for (j = 0; j < NUMBER_OF_COLUMNS+1; j++) {
+                gridPane.add(buttons.get(k), i, j, 1, 1);
+                buttons.get(k).setText(String.valueOf(i) + "," + String.valueOf(j));
+                buttons.get(k).setOnAction(actionEvent -> {
+                      position=k;
+                    int x = board.getRowFromIndex(k);
+                    int y = board.getColumnFromIndex(k);
+                    if (rules.checkSpotForBoat(x, y)) {
+                        placeBoat(position);
+                    } else {
+                        score.missedBoat();
+                        attempts++;
+                        System.out.println("Não pode colocar um barco nessa posição.");
+                    }
+                });
+                k++;
+            }
+        }
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setAlignment(Pos.CENTER);
+        
+        backButton.setPrefSize(80, 30);
+        backButton.setFont(Font.font("Dialog", 12));
+        backButton.setText("Voltar");
+        gridPane.getChildren().add(backButton);
+
+        ButtonType yes = new ButtonType("Sim", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancel = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Alert alert = new Alert(AlertType.WARNING,"Tem a certeza que quer sair do tabuleiro?\nVai perder todo o seu progresso.",yes,cancel);
+        alert.setTitle("Atenção");
+        
+        backButton.setOnAction(actionEvent -> {
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.orElse(cancel) == yes) {
+                    stage.close();
+                    oldStage.show();
+                }
+        });
+    }
+    
+    //COLOCA OS PORTOS NO TABULEIRO DE JOGO - A FUNCIONAR
+    public void placeDock() {
+        while (docks.size() < SET_DIFFICULTY) { // Enquanto a quantidade de docas no tabuleiro for menor do que a pré-estabelecida pela dificuldade, adiciona uma doca numa posição aleatória
+            int random = new Random().nextInt(gameBoard.size()); // Adição de uma doca aleatória
+            if (!docks.contains(random)) { // Adiciona uma doca aleatória caso ainda não exista nenhuma                
+                if (rules.checkSpotForDock(board.getRowFromIndex(random), board.getColumnFromIndex(random))) {
+                    docks.add(random);
+                }
+                gameBoard.set(random, new Dock(board.getRowFromIndex(random), board.getColumnFromIndex(random)));
+            }
+        }
+        //displayBoard();
+        print(); // Exibe o tabuleiro de jogo
+        //play();
+        
+    }
+    
+    //COLOCA OS PORTOS NO TABULEIRO DE JOGO - A FUNCIONAR
+    public void placeDock(Stage oldStage) {
+        while (docks.size() < SET_DIFFICULTY) { // Enquanto a quantidade de docas no tabuleiro for menor do que a pré-estabelecida pela dificuldade, adiciona uma doca numa posição aleatória
+            int random = new Random().nextInt(gameBoard.size()); // Adição de uma doca aleatória
+            if (!docks.contains(random)) { // Adiciona uma doca aleatória caso ainda não exista nenhuma                
+                if (rules.checkSpotForDock(board.getRowFromIndex(random), board.getColumnFromIndex(random))) {
+                    docks.add(random);
+                }
+                gameBoard.set(random, new Dock(board.getRowFromIndex(random), board.getColumnFromIndex(random)));
+            }
+        }
+        displayBoard(oldStage);
+        print(); // Exibe o tabuleiro de jogo
+        //play();
+        
     }
     
     //PAINEL DE ALERT (DIALOG BOX) - A FUNCIONAR (PHASE 3 COMPLETE)
@@ -790,22 +896,22 @@ public class Game extends Application{
         print();
         printEnd();
     }
-
+    
     //COLOCA OS PORTOS NO TABULEIRO DE JOGO - A FUNCIONAR
-    public void placeDock() {
-        while (docks.size() < SET_DIFFICULTY) { // Enquanto a quantidade de docas no tabuleiro for menor do que a pré-estabelecida pela dificuldade, adiciona uma doca numa posição aleatória
-            int random = new Random().nextInt(gameBoard.size()); // Adição de uma doca aleatória
-            if (!docks.contains(random)) { // Adiciona uma doca aleatória caso ainda não exista nenhuma                
-                if (rules.checkSpotForDock(board.getRowFromIndex(random), board.getColumnFromIndex(random))) {
-                    docks.add(random);
-                }
-                gameBoard.set(random, new Dock(board.getRowFromIndex(random), board.getColumnFromIndex(random)));
-            }
-        }
-
-        print(); // Exibe o tabuleiro de jogo
-        play();
-    }
+//    public void placeDock() {
+//        while (docks.size() < SET_DIFFICULTY) { // Enquanto a quantidade de docas no tabuleiro for menor do que a pré-estabelecida pela dificuldade, adiciona uma doca numa posição aleatória
+//            int random = new Random().nextInt(gameBoard.size()); // Adição de uma doca aleatória
+//            if (!docks.contains(random)) { // Adiciona uma doca aleatória caso ainda não exista nenhuma                
+//                if (rules.checkSpotForDock(board.getRowFromIndex(random), board.getColumnFromIndex(random))) {
+//                    docks.add(random);
+//                }
+//                gameBoard.set(random, new Dock(board.getRowFromIndex(random), board.getColumnFromIndex(random)));
+//            }
+//        }
+//
+//        print(); // Exibe o tabuleiro de jogo
+//        play();
+//    }
 
     //transforma em agua no fim do jogo - A FUNCIONAR
     public void placeRemainWater() {
