@@ -68,8 +68,7 @@ public class Rules {
         }
         return result;
     }
-    
-    
+     
     //VERIFICA SE PODE SER POSTO UM PORTO NA POSIÇÃO (x,y) PEDIDA
     public boolean checkSpotForBoat(int x, int y){
         boolean result = false;

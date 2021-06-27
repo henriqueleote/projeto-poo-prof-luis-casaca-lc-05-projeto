@@ -98,7 +98,7 @@ public class Player {
             game.players.add(new Player(game.playerCount, nickname, 0));
             game.playerID = game.players.get(game.playerCount).getId();
             game.playerCount++;
-            game.menuOLD(); // Retrocede-se ao menuOLD
+            game.menuConsole(); // Retrocede-se ao menuOLD
         }
     }
     
@@ -111,7 +111,7 @@ public class Player {
         if (player != null) { // Caso o nickname (jogador) exista, é extraído o index referente ao mesmo, o que carateriza a seleção do jogador a ser utilizado
             if (game.players.contains(player)) {
                 game.playerID = game.players.indexOf(player);
-                game.menuOLD(); // Retrocede-se ao menuOLD
+                game.menuConsole(); // Retrocede-se ao menuOLD
             }
         } else { // Caso o nickname inserido não corresponda a nenhum jogador, é emitida uma mensagem de erro
             System.out.println("Não existe nenhum utilizador com o nickname inserido.");
@@ -121,7 +121,7 @@ public class Player {
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
-            game.startOLD(); // Retrocede-se ao menuOLD principal
+            game.startConsole(); // Retrocede-se ao menuOLD principal
         }
     }
     
@@ -145,7 +145,7 @@ public class Player {
             game.playerCount++;
             oldStage.close();
             //game.menuOLD(); // Retrocede-se ao menuOLD
-            game.menu(oldStage);
+            game.menuFX(oldStage);
         }
     }
     
@@ -158,7 +158,7 @@ public class Player {
                 game.playerID = game.players.indexOf(player);
                 oldStage.close();
                 //game.menuOLD(); // Retrocede-se ao menuOLD
-                game.menu(oldStage);
+                game.menuFX(oldStage);
             }
         } else { // Caso o nickname inserido não corresponda a nenhum jogador, é emitida uma mensagem de erro
             game.createAlert("Erro","Utilizador desconhecido","Não existe nenhum utilizador com o nickname inserido.",AlertType.ERROR);
