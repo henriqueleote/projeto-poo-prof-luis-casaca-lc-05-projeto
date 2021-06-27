@@ -7,24 +7,12 @@ import static game.Game.board;
 import static game.Game.boat;
 import static game.Game.docks;
 import static game.Game.gameBoard;
-import static game.Game.i;
 import static game.Game.playerID;
 import static game.Game.players;
 import static game.Game.rules;
 import static game.Game.score;
 import java.util.Random;
 import java.util.Scanner;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 /**
  *
@@ -92,8 +80,8 @@ public class Board {
         }
     }
     
-        //VALIDA O TABULEIRO NO FIM DO JOGO - A FUNCIONAR
-    public void endValidateBoard(int seconds) {
+    //VALIDA O TABULEIRO NO FIM DO JOGO - A FUNCIONAR
+    public void endValidateBoard(int timer) {
         int count = 0;
 //        for (i = 0; i < gameBoard.size(); i++) { //Verifica se algum campo à volta ficou por validar
 //            if (gameBoard.get(i) instanceof Dock) {
@@ -111,17 +99,21 @@ public class Board {
 //        }
         if (count == 0)
             players.get(playerID).getScore().singleCheck();
+        if(timer != -9999)   //no caso do jogo sem timer
+            players.get(playerID).getScore().plusTime(0);
+        if(timer<0)
+            players.get(playerID).getScore().minusTime(timer);
+        if(timer>0)
+            players.get(playerID).getScore().plusTime(timer);
+        
         players.get(playerID).getScore().missedAttempts(attempts);
         players.get(playerID).getScore().checkRecord();
-        game.createAlert("Jogo Terminado", "Jogo Terminado", "Esqueceu-se de preencher " + count + " casas no tabuleiro.\n"
-                    + "Demorou " + seconds + " segundos a terminar o jogo.\nTeve uma pontuação de "
-                            + "" + players.get(playerID).getScore().getPoints() + " pontos.", Alert.AlertType.WARNING);
         placeRemainWater();
         //game.printConsole();
         //game.printEndConsole();
     }
     
-        //transforma em agua no fim do jogo - A FUNCIONAR
+    //TRANSFORMA OS RESTANTES EM AGUA - A FUNCIONAR
     public void placeRemainWater() {
         for (i = 0; i < gameBoard.size(); i++) { // Ciclo for que cria objetos do tipo "Água" no tabuleiro
             if (gameBoard.get(i) instanceof Unknown) {
@@ -135,12 +127,6 @@ public class Board {
         if (gameBoard.get(arrayNumber) instanceof Dock || gameBoard.get(arrayNumber) instanceof Boat || gameBoard.get(arrayNumber) instanceof Water) { // Caso a posição verificada já possua um estado que não seja "Desconhecido, é emitida uma mensagem
             score.missedWater();
             System.out.println("Não pode colocar agua num lugar que não se encontra desconhecido.");
-            //Não foram utilizadas as exceções visto que interrompiam o programa aquando necessitadas, funcionam, mas estão em comentário
-//            try {
-//                throw new BoatsIllegalArgumentException(ErrorCode.NO_WATER_UNKNOWN.toString());
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
         } else {
             gameBoard.set(arrayNumber, new Water(gameBoard.get(arrayNumber).getPosition().getRow(), gameBoard.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Água", com as coordenadas correspondentes à posição a ser alterada
         }
