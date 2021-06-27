@@ -7,6 +7,8 @@ import board.Spot;
 import board.Boat;
 import board.Board;
 import static board.Board.game;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +29,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -51,10 +55,7 @@ public class Game extends Application{
     public static int j;                                                        //Variavel inteira do contador j
     public static int playerCount;                                              //Variavel inteira para contar os jogadores
     public static int playerID;                                                 //Variavel inteira para a dificuldade facil
-    public static int boardID;                                                  //Variavel inteira para a dificuldade facil
     public static int attempts;                                                 //Variavel inteira para a dificuldade facil
-    public static boolean boardReady = false;
-    public static int k = 0;
     public static int position = 0;
     int counter, seconds;
     
@@ -589,43 +590,60 @@ public class Game extends Application{
        
     //PAINEL DE AJUDA - POR FAZER (PHASE 3 POR FAZER)
     public void helpMenuFX(Stage oldStage) {
-        StackPane root = new StackPane();
-        Scene scene = new Scene(root, 400, 200);
+        GridPane gridPane = new GridPane();
+        Scene scene = new Scene(gridPane, 400, 400);
         Stage stage = new Stage();
         Button backButton = new Button();                                       //Botão do JavaFX
+        Button validateButton = new Button();                                       //Botão do JavaFX
         Text labelOne = new Text();
         Text labelTwo = new Text();        
         stage.setTitle("Ajuda");
         stage.setScene(scene);
         stage.show();
         
-        labelOne.setText("Ajuda");
-        labelOne.setTranslateX(0);
-        labelOne.setTranslateY(-75);
+        labelOne.setText("        Ajuda");
         labelOne.setFill(Color.BLACK);
         labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));
-        root.getChildren().add(labelOne);
+        gridPane.add(labelOne, 3, 0, 6, 1);
         
-        labelTwo.setText("Nome:");
-        labelTwo.setTranslateX(-80);
-        labelTwo.setTranslateY(0);
+        labelTwo.setText("    Selecione a casa");
         labelTwo.setFill(Color.BLACK);
-        labelTwo.setFont(Font.font("Dialog", 12));
-        root.getChildren().add(labelTwo);
+        gridPane.add(labelTwo, 3, 1, 6, 1);
         
-        backButton.setTranslateX(-150);
-        backButton.setTranslateY(75);
-        backButton.setPrefSize(80, 30);
-        backButton.setFont(Font.font("Dialog", 12));
-        backButton.setStyle("-fx-text-fill: white; ");
-        backButton.setText("Voltar");
-        root.getChildren().add(backButton);
-        backButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                stage.close();
+        for (i = 0; i < gameBoard.size(); i++) {
+            buttons.add(new Button());
+        }
+
+        for (i = 2; i <= 6; i++) {
+            for (j = 2; j <= 6; j++) {
+                Button btn = new Button();
+                btn.setPrefSize(30, 30);
+                gridPane.add(btn, j, i);
+                btn.setFocusTraversable(false);
+                btn.setOnAction(e -> {
+                    btn.setDisable(true);
+                });
             }
+        }
+        
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setAlignment(Pos.CENTER);
+        
+        backButton.setPrefSize(70, 30);
+        backButton.setFont(Font.font("Dialog", 12));
+        backButton.setText("Voltar");
+        gridPane.add(backButton, 1, 8, 3, 1);
+        backButton.setOnAction(e -> {
+                stage.close();
+                oldStage.show();
         });
+        
+        validateButton.setDisable(true);
+        validateButton.setPrefSize(70, 30);
+        validateButton.setFont(Font.font("Dialog", 12));
+        validateButton.setText("Validar");
+        gridPane.add(validateButton, 5, 8, 3, 1);
     }
         
     //PAINEL PARA APRESENTAR O TABULEIRO
@@ -748,6 +766,7 @@ public class Game extends Application{
             Optional<ButtonType> result = alert.showAndWait();
             if (result.orElse(cancel) == yes) {
                 players.get(playerID).getScore().setPoints(0);
+                timer.cancel();
                 stage.close();
                 oldStage.show();
             }
