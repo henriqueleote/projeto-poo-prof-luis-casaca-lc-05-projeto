@@ -72,10 +72,10 @@ public class Board {
         while (docks.size() < SET_DIFFICULTY) { // Enquanto a quantidade de docas no tabuleiro for menor do que a pré-estabelecida pela dificuldade, adiciona uma doca numa posição aleatória
             int random = new Random().nextInt(gameBoard.size()); // Adição de uma doca aleatória
             if (!docks.contains(random)) { // Adiciona uma doca aleatória caso ainda não exista nenhuma                
-                if (rules.checkSpotForDock(board.getRowFromIndex(random), board.getColumnFromIndex(random))) {
+                if (rules.checkSpotForDock(getRowFromIndex(random), getColumnFromIndex(random))) {
                     docks.add(random);
                 }
-                gameBoard.set(random, new Dock(board.getRowFromIndex(random), board.getColumnFromIndex(random)));
+                gameBoard.set(random, new Dock(getRowFromIndex(random), getColumnFromIndex(random)));
             }
         }
     }
