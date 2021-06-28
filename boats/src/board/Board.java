@@ -62,19 +62,15 @@ public class Board {
     }
     
     //CRIA O TABULEIRO DE JOGO
-    public void createBoard(ArrayList<Integer> arrayDocks) {
-        if (game.SET_DIFFICULTY == game.DIFFICULTY_BOARD_EASY) { // Caso a dificuldade definida seja "Fácil", cria um tabuleiro de game com base nas propriedades dessa mesma dificuldade
-            for (i = 0; i < game.DIFFICULTY_BOARD_EASY; i++) {
-                for (j = 0; j < game.DIFFICULTY_BOARD_EASY; j++) {
-                    game.gameBoard.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
-                }
+    public void createBoard(int difficulty, ArrayList<Integer> arrayDocks) {
+        for (i = 0; i < difficulty; i++) {
+            for (j = 0; j < difficulty; j++) {
+                game.gameBoard.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
             }
         }
-        for(i=0;i<game.gameBoard.size();i++){
+        for (i = 0; i < arrayDocks.size(); i++) {
             game.gameBoard.set(arrayDocks.get(i), new Dock(getRowFromIndex(arrayDocks.get(i)), getColumnFromIndex(arrayDocks.get(i))));
         }
-        arrayDocks.forEach((n) -> System.out.println(n));
-        game.playConsole();
     }
     
     //COLOCA OS PORTOS NO TABULEIRO DE JOGO - A FUNCIONAR
