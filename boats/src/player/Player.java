@@ -1,10 +1,7 @@
 package player;
 
 import game.Game;
-import static game.Game.game;
-import player.Score;
 import java.util.Scanner;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
@@ -80,17 +77,26 @@ public class Player {
     }
 
     //CRIA UM JOGADOR - A FUNCIONAR
-    public void createPlayer(String nickname) {
+    public void createPlayer(String nickname, Stage oldStage) {
         Player player = getPlayerByNickname(nickname); // Associação do jogador ao nickname
 
         if (player != null) { // Caso o nickname pretendido pelo utilizador já esteja registado na aplicação, é emitida uma mensagem de erro 
             if (game.players.contains(player)) {
+            if(oldStage == null)
                 System.out.println("O nickname inserido já se encontra em uso.");
+            else
+                game.createAlert("Alerta","Nickname em uso","O nickname inserido já se encontra em uso.",AlertType.ERROR); 
             }
         } else { // Caso o nickname pretendido pelo utilizador ainda não exista em utilização, é criado um novo jogador com o respetivo nickname associado
             game.players.add(new Player(game.playerCount, nickname, 0));
             game.playerID = game.players.get(game.playerCount).getId();
             game.playerCount++;
+            if(oldStage != null){
+                oldStage.close();                                                                                          //Fechar janela atual
+                game.menuFX(oldStage);                                                                                     //Abre o menu
+            }
+            else
+                game.createAlert("Alerta","Nickname em uso","O nickname inserido já se encontra em uso.",AlertType.ERROR);
         }
     }
     
@@ -110,10 +116,10 @@ public class Player {
             }
         } else { // Caso o nickname inserido não corresponda a nenhum jogador, é emitida uma mensagem de erro
             if(oldStage == null)
-                    System.out.println("Não existe nenhum utilizador com o nickname inserido.");
-                else{
-                    game.createAlert("Alerta","Jogador desconhecido","Não existe nenhum jogador com esse nickname.",AlertType.ERROR); 
-                }
+                System.out.println("Não existe nenhum utilizador com o nickname inserido.");
+            else
+                game.createAlert("Alerta","Jogador desconhecido","Não existe nenhum jogador com esse nickname.",AlertType.ERROR); 
+                
         }
     }
 

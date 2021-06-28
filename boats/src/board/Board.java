@@ -1,12 +1,7 @@
 package board;
 
 import game.Game;
-import static game.Game.attempts;
 import static game.Game.boat;
-import static game.Game.gameBoard;
-import static game.Game.playerID;
-import static game.Game.players;
-import static game.Game.score;
 import game.Rules;
 import java.util.Random;
 import java.util.Scanner;
@@ -17,12 +12,12 @@ import java.util.Scanner;
  */
 public class Board {
     
-    public int i;                                                        //Variavel inteira do contador i
-    public int j;                                                        //Variavel inteira do contador j
+    public int i;                                                               //Variavel inteira do contador i
+    public int j;                                                               //Variavel inteira do contador j
     
     public static Scanner input = new Scanner(System.in);                       //Objeto da classe Scanner para receber dados
     public static Game game = new Game();                                       //Objeto da classe Game
-    public static Rules rules = new Rules();
+    public static Rules rules = new Rules();                                    //Objeto da classe Rules
     
     
     //CONSTRUTOR VAZIO
@@ -107,8 +102,6 @@ public class Board {
         game.players.get(game.playerID).getScore().missedAttempts(game.attempts);
         game.players.get(game.playerID).getScore().checkRecord();
         placeRemainWater();
-        //game.printConsole();
-        //game.printEndConsole();
     }
     
     //TRANSFORMA OS RESTANTES EM AGUA - A FUNCIONAR
@@ -124,7 +117,6 @@ public class Board {
     public void placeWater(int arrayNumber) {
         if (game.gameBoard.get(arrayNumber) instanceof Dock || game.gameBoard.get(arrayNumber) instanceof Boat || game.gameBoard.get(arrayNumber) instanceof Water) { // Caso a posição verificada já possua um estado que não seja "Desconhecido, é emitida uma mensagem
             game.players.get(game.playerID).getScore().missedWater();
-            System.out.println("Não pode colocar agua num lugar que não se encontra desconhecido.");
         } else {
             game.gameBoard.set(arrayNumber, new Water(game.gameBoard.get(arrayNumber).getPosition().getRow(), game.gameBoard.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Água", com as coordenadas correspondentes à posição a ser alterada
         }
