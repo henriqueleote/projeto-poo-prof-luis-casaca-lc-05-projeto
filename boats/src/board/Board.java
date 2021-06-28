@@ -1,16 +1,13 @@
 package board;
 
 import game.Game;
-import static game.Game.SET_DIFFICULTY;
 import static game.Game.attempts;
-import static game.Game.board;
 import static game.Game.boat;
-import static game.Game.docks;
 import static game.Game.gameBoard;
 import static game.Game.playerID;
 import static game.Game.players;
-import static game.Game.rules;
 import static game.Game.score;
+import game.Rules;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -25,6 +22,7 @@ public class Board {
     
     public static Scanner input = new Scanner(System.in);                       //Objeto da classe Scanner para receber dados
     public static Game game = new Game();                                       //Objeto da classe Game
+    public static Rules rules = new Rules();
     
     
     //CONSTRUTOR VAZIO
@@ -69,13 +67,13 @@ public class Board {
     
     //COLOCA OS PORTOS NO TABULEIRO DE JOGO - A FUNCIONAR
     public void placeDock() {
-        while (docks.size() < SET_DIFFICULTY) { // Enquanto a quantidade de docas no tabuleiro for menor do que a pré-estabelecida pela dificuldade, adiciona uma doca numa posição aleatória
-            int random = new Random().nextInt(gameBoard.size()); // Adição de uma doca aleatória
-            if (!docks.contains(random)) { // Adiciona uma doca aleatória caso ainda não exista nenhuma                
+        while (game.docks.size() < game.SET_DIFFICULTY) { // Enquanto a quantidade de docas no tabuleiro for menor do que a pré-estabelecida pela dificuldade, adiciona uma doca numa posição aleatória
+            int random = new Random().nextInt(game.gameBoard.size()); // Adição de uma doca aleatória
+            if (!game.docks.contains(random)) { // Adiciona uma doca aleatória caso ainda não exista nenhuma                
                 if (rules.checkSpotForDock(getRowFromIndex(random), getColumnFromIndex(random))) {
-                    docks.add(random);
+                    game.docks.add(random);
                 }
-                gameBoard.set(random, new Dock(getRowFromIndex(random), getColumnFromIndex(random)));
+                game.gameBoard.set(random, new Dock(getRowFromIndex(random), getColumnFromIndex(random)));
             }
         }
     }
@@ -98,16 +96,16 @@ public class Board {
 //            }
 //        }
         if (count == 0)
-            players.get(playerID).getScore().singleCheck();
+            game.players.get(game.playerID).getScore().singleCheck();
         if(timer != -9999)   //no caso do jogo sem timer
-            players.get(playerID).getScore().plusTime(0);
+            game.players.get(game.playerID).getScore().plusTime(0);
         if(timer<0)
-            players.get(playerID).getScore().minusTime(timer);
+            game.players.get(game.playerID).getScore().minusTime(timer);
         if(timer>0)
-            players.get(playerID).getScore().plusTime(timer);
+            game.players.get(game.playerID).getScore().plusTime(timer);
         
-        players.get(playerID).getScore().missedAttempts(attempts);
-        players.get(playerID).getScore().checkRecord();
+        game.players.get(game.playerID).getScore().missedAttempts(game.attempts);
+        game.players.get(game.playerID).getScore().checkRecord();
         placeRemainWater();
         //game.printConsole();
         //game.printEndConsole();
@@ -115,26 +113,26 @@ public class Board {
     
     //TRANSFORMA OS RESTANTES EM AGUA - A FUNCIONAR
     public void placeRemainWater() {
-        for (i = 0; i < gameBoard.size(); i++) { // Ciclo for que cria objetos do tipo "Água" no tabuleiro
-            if (gameBoard.get(i) instanceof Unknown) {
-                gameBoard.set(i, new Water(gameBoard.get(i).getPosition().getRow(), gameBoard.get(i).getPosition().getColumn()));
+        for (i = 0; i < game.gameBoard.size(); i++) { // Ciclo for que cria objetos do tipo "Água" no tabuleiro
+            if (game.gameBoard.get(i) instanceof Unknown) {
+                game.gameBoard.set(i, new Water(game.gameBoard.get(i).getPosition().getRow(), game.gameBoard.get(i).getPosition().getColumn()));
             }
         }
     }
 
     //COLOCA A AGUA NO TABULEIRO DE JOGO - A FUNCIONAR
     public void placeWater(int arrayNumber) {
-        if (gameBoard.get(arrayNumber) instanceof Dock || gameBoard.get(arrayNumber) instanceof Boat || gameBoard.get(arrayNumber) instanceof Water) { // Caso a posição verificada já possua um estado que não seja "Desconhecido, é emitida uma mensagem
-            score.missedWater();
+        if (game.gameBoard.get(arrayNumber) instanceof Dock || game.gameBoard.get(arrayNumber) instanceof Boat || game.gameBoard.get(arrayNumber) instanceof Water) { // Caso a posição verificada já possua um estado que não seja "Desconhecido, é emitida uma mensagem
+            game.players.get(game.playerID).getScore().missedWater();
             System.out.println("Não pode colocar agua num lugar que não se encontra desconhecido.");
         } else {
-            gameBoard.set(arrayNumber, new Water(gameBoard.get(arrayNumber).getPosition().getRow(), gameBoard.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Água", com as coordenadas correspondentes à posição a ser alterada
+            game.gameBoard.set(arrayNumber, new Water(game.gameBoard.get(arrayNumber).getPosition().getRow(), game.gameBoard.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Água", com as coordenadas correspondentes à posição a ser alterada
         }
     }
 
     //COLOCA OS BARCOS NO TABULEIRO DE JOGO - A FUNCIONAR
     public void placeBoat(int arrayNumber) {
-        gameBoard.set(arrayNumber, new Boat(gameBoard.get(arrayNumber).getPosition().getRow(), gameBoard.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Boat", com as coordenadas correspondentes à posição a ser alterada
+        game.gameBoard.set(arrayNumber, new Boat(game.gameBoard.get(arrayNumber).getPosition().getRow(), game.gameBoard.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Boat", com as coordenadas correspondentes à posição a ser alterada
         boat.add(arrayNumber); // Adição do objeto do tipo "Boat" no array que guarda as posições do tipo "Boat"
     }
         
