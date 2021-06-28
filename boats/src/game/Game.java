@@ -54,7 +54,7 @@ public class Game extends Application {
     public static int seconds;                                                  //Variavel inteira para contar os segundos
 
     public static List<Spot> gameBoard = new ArrayList<Spot>();                                 //Coleção da classe Spot para o tabuleiro
-    public static ObservableList<Player> players = FXCollections.observableArrayList();        //Coleção da classe Player para os jogadores
+    public static ObservableList<Player> players = FXCollections.observableArrayList();         //Coleção da classe Player para os jogadores
     public static List<Integer> docks = new ArrayList<Integer>();                               //Coleção do tipo inteiro para os portos
     public static List<Integer> boat = new ArrayList<Integer>();                                //Coleção do tipo inteiro para os barcos
     public static ObservableList<Button> buttons = FXCollections.observableArrayList();         //Coleção da classe Button para os butoes de jogo
@@ -75,6 +75,7 @@ public class Game extends Application {
         launch(args);
     }
 
+    
     //JAVAFX
     
     
@@ -88,6 +89,7 @@ public class Game extends Application {
 
         stage.setTitle("Docks & Boats");                                        //Definir o titulo
         stage.setScene(scene);                                                  //Definir a cena
+        stage.setResizable(false);                                              //Definir a janela para não mudar o tamanho
         stage.show();                                                           //Mostrar o stage
 
         labelOne.setText("Como pretende jogar?");                               //Definir texto na label
@@ -101,22 +103,24 @@ public class Game extends Application {
         fxButton.setPrefSize(120, 30);                                          //Definir tamanho do botão
         fxButton.setTranslateX(-70);                                            //Definir posição x do botão
         fxButton.setTranslateY(20);                                             //Definir posição y do botão
-        fxButton.setFont(Font.font("Dialog", 12));                              //Definir fonte e tamanho do botão
+        fxButton.setFont(Font.font("Dialog", 12));                              //Definir fonte e tamanho da fonte do botão
+        fxButton.setFocusTraversable(false);                                    //Definir o botão sem o focus
         root.getChildren().add(fxButton);                                       //Adicionar o botão ao stack pane
         fxButton.setOnAction(event -> {                                         //Quando se carrega no botão
-            stage.close();                                                  //Fechar janela atual
-            startFX();                                                      //Abrir o menu de inicio
+            stage.close();                                                      //Fechar janela atual
+            startFX();                                                          //Abrir o menu de inicio
         });
 
         consoleButton.setText("Consola");                                       //Definir texto do botão 
         consoleButton.setPrefSize(80, 30);                                      //Definir tamanho do botão
         consoleButton.setTranslateX(90);                                        //Definir posição x do botão
         consoleButton.setTranslateY(20);                                        //Definir posição y do botão
-        consoleButton.setFont(Font.font("Dialog", 12));                         //Definir fonte e tamanho do botão
+        consoleButton.setFont(Font.font("Dialog", 12));                         //Definir fonte e tamanho da fonte do botão
+        consoleButton.setFocusTraversable(false);                               //Definir o botão sem o focus
         root.getChildren().add(consoleButton);                                  //Adicionar o botão ao stack pane
-        consoleButton.setOnAction(event -> {                                         //Quando se carrega no botão
-            stage.close();                                                  //Fechar janela atual
-            startConsole();                                                 //Abrir a consola
+        consoleButton.setOnAction(event -> {                                    //Quando se carrega no botão
+            stage.close();                                                      //Fechar janela atual
+            startConsole();                                                     //Abrir a consola
         });
     }
 
@@ -132,6 +136,7 @@ public class Game extends Application {
 
         stage.setTitle("Docks & Boats");                                        //Definir o titulo
         stage.setScene(scene);                                                  //Definir a cena
+        stage.setResizable(false);                                              //Definir a janela para não mudar o tamanho
         stage.show();                                                           //Mostrar o stage
 
         labelOne.setText("Seja bem-vindo ao Docks & Boats");                    //Definir texto na label
@@ -145,22 +150,24 @@ public class Game extends Application {
         createPlayerButton.setPrefSize(120, 30);                                //Definir tamanho do botão
         createPlayerButton.setTranslateX(-70);                                  //Definir posição x do botão
         createPlayerButton.setTranslateY(0);                                    //Definir posição y do botão
-        createPlayerButton.setFont(Font.font("Dialog", 12));                    //Definir fonte e tamanho do botão
+        createPlayerButton.setFont(Font.font("Dialog", 12));                    //Definir fonte e tamanho da fonte do botão
+        createPlayerButton.setFocusTraversable(false);                          //Definir o botão sem o focus
         root.getChildren().add(createPlayerButton);                             //Adicionar o botão ao stack pane
         createPlayerButton.setOnAction(event -> {                               //Quando se carrega no botão
-            stage.close();                                                  //Fechar janela atual
-            createPlayerFX(stage);                                          //Abrir a consola
+            stage.close();                                                      //Fechar janela atual
+            createPlayerFX(stage);                                              //Abrir a consola
         });
 
         choosePlayerButton.setText("Escolher Jogador");                         //Definir texto do botão 
         choosePlayerButton.setPrefSize(120, 30);                                //Definir tamanho do botão
         choosePlayerButton.setTranslateX(-70);                                  //Definir posição x do botão
         choosePlayerButton.setTranslateY(40);                                   //Definir posição y do botão
-        choosePlayerButton.setFont(Font.font("Dialog", 12));                    //Definir fonte e tamanho do botão
+        choosePlayerButton.setFont(Font.font("Dialog", 12));                    //Definir fonte e tamanho da fonte do botão
+        choosePlayerButton.setFocusTraversable(false);                          //Definir o botão sem o focus
         root.getChildren().add(choosePlayerButton);                             //Adicionar o botão ao stack pane
         choosePlayerButton.setOnAction(event -> {                               //Quando se carrega no botão
-            stage.close();                                                  //Fechar janela atual
-            choosePlayerFX(stage);                                          //Abrir a consola
+            stage.close();                                                      //Fechar janela atual
+            choosePlayerFX(stage);                                              //Abrir a consola
         });
 
         if (players.isEmpty()) {                                                //Caso ainda não haja um jogador
@@ -173,10 +180,11 @@ public class Game extends Application {
         exitButton.setPrefSize(80, 30);                                         //Definir tamanho do botão
         exitButton.setTranslateX(90);                                           //Definir posição x do botão
         exitButton.setTranslateY(20);                                           //Definir posição y do botão
-        exitButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        exitButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        exitButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         root.getChildren().add(exitButton);                                     //Adicionar o botão ao stack pane
         exitButton.setOnAction(event -> {                                       //Quando se carrega no botão
-            System.exit(0);                                                 //Sai do jogo
+            System.exit(0);                                                     //Sai do jogo
         });
     }
 
@@ -193,6 +201,7 @@ public class Game extends Application {
 
         stage.setTitle("Criar jogador");                                        //Definir o titulo
         stage.setScene(scene);                                                  //Definir a cena
+        stage.setResizable(false);                                              //Definir a janela para não mudar o tamanho
         stage.show();                                                           //Mostrar o stage
 
         labelOne.setText("Criar jogador");                                      //Definir texto na label
@@ -213,20 +222,22 @@ public class Game extends Application {
         nicknameField.setTranslateY(0);                                         //Definir posição y do textField
         nicknameField.setPrefWidth(100);                                        //Definir tamanho do textField
         nicknameField.setMaxWidth(100);                                         //Definir tamanho do textField
+        nicknameField.setFocusTraversable(false);                               //Definir o botão sem o focus
         root.getChildren().add(nicknameField);                                  //Adicionar o textField ao stack pane
 
         createButton.setText("Criar Jogador");                                  //Definir texto do botão 
         createButton.setPrefSize(110, 30);                                      //Definir tamanho do botão
         createButton.setTranslateX(130);                                        //Definir posição x do botão
         createButton.setTranslateY(75);                                         //Definir posição y do botão
-        createButton.setFont(Font.font("Dialog", 12));                          //Definir fonte e tamanho do botão
+        createButton.setFont(Font.font("Dialog", 12));                          //Definir fonte e tamanho da fonte do botão
+        createButton.setFocusTraversable(false);                                //Definir o botão sem o focus
         root.getChildren().add(createButton);                                   //Adicionar o botão ao stack pane
         createButton.setOnAction(event -> {                                     //Quando se carrega no botão
             if (nicknameField.getText() == null || nicknameField.getText().trim().isEmpty()) //Verifica se o textField está vazio
             {
-                createAlert("Alerta", "Falta de dados", "Tem que preencher o nome do jogador.", AlertType.WARNING);        //Cria um alerta personalizado de erro
+                createAlert("Alerta", "Falta de dados", "Tem que preencher o nome do jogador.", AlertType.WARNING);         //Cria um alerta personalizado de erro
             } else {
-                player.createPlayer(nicknameField.getText().toString().trim(), stage);                                   //Invoca o metodo para criar o jogador
+                player.createPlayer(nicknameField.getText().toString().trim(), stage);                                      //Invoca o metodo para criar o jogador
             }
         });
 
@@ -234,7 +245,8 @@ public class Game extends Application {
         backButton.setPrefSize(80, 30);                                         //Definir tamanho do botão
         backButton.setTranslateX(-150);                                         //Definir posição x do botão
         backButton.setTranslateY(75);                                           //Definir posição y do botão
-        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        backButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         root.getChildren().add(backButton);                                     //Adicionar o botão ao stack pane
         backButton.setOnAction(event -> {                                       //Quando se carrega no botão
             stage.close();                                                      //Fechar janela atual
@@ -255,6 +267,7 @@ public class Game extends Application {
 
         stage.setTitle("Escolher jogador");                                     //Definir o titulo
         stage.setScene(scene);                                                  //Definir a cena
+        stage.setResizable(false);                                              //Definir a janela para não mudar o tamanho
         stage.show();                                                           //Mostrar o stage
 
         labelOne.setText("Escolher jogador");                                   //Definir texto na label
@@ -275,20 +288,22 @@ public class Game extends Application {
         nicknameField.setTranslateY(0);                                         //Definir posição y do textField
         nicknameField.setPrefWidth(100);                                        //Definir tamanho do textField
         nicknameField.setMaxWidth(100);                                         //Definir tamanho do textField
+        nicknameField.setFocusTraversable(false);                               //Definir o botão sem o focus
         root.getChildren().add(nicknameField);                                  //Adicionar o textField ao stack pane
 
         chooseButton.setText("Escolher Jogador");                               //Definir texto do botão 
         chooseButton.setPrefSize(120, 30);                                      //Definir tamanho do botão
         chooseButton.setTranslateX(130);                                        //Definir posição x do botão
         chooseButton.setTranslateY(75);                                         //Definir posição y do botão
-        chooseButton.setFont(Font.font("Dialog", 12));                          //Definir fonte e tamanho do botão
+        chooseButton.setFont(Font.font("Dialog", 12));                          //Definir fonte e tamanho da fonte do botão
+        chooseButton.setFocusTraversable(false);                                //Definir o botão sem o focus
         root.getChildren().add(chooseButton);                                   //Adicionar o botão ao stack pane
         chooseButton.setOnAction(event -> {                                     //Quando se carrega no botão
             if (nicknameField.getText() == null || nicknameField.getText().trim().isEmpty()) //Verifica se o textField está vazio
             {
-                createAlert("Alerta", "Falta de dados", "Tem que preencher o nome do jogador.", AlertType.WARNING);        //Cria um alerta personalizado de erro
+                createAlert("Alerta", "Falta de dados", "Tem que preencher o nome do jogador.", AlertType.WARNING);         //Cria um alerta personalizado de erro
             } else {
-                player.choosePlayer(nicknameField.getText().toString().trim(), stage);                                   //Invoca o metodo para escolher o jogador 
+                player.choosePlayer(nicknameField.getText().toString().trim(), stage);                                      //Invoca o metodo para escolher o jogador 
             }
         });
 
@@ -296,11 +311,12 @@ public class Game extends Application {
         backButton.setPrefSize(80, 30);                                         //Definir tamanho do botão
         backButton.setTranslateX(-150);                                         //Definir posição x do botão
         backButton.setTranslateY(75);                                           //Definir posição y do botão
-        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        backButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         root.getChildren().add(backButton);                                     //Adicionar o botão ao stack pane
         backButton.setOnAction(event -> {                                       //Quando se carrega no botão
-            stage.close();                                                  //Fechar janela atual
-            startFX();                                                      //Abre o menu
+            stage.close();                                                      //Fechar janela atual
+            startFX();                                                          //Abre o menu
         });
     }
 
@@ -323,6 +339,7 @@ public class Game extends Application {
 
         stage.setTitle("Menu");                                                 //Definir o titulo
         stage.setScene(scene);                                                  //Definir a cena
+        stage.setResizable(false);                                              //Definir a janela para não mudar o tamanho
         stage.show();                                                           //Mostrar o stage
 
         labelOne.setText("Olá " + players.get(playerID).getNickname());         //Definir texto na label
@@ -350,18 +367,20 @@ public class Game extends Application {
         startGameButton.setPrefSize(120, 30);                                   //Definir tamanho do botão
         startGameButton.setTranslateX(-70);                                     //Definir posição x do botão
         startGameButton.setTranslateY(-40);                                     //Definir posição y do botão
-        startGameButton.setFont(Font.font("Dialog", 12));                       //Definir fonte e tamanho do botão
+        startGameButton.setFont(Font.font("Dialog", 12));                       //Definir fonte e tamanho da fonte do botão
+        startGameButton.setFocusTraversable(false);                             //Definir o botão sem o focus
         root.getChildren().add(startGameButton);                                //Adicionar o botão ao stack pane
         startGameButton.setOnAction(event -> {                                  //Quando se carrega no botão
-            stage.close();                                                  //Fechar janela atual
-            chooseDifficultyFX(stage);                                      //Abre o menu
+            stage.close();                                                      //Fechar janela atual
+            chooseDifficultyFX(stage);                                          //Abre o menu
         });
 
         loadGameButton.setText("Carregar Jogo");                                //Definir texto do botão 
         loadGameButton.setPrefSize(120, 30);                                    //Definir tamanho do botão
         loadGameButton.setTranslateX(70);                                       //Definir posição x do botão
         loadGameButton.setTranslateY(-40);                                      //Definir posição y do botão
-        loadGameButton.setFont(Font.font("Dialog", 12));                        //Definir fonte e tamanho do botão
+        loadGameButton.setFont(Font.font("Dialog", 12));                        //Definir fonte e tamanho da fonte do botão
+        loadGameButton.setFocusTraversable(false);                              //Definir o botão sem o focus
         loadGameButton.setDisable(true);                                        //Definir botão como desativado
         root.getChildren().add(loadGameButton);                                 //Adicionar o botão ao stack pane
 
@@ -369,7 +388,8 @@ public class Game extends Application {
         personalScoreButton.setPrefSize(120, 30);                               //Definir tamanho do botão
         personalScoreButton.setTranslateX(-70);                                 //Definir posição x do botão
         personalScoreButton.setTranslateY(0);                                   //Definir posição y do botão
-        personalScoreButton.setFont(Font.font("Dialog", 12));                   //Definir fonte e tamanho do botão
+        personalScoreButton.setFont(Font.font("Dialog", 12));                   //Definir fonte e tamanho da fonte do botão
+        personalScoreButton.setFocusTraversable(false);                         //Definir o botão sem o focus
         root.getChildren().add(personalScoreButton);                            //Adicionar o botão ao stack pane
         personalScoreButton.setOnAction(event -> {                              //Quando se carrega no botão
             createAlert("Pontuação", players.get(playerID).getNickname(), "A sua pontuação é de " + players.get(playerID).getScore().getPoints() + " pontos.\n"
@@ -380,7 +400,8 @@ public class Game extends Application {
         generalScoreButton.setPrefSize(120, 30);                                //Definir tamanho do botão
         generalScoreButton.setTranslateX(70);                                   //Definir posição x do botão
         generalScoreButton.setTranslateY(0);                                    //Definir posição y do botão
-        generalScoreButton.setFont(Font.font("Dialog", 12));                    //Definir fonte e tamanho do botão
+        generalScoreButton.setFont(Font.font("Dialog", 12));                    //Definir fonte e tamanho da fonte do botão
+        generalScoreButton.setFocusTraversable(false);                          //Definir o botão sem o focus
         root.getChildren().add(generalScoreButton);                             //Adicionar o botão ao stack pane
         generalScoreButton.setOnAction(event -> {                               //Quando se carrega no botão
             String result = "";
@@ -395,7 +416,8 @@ public class Game extends Application {
         levelCreationButton.setPrefSize(120, 30);                               //Definir tamanho do botão
         levelCreationButton.setTranslateX(-70);                                 //Definir posição x do botão
         levelCreationButton.setTranslateY(40);                                  //Definir posição y do botão
-        levelCreationButton.setFont(Font.font("Dialog", 12));                   //Definir fonte e tamanho do botão
+        levelCreationButton.setFont(Font.font("Dialog", 12));                   //Definir fonte e tamanho da fonte do botão
+        levelCreationButton.setFocusTraversable(false);                         //Definir o botão sem o focus
         root.getChildren().add(levelCreationButton);                            //Adicionar o botão ao stack pane
         levelCreationButton.setOnAction(event -> {                              //Quando se carrega no botão
             stage.close();                                                      //Fechar janela atual
@@ -406,7 +428,8 @@ public class Game extends Application {
         helpButton.setPrefSize(120, 30);                                        //Definir tamanho do botão
         helpButton.setTranslateX(70);                                           //Definir posição x do botão
         helpButton.setTranslateY(40);                                           //Definir posição y do botão
-        helpButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        helpButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        helpButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         root.getChildren().add(helpButton);                                     //Adicionar o botão ao stack pane
         helpButton.setOnAction(event -> {                                       //Quando se carrega no botão
             stage.close();                                                      //Fechar janela atual
@@ -417,7 +440,8 @@ public class Game extends Application {
         backButton.setPrefSize(120, 30);                                        //Definir tamanho do botão
         backButton.setTranslateX(-70);                                          //Definir posição x do botão
         backButton.setTranslateY(80);                                           //Definir posição y do botão
-        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        backButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         root.getChildren().add(backButton);                                     //Adicionar o botão ao stack pane
         backButton.setOnAction(event -> {                                       //Quando se carrega no botão
             stage.close();                                                      //Fechar janela atual
@@ -428,7 +452,8 @@ public class Game extends Application {
         exitButton.setPrefSize(120, 30);                                        //Definir tamanho do botão
         exitButton.setTranslateX(70);                                           //Definir posição x do botão
         exitButton.setTranslateY(80);                                           //Definir posição y do botão
-        exitButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        exitButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        exitButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         root.getChildren().add(exitButton);                                     //Adicionar o botão ao stack pane
         exitButton.setOnAction(event -> {                                       //Quando se carrega no botão
             System.exit(0);                                                     //Sair do jogo
@@ -449,6 +474,7 @@ public class Game extends Application {
 
         stage.setTitle("Escolher dificuldade");                                 //Definir o titulo
         stage.setScene(scene);                                                  //Definir a cena
+        stage.setResizable(false);                                              //Definir a janela para não mudar o tamanho
         stage.show();                                                           //Mostrar o stage
 
         labelOne.setText("Escolher dificuldade");                               //Definir texto na label
@@ -469,62 +495,66 @@ public class Game extends Application {
         easyButton.setPrefSize(120, 30);                                        //Definir tamanho do botão
         easyButton.setTranslateX(0);                                            //Definir posição x do botão
         easyButton.setTranslateY(-5);                                           //Definir posição y do botão
-        easyButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        easyButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        easyButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         root.getChildren().add(easyButton);                                     //Adicionar o botão ao stack pane
         easyButton.setOnAction(event -> {                                       //Quando se carrega no botão
-            board.resetValue();                                             //Definir os valores todos a 0
-            SET_DIFFICULTY = DIFFICULTY_BOARD_EASY;                         //Definir a dificuldade
-            NUMBER_OF_ROWS = 4;                                             //Definir o numero de linhas
-            NUMBER_OF_COLUMNS = 4;                                          //Definir o numero de colunas
-            stage.close();                                                  //Fechar pagina
-            players.get(playerID).getScore().setPoints(50);                 //Atribuição de 50 pontos iniciais ao jogador
-            board.generateBoard();                                          //Gerar o tabuleiro
-            displayBoardFX(stage);                                          //Apresentar o tabuleiro
+            board.resetValue();                                                 //Definir os valores todos a 0
+            SET_DIFFICULTY = DIFFICULTY_BOARD_EASY;                             //Definir a dificuldade
+            NUMBER_OF_ROWS = 4;                                                 //Definir o numero de linhas
+            NUMBER_OF_COLUMNS = 4;                                              //Definir o numero de colunas
+            stage.close();                                                      //Fechar pagina
+            players.get(playerID).getScore().setPoints(50);                     //Atribuição de 50 pontos iniciais ao jogador
+            board.generateBoard();                                              //Gerar o tabuleiro
+            displayBoardFX(stage);                                              //Apresentar o tabuleiro
         });
 
         mediumButton.setText("Médio");                                          //Definir texto do botão
         mediumButton.setPrefSize(120, 30);                                      //Definir tamanho do botão
         mediumButton.setTranslateX(0);                                          //Definir posição x do botão
         mediumButton.setTranslateY(35);                                         //Definir posição y do botão
-        mediumButton.setFont(Font.font("Dialog", 12));                          //Definir fonte e tamanho do botão
+        mediumButton.setFont(Font.font("Dialog", 12));                          //Definir fonte e tamanho da fonte do botão
+        mediumButton.setFocusTraversable(false);                                //Definir o botão sem o focus
         root.getChildren().add(mediumButton);                                   //Adicionar o botão ao stack pane
         mediumButton.setOnAction(event -> {                                     //Quando se carrega no botão
-            board.resetValue();                                             //Definir os valores todos a 0
-            SET_DIFFICULTY = DIFFICULTY_BOARD_MEDIUM;                       //Definir a dificuldade
-            NUMBER_OF_ROWS = 6;                                             //Definir o numero de linhas
-            NUMBER_OF_COLUMNS = 6;                                          //Definir o numero de colunas
-            stage.close();                                                  //Fechar pagina
-            players.get(playerID).getScore().setPoints(100);                //Atribuição de 100 pontos iniciais ao jogador
-            board.generateBoard();                                          //Gerar o tabuleiro
-            displayBoardFX(stage);                                          //Apresentar o tabuleiro
+            board.resetValue();                                                 //Definir os valores todos a 0
+            SET_DIFFICULTY = DIFFICULTY_BOARD_MEDIUM;                           //Definir a dificuldade
+            NUMBER_OF_ROWS = 6;                                                 //Definir o numero de linhas
+            NUMBER_OF_COLUMNS = 6;                                              //Definir o numero de colunas
+            stage.close();                                                      //Fechar pagina
+            players.get(playerID).getScore().setPoints(100);                    //Atribuição de 100 pontos iniciais ao jogador
+            board.generateBoard();                                              //Gerar o tabuleiro
+            displayBoardFX(stage);                                              //Apresentar o tabuleiro
         });
 
         hardButton.setText("Difícil");                                          //Definir texto do botão
         hardButton.setPrefSize(120, 30);                                        //Definir tamanho do botão
         hardButton.setTranslateX(0);                                            //Definir posição x do botão
         hardButton.setTranslateY(75);                                           //Definir posição y do botão
-        hardButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        hardButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        hardButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         root.getChildren().add(hardButton);                                     //Adicionar o botão ao stack pane
         hardButton.setOnAction(event -> {                                       //Quando se carrega no botão
-            board.resetValue();                                             //Definir os valores todos a 0
-            SET_DIFFICULTY = DIFFICULTY_BOARD_HARD;                         //Definir a dificuldade
-            NUMBER_OF_ROWS = 9;                                             //Definir o numero de linhas
-            NUMBER_OF_COLUMNS = 9;                                          //Definir o numero de colunas
-            stage.close();                                                  //Fechar pagina
-            players.get(playerID).getScore().setPoints(150);                //Atribuição de 150 pontos iniciais ao jogador
-            board.generateBoard();                                          //Gerar o tabuleiro
-            displayBoardFX(stage);                                          //Apresentar o tabuleiro
+            board.resetValue();                                                 //Definir os valores todos a 0
+            SET_DIFFICULTY = DIFFICULTY_BOARD_HARD;                             //Definir a dificuldade
+            NUMBER_OF_ROWS = 9;                                                 //Definir o numero de linhas
+            NUMBER_OF_COLUMNS = 9;                                              //Definir o numero de colunas
+            stage.close();                                                      //Fechar pagina
+            players.get(playerID).getScore().setPoints(150);                    //Atribuição de 150 pontos iniciais ao jogador
+            board.generateBoard();                                              //Gerar o tabuleiro
+            displayBoardFX(stage);                                              //Apresentar o tabuleiro
         });
 
         backButton.setText("Voltar");                                           //Definir texto do botão
         backButton.setPrefSize(80, 30);                                         //Definir tamanho do botão
         backButton.setTranslateX(-150);                                         //Definir posição x do botão
         backButton.setTranslateY(75);                                           //Definir posição y do botão
-        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        backButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         root.getChildren().add(backButton);                                     //Adicionar o botão ao stack pane
         backButton.setOnAction(event -> {                                       //Quando se carrega no botão
-            stage.close();                                                  //Fechar janela atual
-            menuFX(oldStage);                                               //Abrir o menu
+            stage.close();                                                      //Fechar janela atual
+            menuFX(oldStage);                                                   //Abrir o menu
         });
     }
 
@@ -542,6 +572,7 @@ public class Game extends Application {
 
         stage.setTitle("Criar tabuleiro");                                      //Definir o titulo
         stage.setScene(scene);                                                  //Definir a cena
+        stage.setResizable(false);                                              //Definir a janela para não mudar o tamanho
         stage.show();                                                           //Mostrar o stage
 
         labelOne.setText("Criar tabuleiro");                                    //Definir texto na label
@@ -562,7 +593,8 @@ public class Game extends Application {
         easyButton.setPrefSize(120, 30);                                        //Definir tamanho do botão
         easyButton.setTranslateX(0);                                            //Definir posição x do botão
         easyButton.setTranslateY(-5);                                           //Definir posição y do botão
-        easyButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        easyButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        easyButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         root.getChildren().add(easyButton);                                     //Adicionar o botão ao stack pane
         easyButton.setOnAction(event -> {                                       //Quando se carrega no botão
             board.resetValue();                                                 //Definir os valores todos a 0
@@ -578,7 +610,8 @@ public class Game extends Application {
         mediumButton.setPrefSize(120, 30);                                      //Definir tamanho do botão
         mediumButton.setTranslateX(0);                                          //Definir posição x do botão
         mediumButton.setTranslateY(35);                                         //Definir posição y do botão
-        mediumButton.setFont(Font.font("Dialog", 12));                          //Definir fonte e tamanho do botão
+        mediumButton.setFont(Font.font("Dialog", 12));                          //Definir fonte e tamanho da fonte do botão
+        mediumButton.setFocusTraversable(false);                                //Definir o botão sem o focus
         root.getChildren().add(mediumButton);                                   //Adicionar o botão ao stack pane
         mediumButton.setOnAction(event -> {                                     //Quando se carrega no botão
             board.resetValue();                                                 //Definir os valores todos a 0
@@ -594,7 +627,8 @@ public class Game extends Application {
         hardButton.setPrefSize(120, 30);                                        //Definir tamanho do botão
         hardButton.setTranslateX(0);                                            //Definir posição x do botão
         hardButton.setTranslateY(75);                                           //Definir posição y do botão
-        hardButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        hardButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        hardButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         root.getChildren().add(hardButton);                                     //Adicionar o botão ao stack pane
         hardButton.setOnAction(event -> {                                       //Quando se carrega no botão
             board.resetValue();                                                 //Definir os valores todos a 0
@@ -610,7 +644,8 @@ public class Game extends Application {
         backButton.setPrefSize(80, 30);                                         //Definir tamanho do botão
         backButton.setTranslateX(-150);                                         //Definir posição x do botão
         backButton.setTranslateY(75);                                           //Definir posição y do botão
-        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        backButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         root.getChildren().add(backButton);                                     //Adicionar o botão ao stack pane
         backButton.setOnAction(event -> {                                       //Quando se carrega no botão
             stage.close();                                                      //Fechar janela atual
@@ -631,11 +666,12 @@ public class Game extends Application {
 
         stage.setTitle("Escolha a posição dos portos");                         //Definir o titulo
         stage.setScene(scene);                                                  //Definir a cena
+        stage.setResizable(false);                                              //Definir a janela para não mudar o tamanho
         stage.show();                                                           //Mostrar o stage
 
         labelOne.setText("Escolha a posição dos portos");                                      //Definir texto na label
         labelOne.setFill(Color.BLACK);                                          //Definir cor do texto
-        labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));             //Definir fonte e tamanho do botão
+        labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));             //Definir fonte e tamanho da fonte do botão
         gridPane.add(labelOne, 1, 0, 6, 1);                                     //Adicionar o botão ao grid pane com as posições
 
         labelTwo.setText("    Selecione a casa");                               //Definir texto na label
@@ -668,7 +704,8 @@ public class Game extends Application {
 
         backButton.setText("Voltar");                                           //Definir texto do botão 
         backButton.setPrefSize(70, 30);                                         //Definir tamanho do botão
-        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        backButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         gridPane.add(backButton, 3, 8, 4, 1);                                   //Adicionar o botão ao stack pane com as posições
         backButton.setOnAction(event -> {                                       //Quando se carrega no botão
             stage.close();                                                      //Fechar janela atual
@@ -677,7 +714,8 @@ public class Game extends Application {
 
         createButton.setText("Criar");                                          //Definir texto do botão 
         createButton.setPrefSize(70, 30);                                       //Definir tamanho do botão
-        createButton.setFont(Font.font("Dialog", 12));                          //Definir fonte e tamanho do botão
+        createButton.setFont(Font.font("Dialog", 12));                          //Definir fonte e tamanho da fonte do botão
+        createButton.setFocusTraversable(false);                                //Definir o botão sem o focus
         gridPane.add(createButton, 6, 8, 4, 1);                                 //Adicionar o botão ao stack pane com as posições
         createButton.setDisable(false);
         createButton.setOnAction(event -> {                                     //Quando se carrega no botão
@@ -699,11 +737,12 @@ public class Game extends Application {
 
         stage.setTitle("Ajuda");                                                //Definir o titulo
         stage.setScene(scene);                                                  //Definir a cena
+        stage.setResizable(false);                                              //Definir a janela para não mudar o tamanho
         stage.show();                                                           //Mostrar o stage
 
         labelOne.setText("        Ajuda");                                      //Definir texto na label
         labelOne.setFill(Color.BLACK);                                          //Definir cor do texto
-        labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));             //Definir fonte e tamanho do botão
+        labelOne.setFont(Font.font("Dialog", FontWeight.BOLD, 16));             //Definir fonte e tamanho da fonte do botão
         gridPane.add(labelOne, 3, 0, 6, 1);                                     //Adicionar o botão ao grid pane com as posições
 
         labelTwo.setText("    Selecione a casa");                               //Definir texto na label
@@ -732,16 +771,18 @@ public class Game extends Application {
 
         backButton.setText("Voltar");                                           //Definir texto do botão 
         backButton.setPrefSize(70, 30);                                         //Definir tamanho do botão
-        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho do botão
+        backButton.setFont(Font.font("Dialog", 12));                            //Definir fonte e tamanho da fonte do botão
+        backButton.setFocusTraversable(false);                                  //Definir o botão sem o focus
         gridPane.add(backButton, 1, 8, 3, 1);                                   //Adicionar o botão ao stack pane com as posições
-        backButton.setOnAction(event -> {                                           //Quando se carrega no botão
-            stage.close();                                                  //Fechar janela atual
-            oldStage.show();                                                //Abrir o anterior
+        backButton.setOnAction(event -> {                                       //Quando se carrega no botão
+            stage.close();                                                      //Fechar janela atual
+            oldStage.show();                                                    //Abrir o anterior
         });
 
         validateButton.setText("Validar");                                      //Definir texto do botão 
         validateButton.setPrefSize(70, 30);                                     //Definir tamanho do botão
-        validateButton.setFont(Font.font("Dialog", 12));                        //Definir fonte e tamanho do botão
+        validateButton.setFont(Font.font("Dialog", 12));                        //Definir fonte e tamanho da fonte do botão
+        validateButton.setFocusTraversable(false);                              //Definir o botão sem o focus
         validateButton.setDisable(true);                                        //Definir o botão como desativado
         gridPane.add(validateButton, 5, 8, 3, 1);                               //Adicionar o botão ao stack pane com as posições
     }
@@ -781,6 +822,7 @@ public class Game extends Application {
 
         stage.setTitle("Tabuleiro de Jogo");                                    //Definir o titulo
         stage.setScene(scene);                                                  //Definir a cena
+        stage.setResizable(false);                                              //Definir a janela para não mudar o tamanho
         stage.show();                                                           //Mostrar o stage
 
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -804,7 +846,7 @@ public class Game extends Application {
                 btn.setText(gameBoard.get(board.getIndex(x, y)).toString());    //Definir texto na label
                 btn.setFocusTraversable(false);                                 //Definir o botão sem o focus
                 btn.setPrefSize(30, 30);                                        //Definir tamanho do botao       
-                btn.setOnAction(event -> {                                //Quando se carrega no botão                  
+                btn.setOnAction(event -> {                                      //Quando se carrega no botão                  
                     attempts++;                                                 //Incrementa 1 ao numero de tentativas
                     btn.setDisable(true);                                       //Definir o botão como desativado
                     position = board.getIndex(x, y);                            //Definir a variavel com a posição do botão clicado
@@ -812,13 +854,13 @@ public class Game extends Application {
                         validateButton.setDisable(false);                       //Definir o botão como desativado
                     }
                     if (!(gameBoard.get(position) instanceof Dock) && !(gameBoard.get(position) instanceof Boat)) { //Se a posição escolhida não for porto nem barco
-                        if (rules.checkSpotForBoat(x, y)) {                 //Verificar a posição escolhida
-                            board.placeBoat(position);                      //Definir a posição como barco
-                            btn.setText("B");                               //Definir texto no botão
+                        if (rules.checkSpotForBoat(x, y)) {                     //Verificar a posição escolhida
+                            board.placeBoat(position);                          //Definir a posição como barco
+                            btn.setText("B");                                   //Definir texto no botão
                         } else {
-                            players.get(playerID).getScore().missedBoat();  //Retirar pontos
-                            board.placeWater(position);                     //Definir a posição como agua
-                            btn.setText("A");                               //Definir texto no botão
+                            players.get(playerID).getScore().missedBoat();      //Retirar pontos
+                            board.placeWater(position);                         //Definir a posição como agua
+                            btn.setText("A");                                   //Definir texto no botão
                             createAlert("Aviso", "Casa errada", "Não pode colocar um barco nessa posição.\nFoi punido em x pontos", AlertType.WARNING); //Criar um alerta personalizado
                         }
                     } else {
@@ -840,18 +882,19 @@ public class Game extends Application {
 
         pointsLabel.setText("Pontuação: " + players.get(playerID).getScore().getPoints() + " pontos");      //Definir texto na label
         pointsLabel.setFill(Color.GREEN);                                                                   //Definir cor do texto
-        pointsLabel.setFont(Font.font("Dialog", FontWeight.BOLD, 16));                                      //Definir fonte e tamanho do botão
+        pointsLabel.setFont(Font.font("Dialog", FontWeight.BOLD, 16));                                      //Definir fonte e tamanho da fonte do botão
         gridPane.add(pointsLabel, 0, NUMBER_OF_ROWS + 3, NUMBER_OF_COLUMNS + 1, 1);                         //Adicionar o botão ao grid pane com as posições
 
         timerLabel.setFill(Color.RED);                                                                      //Definir cor do texto
-        timerLabel.setFont(Font.font("Dialog", FontWeight.BOLD, 16));                                       //Definir fonte e tamanho do botão
+        timerLabel.setFont(Font.font("Dialog", FontWeight.BOLD, 16));                                       //Definir fonte e tamanho da fonte do botão
         gridPane.add(timerLabel, 0, NUMBER_OF_ROWS + 4, NUMBER_OF_COLUMNS + 1, 1);                          //Adicionar o botão ao grid pane com as posições
 
         backButton.setText("Voltar");                                                                       //Definir texto do botão 
         backButton.setPrefSize(70, 30);                                                                     //Definir tamanho do botão
-        backButton.setFont(Font.font("Dialog", 12));                                                        //Definir fonte e tamanho do botão
+        backButton.setFont(Font.font("Dialog", 12));                                                        //Definir fonte e tamanho da fonte do botão
+        backButton.setFocusTraversable(false);                                                              //Definir o botão sem o focus
         gridPane.add(backButton, 0, NUMBER_OF_ROWS + 5, 2, 1);                                              //Adicionar o botão ao stack pane com as posições
-        backButton.setOnAction(event -> {                                                                       //Quando se carrega no botão
+        backButton.setOnAction(event -> {                                                                   //Quando se carrega no botão
             Optional<ButtonType> result = alert.showAndWait();                                              //Definir a opção
             if (result.orElse(cancel) == yes) {                                                             //Caso a opção seja "Sim"
                 players.get(playerID).getScore().setPoints(0);                                              //Definir os pontos a 0
@@ -863,12 +906,13 @@ public class Game extends Application {
 
         validateButton.setText("Validar");                                                                  //Definir texto do botão 
         validateButton.setPrefSize(70, 30);                                                                 //Definir tamanho do botão
-        validateButton.setFont(Font.font("Dialog", 12));                                                    //Definir fonte e tamanho do botão
+        validateButton.setFont(Font.font("Dialog", 12));                                                    //Definir fonte e tamanho da fonte do botão
+        validateButton.setFocusTraversable(false);                                                          //Definir o botão sem o focus
         validateButton.setDisable(true);                                                                    //Definir o botão como desativado
         gridPane.add(validateButton, NUMBER_OF_COLUMNS - 1, NUMBER_OF_ROWS + 5, 2, 1);                      //Adicionar o botão ao stack pane com as posições     
-        validateButton.setOnAction(event -> {                                                                   //Quando se carrega no botão
+        validateButton.setOnAction(event -> {                                                               //Quando se carrega no botão
             timer.cancel();                                                                                 //Cancelar o timer
-            board.endValidateBoard((seconds - counter));                                                      //Terminar a validação do tabuleiro
+            board.endValidateBoard((seconds - counter));                                                    //Terminar a validação do tabuleiro
             createAlert("Jogo Terminado", "Jogo Terminado", "Demorou " + (seconds - counter) + " segundos a terminar o jogo.\n"
                     + "Teve uma pontuação de " + players.get(playerID).getScore().getPoints() + " pontos.", Alert.AlertType.WARNING);   //Apresentar o alerta
             stage.close();
@@ -882,9 +926,11 @@ public class Game extends Application {
         alert.setTitle(title);                                                  //Definir o titulo recebido por parametro
         alert.setHeaderText(header);                                            //Definir o header recebido por parametro
         alert.setContentText(message);                                          //Definir a mensagem recebido por parametro
+        alert.setResizable(false);                                              //Definir a janela para não mudar o tamanho
         alert.showAndWait();                                                    //Apresentar o alerta
     }
 
+    
     //JAVA CONSOLE
     
     

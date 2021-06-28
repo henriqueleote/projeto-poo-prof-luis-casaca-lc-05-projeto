@@ -54,14 +54,6 @@ public class ProjectTest {
     }
     
     @Test
-    public void test(){
-//        game.players.add(new Player(game.playerCount,"teste",0));
-//        board.generateBoard();
-//        game.gameBoard.set(0, new Dock(board.getRowFromIndex(0), board.getColumnFromIndex(0)));
-//        game.print();
-    }
-    
-    @Test
     public void testPlayer(){
         String name = "Teste";
         assertEquals(name, player.getNickname());
