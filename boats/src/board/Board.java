@@ -1,7 +1,6 @@
 package board;
 
 import game.Game;
-import static game.Game.players;
 import game.Rules;
 import java.util.ArrayList;
 import java.util.Random;

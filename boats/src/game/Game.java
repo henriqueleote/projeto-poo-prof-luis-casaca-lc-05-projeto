@@ -6,7 +6,6 @@ import board.Dock;
 import board.Spot;
 import board.Boat;
 import board.Board;
-import static board.Board.game;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

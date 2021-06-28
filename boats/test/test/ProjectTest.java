@@ -13,9 +13,11 @@ import static game.Game.board;
 import player.Player;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import player.Score;
 
 
 /**
@@ -27,11 +29,12 @@ public class ProjectTest {
     private Game game;
     private Player player;
     private Board board;
+    private Score score;
     
     public ProjectTest() {
-        game = new Game();
-        player = new Player();
-        board = new Board();
+        score = new Score(350);
+        player = new Player(0,"Teste", score.getPoints());
+
     }
     
     @BeforeClass
@@ -56,6 +59,13 @@ public class ProjectTest {
 //        board.generateBoard();
 //        game.gameBoard.set(0, new Dock(board.getRowFromIndex(0), board.getColumnFromIndex(0)));
 //        game.print();
+    }
+    
+    @Test
+    public void testPlayer(){
+        String name = "Teste";
+        assertEquals(name, player.getNickname());
+        assertEquals(350, player.getScore().getPoints());
     }
 
     // TODO add test methods here.
