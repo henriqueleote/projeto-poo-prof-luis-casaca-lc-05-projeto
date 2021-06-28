@@ -82,8 +82,10 @@ public class Player {
 
         if (player != null) { // Caso o nickname pretendido pelo utilizador já esteja registado na aplicação, é emitida uma mensagem de erro 
             if (game.players.contains(player)) {
-            if(oldStage == null)
-                System.out.println("O nickname inserido já se encontra em uso.");
+            if(oldStage == null){
+                System.out.println("O nickname inserido já se encontra em uso.\n");
+                game.startConsole();
+            }
             else
                 game.createAlert("Alerta","Nickname em uso","O nickname inserido já se encontra em uso.",AlertType.ERROR); 
             }
@@ -96,7 +98,7 @@ public class Player {
                 game.menuFX(oldStage);                                                                                     //Abre o menu
             }
             else
-                game.createAlert("Alerta","Nickname em uso","O nickname inserido já se encontra em uso.",AlertType.ERROR);
+                game.menuConsole();
         }
     }
     
@@ -107,16 +109,17 @@ public class Player {
         if (player != null) { // Caso o nickname (jogador) exista, é extraído o index referente ao mesmo, o que carateriza a seleção do jogador a ser utilizado
             if (game.players.contains(player)) {
                 game.playerID = game.players.indexOf(player);
-                if(oldStage == null)
-                    game.menuConsole(); // Retrocede-se ao menuOLD
-                else{
+                if(oldStage != null){
                     oldStage.close();
-                    game.menuFX(oldStage);  
-                }
+                    game.menuFX(oldStage); 
+                }else
+                    game.menuConsole(); // Retrocede-se ao menu
             }
         } else { // Caso o nickname inserido não corresponda a nenhum jogador, é emitida uma mensagem de erro
-            if(oldStage == null)
-                System.out.println("Não existe nenhum utilizador com o nickname inserido.");
+            if(oldStage == null){
+                System.out.println("Não existe nenhum utilizador com o nickname inserido.\n");
+                game.startConsole();
+            }
             else
                 game.createAlert("Alerta","Jogador desconhecido","Não existe nenhum jogador com esse nickname.",AlertType.ERROR); 
                 

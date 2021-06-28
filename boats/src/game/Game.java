@@ -53,7 +53,6 @@ public class Game extends Application{
     public static int counter;                                                  //Variavel inteira para o timer
     public static int seconds;                                                  //Variavel inteira para contar os segundos
     
-    public static List<List> boards = new ArrayList<List>();                                    //Coleção da classe Spot para o tabuleiro
     public static List<Spot> gameBoard = new ArrayList<Spot>();                                 //Coleção da classe Spot para o tabuleiro
     public static ObservableList<Player> players =  FXCollections.observableArrayList();        //Coleção da classe Player para os jogadores
     public static List<Integer> docks = new ArrayList<Integer>();                               //Coleção do tipo inteiro para os portos
@@ -429,7 +428,7 @@ public class Game extends Application{
         });
     }
     
-    //PAINEL DE DIFICULDADE - POR FAZER (PHASE 3 POR FAZER)
+    //PAINEL DE DIFICULDADE - A FUNCIONAR (PHASE 3 COMPLETE)
     public void chooseDifficultyFX(Stage oldStage) {
         StackPane root = new StackPane();                                       //StackPane do JavaFX
         Scene scene = new Scene(root, 400, 200);                                //Scene do JavaFX
@@ -489,7 +488,7 @@ public class Game extends Application{
                 NUMBER_OF_ROWS = 6;                                             //Definir o numero de linhas
                 NUMBER_OF_COLUMNS = 6;                                          //Definir o numero de colunas
                 stage.close();                                                  //Fechar pagina
-                players.get(playerID).getScore().setPoints(100);                //Atribuição de 50 pontos iniciais ao jogador
+                players.get(playerID).getScore().setPoints(100);                //Atribuição de 100 pontos iniciais ao jogador
                 board.generateBoard();                                          //Gerar o tabuleiro
                 displayBoardFX(stage);                                          //Apresentar o tabuleiro
         });       
@@ -506,7 +505,7 @@ public class Game extends Application{
                 NUMBER_OF_ROWS = 9;                                             //Definir o numero de linhas
                 NUMBER_OF_COLUMNS = 9;                                          //Definir o numero de colunas
                 stage.close();                                                  //Fechar pagina
-                players.get(playerID).getScore().setPoints(150);                //Atribuição de 50 pontos iniciais ao jogador
+                players.get(playerID).getScore().setPoints(150);                //Atribuição de 150 pontos iniciais ao jogador
                 board.generateBoard();                                          //Gerar o tabuleiro
                 displayBoardFX(stage);                                          //Apresentar o tabuleiro
         });
@@ -523,7 +522,7 @@ public class Game extends Application{
         });
     }
        
-    //PAINEL DE AJUDA - POR FAZER (PHASE 3 POR FAZER)
+    //PAINEL DE AJUDA - A FUNCIONAR (PHASE 3 COMPLETE)
     public void helpMenuFX(Stage oldStage) {
         GridPane gridPane = new GridPane();                                     //GridPane do JavaFX
         Scene scene = new Scene(gridPane, 400, 400);                            //Scene do JavaFX
@@ -582,7 +581,7 @@ public class Game extends Application{
         gridPane.add(validateButton, 5, 8, 3, 1);                               //Adicionar o botão ao stack pane com as posições
     }
         
-    //PAINEL PARA APRESENTAR O TABULEIRO
+    //PAINEL PARA APRESENTAR O TABULEIRO - A FUNCIONAR (PHASE 3 COMPLETE)
     public void displayBoardFX(Stage oldStage) {
         int SCENE_WIDTH = 0;                                                    //Definir a largura da cena
         int SCENE_HEIGHT = 0;                                                   //Definir a altura da cena
@@ -709,6 +708,8 @@ public class Game extends Application{
             board.endValidateBoard((seconds-counter));                                                      //Terminar a validação do tabuleiro
             createAlert("Jogo Terminado", "Jogo Terminado", "Demorou " + (seconds-counter) + " segundos a terminar o jogo.\n"
                     + "Teve uma pontuação de " + players.get(playerID).getScore().getPoints() + " pontos.", Alert.AlertType.WARNING);   //Apresentar o alerta
+            stage.close();
+            menuFX(oldStage);
         });
     }
       
@@ -751,7 +752,6 @@ public class Game extends Application{
                     System.out.print("Nickname -> ");
                     nickname = input.next().trim(); // Leitura do nickname digitado pelo utilizador
                     player.createPlayer(nickname,null);
-                    menuConsole(); // Retrocede-se ao menuOLD
                     break;
                 case 0:
                     System.exit(0);
@@ -778,7 +778,6 @@ public class Game extends Application{
                     System.out.print("Nickname -> ");
                     nickname = input.next().trim(); // Leitura do nickname digitado pelo utilizador
                     player.createPlayer(nickname,null);
-                    menuConsole(); // Retrocede-se ao menuOLD
                     break;
                 case 2:
                     System.out.print("Nickname -> ");
@@ -821,7 +820,7 @@ public class Game extends Application{
         switch (option) { // Verifica qual a opção escolhida pelo utilizador
             case 1:
                 if (gameBoard.isEmpty()) {
-                    chooseDifficultyConsole(); // Redireciona o utilizar para o menuOLD de escolha da dificuldade do jogo a ser jogado
+                    chooseDifficultyConsole(); // Redireciona o utilizar para o menu de escolha da dificuldade do jogo a ser jogado
                 } else {
                     playConsole();
                 }
@@ -837,11 +836,60 @@ public class Game extends Application{
                 score.printScore(); // Exibe a pontuação geral dos jogadores 
                 break;
             case 5:
-                System.out.println("Funcionalidade indisponivel. Obrigado.");
-                menuConsole();
+                ArrayList<Integer> arrayDocks = new ArrayList<Integer>();
+                System.out.println("----------------------------------\n");
+                System.out.println("1 - (5x5) - 25 casas");
+                System.out.println("2 - (7x7) - 49 casas");
+                System.out.println("3 - (10x10) - 100 casas");
+                System.out.print("Escolha a opção para o numero de casas -> ");
+
+                while (!input.hasNextInt()) {
+                    System.out.print("-> ");
+                    input.next();
+                }
+                option = input.nextInt();
+
+                switch (option) { // Verifica qual a opção escolhida pelo utilizador
+                    case 1:
+                        SET_DIFFICULTY = DIFFICULTY_BOARD_EASY;
+                        for (i = 0; i < SET_DIFFICULTY; i++) {
+                            System.out.print("Insira a posição do porto -> ");
+                            while (!input.hasNextInt()) {
+                                System.out.print("-> ");
+                                input.next();
+                            }
+                            arrayDocks.add(input.nextInt());
+                        }
+                        board.createBoard(arrayDocks);
+                        break;
+                    case 2:
+                        SET_DIFFICULTY = DIFFICULTY_BOARD_MEDIUM;
+                        for (i = 0; i < SET_DIFFICULTY; i++) {
+                            System.out.print("Insira a posição do porto -> ");
+                            while (!input.hasNextInt()) {
+                                System.out.print("-> ");
+                                input.next();
+                            }
+                            arrayDocks.add(input.nextInt());
+                        }
+                        board.createBoard(arrayDocks);
+                        break;
+                    case 3:
+                        SET_DIFFICULTY = DIFFICULTY_BOARD_HARD;
+                        for (i = 0; i < SET_DIFFICULTY; i++) {
+                            System.out.print("Insira a posição do porto -> ");
+                            while (!input.hasNextInt()) {
+                                System.out.print("-> ");
+                                input.next();
+                            }
+                            arrayDocks.add(input.nextInt());
+                        }
+                        board.createBoard(arrayDocks);
+                        break;
+                }
                 break;
             case 6:
-                printHelpConsole(); // O utilizador é redirecionado para um menuOLD de ajuda à compreensão das diferentes siglas inerentes ao jogo
+                printHelpConsole(); // O utilizador é redirecionado para um menu de ajuda à compreensão das diferentes siglas inerentes ao jogo
                 break;
             case 7:
                 startConsole(); // Retrocede-se ao menu inicial
@@ -855,7 +903,7 @@ public class Game extends Application{
         }
     }
     
-    //MENU PARA ESCOLHA DE DIFICULDADE - REVER
+    //MENU PARA ESCOLHA DE DIFICULDADE - A FUNCIONAR
     public void chooseDifficultyConsole() {       
         System.out.println("Escolha a dificuldade:");
         System.out.println();
@@ -906,7 +954,7 @@ public class Game extends Application{
                 SET_DIFFICULTY = DIFFICULTY_BOARD_EASY;
                 NUMBER_OF_ROWS = 4;
                 NUMBER_OF_COLUMNS = 4;
-                players.get(playerID).getScore().setPoints(50); // Atribuição de 100 pontos iniciais ao jogador
+                players.get(playerID).getScore().setPoints(50); // Atribuição de 50 pontos iniciais ao jogador
                 board.generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 playConsole();
                 break;
@@ -922,7 +970,7 @@ public class Game extends Application{
                 SET_DIFFICULTY = DIFFICULTY_BOARD_HARD;
                 NUMBER_OF_ROWS = 9;
                 NUMBER_OF_COLUMNS = 9;
-                players.get(playerID).getScore().setPoints(150); // Atribuição de 100 pontos iniciais ao jogador
+                players.get(playerID).getScore().setPoints(150); // Atribuição de 150 pontos iniciais ao jogador
                 board.generateBoard(); // Criação do tabuleiro com as caraterísticas acima descritas
                 playConsole();
                 break;
@@ -930,7 +978,7 @@ public class Game extends Application{
                 menuConsole(); // Retrocede-se ao menu
                 break;
             default:
-                chooseDifficultyConsole(); // Caso não seja selecionada nenhuma das opções disponíveis, é exibido novamente o menuOLD de  escolha de dificuldade
+                chooseDifficultyConsole(); // Caso não seja selecionada nenhuma das opções disponíveis, é exibido novamente o menu de  escolha de dificuldade
                 break;
         }
     }
@@ -961,7 +1009,7 @@ public class Game extends Application{
             System.in.read(); // É lida a tecla premida pelo utilizador
         } catch (Exception e) {
         }
-        menuConsole(); // Retrocede-se ao menuOLD
+        menuConsole(); // Retrocede-se ao menu
     }
 
     //IMPRIME O TABULEIRO FINAL - A FUNCIONAR
@@ -972,7 +1020,7 @@ public class Game extends Application{
             System.in.read(); // É lida a tecla premida pelo utilizador
         } catch (Exception e) {
         }
-        System.exit(0);// Retrocede-se ao menuOLD
+        System.exit(0);// Retrocede-se ao menu
     }
 
     //JOGADAS DO UTILIZADOR - A FUNCIONAR
@@ -1013,6 +1061,7 @@ public class Game extends Application{
                         } else {
                             board.endValidateBoard(-9999);
                             System.out.println("Teve uma pontuação de " + players.get(playerID).getScore().getPoints() + " pontos.");
+                            menuConsole();
                         }
                     }
                 }
@@ -1035,6 +1084,7 @@ public class Game extends Application{
                     } else {
                         board.endValidateBoard(-9999);
                         System.out.println("Teve uma pontuação de " + players.get(playerID).getScore().getPoints() + " pontos.");
+                        menuConsole();
                     }
                 }
             } else {
@@ -1061,6 +1111,7 @@ public class Game extends Application{
                     } else {
                         board.endValidateBoard(-9999);
                         System.out.println("Teve uma pontuação de " + players.get(playerID).getScore().getPoints() + " pontos.");
+                        menuConsole();
                     }
                 }
             } else {

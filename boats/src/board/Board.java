@@ -1,8 +1,9 @@
 package board;
 
 import game.Game;
-import static game.Game.boat;
+import static game.Game.players;
 import game.Rules;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -29,7 +30,7 @@ public class Board {
         game.docks.clear();
         game.boat.clear();
         game.buttons.clear();
-        //game.getPlayers().get(game.getPlayerID()).getScore().setPoints(0); // Atribuição de 50 pontos iniciais ao jogador
+        game.players.get(game.playerID).getScore().setPoints(0);
     }
      
     //GERA O TABULEIRO DE JOGO
@@ -58,6 +59,22 @@ public class Board {
             }
         }
         placeDock(); // Colocação de portos no tabuleiro de game
+    }
+    
+    //CRIA O TABULEIRO DE JOGO
+    public void createBoard(ArrayList<Integer> arrayDocks) {
+        if (game.SET_DIFFICULTY == game.DIFFICULTY_BOARD_EASY) { // Caso a dificuldade definida seja "Fácil", cria um tabuleiro de game com base nas propriedades dessa mesma dificuldade
+            for (i = 0; i < game.DIFFICULTY_BOARD_EASY; i++) {
+                for (j = 0; j < game.DIFFICULTY_BOARD_EASY; j++) {
+                    game.gameBoard.add(new Unknown(i, j)); // Adiciona posições do tipo "Unknown" ao tabuleiro, com as suas respetivas coordenadas
+                }
+            }
+        }
+        for(i=0;i<game.gameBoard.size();i++){
+            game.gameBoard.set(arrayDocks.get(i), new Dock(getRowFromIndex(arrayDocks.get(i)), getColumnFromIndex(arrayDocks.get(i))));
+        }
+        arrayDocks.forEach((n) -> System.out.println(n));
+        game.playConsole();
     }
     
     //COLOCA OS PORTOS NO TABULEIRO DE JOGO - A FUNCIONAR
@@ -125,7 +142,7 @@ public class Board {
     //COLOCA OS BARCOS NO TABULEIRO DE JOGO - A FUNCIONAR
     public void placeBoat(int arrayNumber) {
         game.gameBoard.set(arrayNumber, new Boat(game.gameBoard.get(arrayNumber).getPosition().getRow(), game.gameBoard.get(arrayNumber).getPosition().getColumn())); // Criação de um objeto do tipo "Boat", com as coordenadas correspondentes à posição a ser alterada
-        boat.add(arrayNumber); // Adição do objeto do tipo "Boat" no array que guarda as posições do tipo "Boat"
+        game.boat.add(arrayNumber); // Adição do objeto do tipo "Boat" no array que guarda as posições do tipo "Boat"
     }
         
     //DEVOLVE A POSIÇÃO NO ARRAYLIST DADAS AS COORDENADAS
